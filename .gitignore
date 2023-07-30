@@ -1,5 +1,7 @@
 
 ROTD/.vs/
+ROTD/ROTD.sln
+ROTD/ROTD.uproject
 ROTD/Saved/
 ROTD/Content/BulletHoles
 ROTD/Content/BulletVFX
@@ -15,6 +17,6 @@ ROTD/Content/IBFPSStarterPack
 ROTD/Content/FPS_Starter_Pack
 ROTD/Content/muzzles
 ROTD/Content/UWC_Bullet_Holes
-ROTDROTD/Binaries
+ROTD/ROTD/Binaries
 ROTDROTDROTD/DerivedDataCache
 ROTD/Intermediate
