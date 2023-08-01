@@ -20,3 +20,6 @@ ROTD/Content/muzzles
 ROTD/Content/UWC_Bullet_Holes
 ROTD/DerivedDataCache
 ROTD/Intermediate
+ROTD/Binaries/Win64/ROTDEditor.target
+ROTD/Binaries/Win64/UnrealEditor-ROTD.dll
+ROTD/Binaries/Win64/UnrealEditor-ROTD.pdb
