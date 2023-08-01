@@ -2,6 +2,7 @@
 ROTD/.vs/
 ROTD/ROTD.sln
 ROTD/ROTD.uproject
+ROTD/Binaries/Win64/
 ROTD/Saved/
 ROTD/Content/BulletHoles
 ROTD/Content/BulletVFX
@@ -17,6 +18,5 @@ ROTD/Content/IBFPSStarterPack
 ROTD/Content/FPS_Starter_Pack
 ROTD/Content/muzzles
 ROTD/Content/UWC_Bullet_Holes
-ROTD/Binaries
-ROTDROTDROTD/DerivedDataCache
+ROTD/DerivedDataCache
 ROTD/Intermediate
