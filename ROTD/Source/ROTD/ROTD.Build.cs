@@ -9,5 +9,13 @@ public class ROTD : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
-	}
+
+        PrivateIncludePaths.AddRange(
+           new string[] {
+           // ... add other private include paths required here  ...
+            "ROTD/Weapons",
+           }
+         );
+
+    }
 }

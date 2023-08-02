@@ -99,5 +99,15 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+	// ÇÐ»»ÎäÆ÷
+	UFUNCTION(BlueprintCallable)
+	void SwitchWeapons(int32 Type);
+
+	FString GetKnife() const { return TEXT("/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP"); }
+
+	FString GetPisto() const { return TEXT("/Game/ROTD/Blueprint/Weapons/Magnum_BP"); }
+
+	FString GetRifle() const { return TEXT("/Game/ROTD/Blueprint/Weapons/AK_BP"); }
+
 };
 

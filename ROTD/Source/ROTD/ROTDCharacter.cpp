@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "WeaponBase.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -146,4 +147,47 @@ bool AROTDCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInpu
 	}
 	
 	return false;
+}
+
+void AROTDCharacter::SwitchWeapons(int32 Type)
+{
+	switch (Type)
+	{
+	case 0:
+		// ¿ÕÊÖ
+		
+
+		break;
+	case 1:
+		// Ø°Ê×
+		{
+			FString KnifeStr = GetKnife();
+			UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
+
+			UWorld* const World = GetWorld();
+			FVector Localtion = FVector(0.f, 0.f, 0.f);
+			FRotator Rotator = FRotator(0.f);
+
+			if (WeaponKnifeClass != nullptr)
+			{
+				if (World != nullptr)
+				{
+					AWeaponBase* WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
+					WeaponKnife->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
+				}
+			}
+		}
+		break;
+	case 2:
+		// ÊÖÇ¹
+		break;
+	case 3:
+		// ³å·æÇ¹
+		break;
+	case 4:
+		// ¾Ñ»÷Ç¹
+		break;
+	default:
+		break;
+	}
 }
