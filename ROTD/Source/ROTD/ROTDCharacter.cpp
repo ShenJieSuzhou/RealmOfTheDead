@@ -180,6 +180,23 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 		break;
 	case 2:
 		//  ÷«π
+	{
+		FString PistoStr = GetPisto();
+		UClass* WeaponPistoClass = LoadClass<AWeaponBase>(nullptr, *PistoStr);
+
+		UWorld* const World = GetWorld();
+		FVector Localtion = FVector(0.f, 0.f, 0.f);
+		FRotator Rotator = FRotator(0.f);
+
+		if (WeaponPistoClass != nullptr)
+		{
+			if (World != nullptr)
+			{
+				AWeaponBase* WeaponPisto = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponPistoClass, Localtion, Rotator));
+				WeaponPisto->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
+			}
+		}
+	}
 		break;
 	case 3:
 		// ≥Â∑Ê«π

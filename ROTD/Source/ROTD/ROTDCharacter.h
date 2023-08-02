@@ -103,11 +103,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);
 
-	FString GetKnife() const { return TEXT("/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP"); }
+	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 
-	FString GetPisto() const { return TEXT("/Game/ROTD/Blueprint/Weapons/Magnum_BP"); }
+	FString GetPisto() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Magnum_BP.Magnum_BP_C'"); }
 
-	FString GetRifle() const { return TEXT("/Game/ROTD/Blueprint/Weapons/AK_BP"); }
+	FString GetRifle() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/AK_BP.AK_BP_C'"); }
 
 };
 
