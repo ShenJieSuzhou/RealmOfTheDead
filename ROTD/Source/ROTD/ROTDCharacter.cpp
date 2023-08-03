@@ -200,6 +200,23 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 		break;
 	case 3:
 		// ³å·æÇ¹
+	{
+		FString RifleStr = GetRifle();
+		UClass* WeaponRifleClass = LoadClass<AWeaponBase>(nullptr, *RifleStr);
+
+		UWorld* const World = GetWorld();
+		FVector Localtion = FVector(0.f, 0.f, 0.f);
+		FRotator Rotator = FRotator(0.f);
+
+		if (WeaponRifleClass != nullptr)
+		{
+			if (World != nullptr)
+			{
+				AWeaponBase* WeaponAK = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponRifleClass, Localtion, Rotator));
+				WeaponAK->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+			}
+		}
+	}
 		break;
 	case 4:
 		// ¾Ñ»÷Ç¹
