@@ -69,6 +69,9 @@ public:
 	UAnimMontage* FireAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UAnimMontage* ReloadAnimation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FString GunName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
