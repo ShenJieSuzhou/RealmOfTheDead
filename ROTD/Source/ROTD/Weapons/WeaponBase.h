@@ -17,11 +17,11 @@ class USoundBase;
 
 UENUM()
 enum class EWeapon : uint8
-{	
-	EW_None,
+{
 	EW_Knife,
 	EW_Pisto,
-	EW_Rifle
+	EW_Rifle,
+	EW_Snipe
 };
 
 UCLASS()

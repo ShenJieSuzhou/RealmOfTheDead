@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeaponBase.h"
 #include "ROTDCharacter.generated.h"
 
 class UInputComponent;
@@ -16,6 +17,7 @@ class USoundBase;
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseItem);
+
 
 UCLASS(config=Game)
 class AROTDCharacter : public ACharacter
@@ -44,6 +46,22 @@ public:
 	/** Delegate to whom anyone can subscribe to receive this event */
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnUseItem OnUseItem;
+
+	// Current Weapons
+	AWeaponBase* CurrentWeapon;
+
+	// Knife
+	AWeaponBase* WeaponKnife;
+	// Pisto 
+	AWeaponBase* WeaponPisto;
+	// Rifle
+	AWeaponBase* WeaponRifle;
+	// Snipe
+	AWeaponBase* WeaponSnipe;
+
+	// ÎäÆ÷±³°ü
+	TMap<EWeapon, int32> WeaponMap;
+
 protected:
 	
 	/** Fires a projectile. */
@@ -103,11 +121,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);
 
+	// Reload µ¯Ò©
+	UFUNCTION(BlueprintCallable)
+	void Reload();
+
 	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 
 	FString GetPisto() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Magnum_BP.Magnum_BP_C'"); }
 
 	FString GetRifle() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/AK_BP.AK_BP_C'"); }
+
+	void TestInitWeaponData();
 
 };
 

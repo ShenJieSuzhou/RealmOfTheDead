@@ -6,7 +6,6 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
-#include "WeaponBase.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -43,6 +42,8 @@ void AROTDCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	// Just for Test
+	this->TestInitWeaponData();
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -155,73 +156,165 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	{
 	case 0:
 		// ¿ÕÊÖ
-		
-
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
 		break;
 	case 1:
 		// Ø°Ê×
 		{
-			FString KnifeStr = GetKnife();
-			UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
+			//if(WeaponMap.Find(EWeapon::EW_Knife) == 0)
+			//{
+			//	return;
+			//}
 
-			UWorld* const World = GetWorld();
-			FVector Localtion = FVector(0.f, 0.f, 0.f);
-			FRotator Rotator = FRotator(0.f);
-
-			if (WeaponKnifeClass != nullptr)
-			{
-				if (World != nullptr)
-				{
-					AWeaponBase* WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
-					WeaponKnife->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
-				}
+			if(CurrentWeapon){
+				CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 			}
+
+			CurrentWeapon = WeaponKnife;
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
 		}
 		break;
 	case 2:
 		// ÊÖÇ¹
 	{
-		FString PistoStr = GetPisto();
-		UClass* WeaponPistoClass = LoadClass<AWeaponBase>(nullptr, *PistoStr);
+		//if (WeaponMap.Find(EWeapon::EW_Pisto) == 0)
+		//{
+		//	return;
+		//}
 
-		UWorld* const World = GetWorld();
-		FVector Localtion = FVector(0.f, 0.f, 0.f);
-		FRotator Rotator = FRotator(0.f);
-
-		if (WeaponPistoClass != nullptr)
-		{
-			if (World != nullptr)
-			{
-				AWeaponBase* WeaponPisto = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponPistoClass, Localtion, Rotator));
-				WeaponPisto->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
-			}
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
+
+		CurrentWeapon = WeaponPisto;
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
 	}
 		break;
 	case 3:
 		// ³å·æÇ¹
-	{
-		FString RifleStr = GetRifle();
-		UClass* WeaponRifleClass = LoadClass<AWeaponBase>(nullptr, *RifleStr);
+	{	
+		//if (WeaponMap.Find(EWeapon::EW_Rifle) == 0)
+		//{
+		//	return;
+		//}
 
-		UWorld* const World = GetWorld();
-		FVector Localtion = FVector(0.f, 0.f, 0.f);
-		FRotator Rotator = FRotator(0.f);
-
-		if (WeaponRifleClass != nullptr)
-		{
-			if (World != nullptr)
-			{
-				AWeaponBase* WeaponAK = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponRifleClass, Localtion, Rotator));
-				WeaponAK->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
-			}
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
+
+		CurrentWeapon = WeaponRifle;
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
 	}
 		break;
 	case 4:
 		// ¾Ñ»÷Ç¹
+		//if (WeaponMap.Find(EWeapon::EW_Snipe) == 0)
+		//{
+		//	return;
+		//}
+
 		break;
 	default:
 		break;
 	}
+}
+
+
+void AROTDCharacter::Reload()
+{
+	switch (CurrentWeapon->WeaponType)
+	{
+	case EWeapon::EW_Knife:
+		break;
+	case EWeapon::EW_Pisto:
+	{
+		if(CurrentWeapon->GunName == "Magnum")
+		{
+			// Play Reload montage
+
+			// Load static asset
+			// AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'
+			FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
+			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *MagnumReloadMontage));
+			if (assetMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(assetMontage, 1.f);
+				}
+			}
+		}
+
+		break;
+	}
+	case EWeapon::EW_Rifle:
+	{
+		if (CurrentWeapon->GunName == "AK47")
+		{
+
+		}
+		break;
+	}
+	case EWeapon::EW_Snipe:
+	{
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void AROTDCharacter::TestInitWeaponData()
+{
+	UWorld* const World = GetWorld();
+	FVector Localtion = FVector(0.f, 0.f, 0.f);
+	FRotator Rotator = FRotator(0.f);
+
+	// knife
+	FString KnifeStr = GetKnife();
+	UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
+
+	if (WeaponKnifeClass != nullptr)
+	{
+		if (World != nullptr)
+		{
+			WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
+		}
+	}
+	
+	// Pisto
+	FString PistoStr = GetPisto();
+	UClass* WeaponPistoClass = LoadClass<AWeaponBase>(nullptr, *PistoStr);
+
+	if (WeaponPistoClass != nullptr)
+	{
+		if (World != nullptr)
+		{
+			WeaponPisto = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponPistoClass, Localtion, Rotator));
+			//WeaponPisto->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
+		}
+	}
+
+	// Rifle
+	FString RifleStr = GetRifle();
+	UClass* WeaponRifleClass = LoadClass<AWeaponBase>(nullptr, *RifleStr);
+
+	if (WeaponRifleClass != nullptr)
+	{
+		if (World != nullptr)
+		{
+			WeaponRifle = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponRifleClass, Localtion, Rotator));
+			//WeaponAK->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+			//WeaponAK->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+	}
+
+	WeaponMap.Add(EWeapon::EW_Knife, 1);
+	WeaponMap.Add(EWeapon::EW_Pisto, 1);
+	WeaponMap.Add(EWeapon::EW_Rifle, 1);
+	WeaponMap.Add(EWeapon::EW_Snipe, 0);
 }
