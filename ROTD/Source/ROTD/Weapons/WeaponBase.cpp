@@ -29,6 +29,10 @@ AWeaponBase::AWeaponBase()
 	FP_FlashPlane = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GunFlash"));
 	FP_FlashPlane->SetVisibility(false);
 	FP_FlashPlane->SetupAttachment(FP_Gun);
+
+	FP_MuzzleFlash = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("MuzzleFlash"));
+	FP_MuzzleFlash->SetVisibility(false);
+	FP_MuzzleFlash->SetupAttachment(FP_Gun);
 }
 
 // Called when the game starts or when spawned

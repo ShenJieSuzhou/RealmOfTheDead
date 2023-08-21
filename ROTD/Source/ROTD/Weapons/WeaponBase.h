@@ -8,6 +8,7 @@
 #include "Sound/SoundBase.h"
 #include "Components/PointLightComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "WeaponBase.generated.h"
 
 class USkeletalMeshComponent;
@@ -43,6 +44,9 @@ public:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	UStaticMeshComponent* FP_FlashPlane;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	UParticleSystemComponent* FP_MuzzleFlash;
 
 	// Projectile class to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)

@@ -125,6 +125,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Reload();
 
+	// Fire
+	UFUNCTION(BlueprintCallable)
+	void OnFire();
+
 	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 
 	FString GetPisto() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Magnum_BP.Magnum_BP_C'"); }

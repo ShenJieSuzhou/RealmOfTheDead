@@ -234,14 +234,12 @@ void AROTDCharacter::Reload()
 		{
 			// Play Reload montage
 			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
-			if(ReloadM != nullptr)
+			if (ReloadM != nullptr)
 			{
 				CurrentWeapon->FP_Gun->PlayAnimation(ReloadM, false);
 			}
 
-
 			// Load static asset
-			// AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'
 			FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
 			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *MagnumReloadMontage));
 			if (assetMontage != nullptr)
@@ -253,6 +251,10 @@ void AROTDCharacter::Reload()
 					AnimInstance->Montage_Play(assetMontage, 1.f);
 				}
 			}
+		} 
+		else if(CurrentWeapon->GunName == "Glock")
+		{
+
 		}
 
 		break;
@@ -272,6 +274,18 @@ void AROTDCharacter::Reload()
 	default:
 		break;
 	}
+}
+
+
+void AROTDCharacter::OnFire()
+{
+	
+
+
+
+
+
+
 }
 
 void AROTDCharacter::TestInitWeaponData()
