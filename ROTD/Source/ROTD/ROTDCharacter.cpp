@@ -233,6 +233,12 @@ void AROTDCharacter::Reload()
 		if(CurrentWeapon->GunName == "Magnum")
 		{
 			// Play Reload montage
+			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
+			if(ReloadM != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(ReloadM, false);
+			}
+
 
 			// Load static asset
 			// AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'
