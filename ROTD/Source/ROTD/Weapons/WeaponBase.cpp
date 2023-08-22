@@ -30,9 +30,10 @@ AWeaponBase::AWeaponBase()
 	FP_FlashPlane->SetVisibility(false);
 	FP_FlashPlane->SetupAttachment(FP_Gun);
 
-	FP_MuzzleFlash = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("MuzzleFlash"));
-	FP_MuzzleFlash->SetVisibility(false);
-	FP_MuzzleFlash->SetupAttachment(FP_Gun);
+	FP_Muzzle = CreateDefaultSubobject<UNiagaraComponent>(TEXT("MuzzleFlash"));
+	FP_Muzzle->SetVisibility(false);
+	FP_Muzzle->AttachToComponent(FP_Gun, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Fire_FX_Slot"));
+	//FP_Muzzle->SetupAttachment(FP_Gun);
 }
 
 // Called when the game starts or when spawned

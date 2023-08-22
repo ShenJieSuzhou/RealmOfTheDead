@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -279,13 +280,106 @@ void AROTDCharacter::Reload()
 
 void AROTDCharacter::OnFire()
 {
+	if(!CurrentWeapon)
+	{
+		return;
+	}
+
+	switch (CurrentWeapon->WeaponType)
+	{
+	case EWeapon::EW_Knife:
+	{
+		// Play Knife Attack Animation
+		break;
+	}
+	case EWeapon::EW_Pisto:
+	{
+		if (CurrentWeapon->GunName == "Magnum")
+		{
+			// Muzzle Flash
+			this->MuzzleFlash();
+
+			// Play gun fire montage
+			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+			if (GunFireMontage != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+			}
+
+			// Play Arm fire montage
+			FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
+			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+			if (ArmFireMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+				}
+			}
+		}
+		else if (CurrentWeapon->GunName == "Glock")
+		{
+
+		}
+
+		break;
+	}
+	case EWeapon::EW_Rifle:
+	{
+		if (CurrentWeapon->GunName == "AK47")
+		{
+
+		}
+		break;
+	}
+	case EWeapon::EW_Snipe:
+	{
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void AROTDCharacter::MuzzleFlash()
+{
+	if (!CurrentWeapon)
+	{
+		return;
+	}
+
+	CurrentWeapon->FP_PointLight->SetIntensity(10000.0f);
+	CurrentWeapon->FP_Muzzle->SetActive(true);
+
+	// Delay 0.1
+	FLatentActionInfo LatentInfo;
+	LatentInfo.Linkage = 0;
+	LatentInfo.CallbackTarget = this;
+	LatentInfo.ExecutionFunction = "DelayAndDisplayMuzzle";
+	LatentInfo.UUID = __LINE__;//ÐÐºÅÎªID
+	UKismetSystemLibrary::Delay(this, 0.1f, LatentInfo);
+}
+
+
+void AROTDCharacter::DelayAndDisplayMuzzle()
+{
+	if (!CurrentWeapon)
+	{
+		return;
+	}
+	CurrentWeapon->FP_Muzzle->SetActive(false);
+	CurrentWeapon->FP_PointLight->SetIntensity(0);
+}
+
+void AROTDCharacter::DelayAndDisplayLight()
+{
+	if (!CurrentWeapon)
+	{
+		return;
+	}
 	
-
-
-
-
-
-
 }
 
 void AROTDCharacter::TestInitWeaponData()

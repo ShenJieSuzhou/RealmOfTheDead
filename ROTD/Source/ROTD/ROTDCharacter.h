@@ -117,6 +117,14 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+	void MuzzleFlash();
+
+	UFUNCTION()
+	void DelayAndDisplayMuzzle();
+
+	UFUNCTION()
+	void DelayAndDisplayLight();
+
 	// ÇÐ»»ÎäÆ÷
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);

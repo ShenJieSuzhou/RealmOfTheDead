@@ -9,6 +9,7 @@
 #include "Components/PointLightComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "NiagaraComponent.h"
 #include "WeaponBase.generated.h"
 
 class USkeletalMeshComponent;
@@ -46,7 +47,7 @@ public:
 	UStaticMeshComponent* FP_FlashPlane;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	UParticleSystemComponent* FP_MuzzleFlash;
+	UNiagaraComponent* FP_Muzzle;
 
 	// Projectile class to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
