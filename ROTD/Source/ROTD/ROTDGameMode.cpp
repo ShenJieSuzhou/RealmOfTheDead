@@ -2,6 +2,7 @@
 
 #include "ROTDGameMode.h"
 #include "ROTDCharacter.h"
+#include "ShootingHUD.h"
 #include "UObject/ConstructorHelpers.h"
 
 AROTDGameMode::AROTDGameMode()
@@ -13,4 +14,6 @@ AROTDGameMode::AROTDGameMode()
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/ROTD/Blueprint/Henry_BP"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 
+	// use our custom HUD class
+	HUDClass = AShootingHUD::StaticClass();
 }
