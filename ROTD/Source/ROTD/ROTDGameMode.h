@@ -13,6 +13,11 @@ class AROTDGameMode : public AGameModeBase
 
 public:
 	AROTDGameMode();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+
+	UFUNCTION()
+	void OnMaterialLoaded(bool result);
 };
 
 

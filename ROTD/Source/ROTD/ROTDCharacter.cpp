@@ -7,6 +7,10 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Util/ShootingUtil.h"
+#include "CusActor/BulletHole.h"
+#include "CusActor/BulletImpactEffect.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -45,6 +49,10 @@ void AROTDCharacter::BeginPlay()
 
 	// Just for Test
 	this->TestInitWeaponData();
+
+	//Blueprint
+	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
+	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -299,6 +307,9 @@ void AROTDCharacter::OnFire()
 			// Muzzle Flash
 			this->MuzzleFlash();
 
+			// GunFire
+			this->OnGunFire();
+
 			// Play gun fire montage
 			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
 			if (GunFireMontage != nullptr)
@@ -373,15 +384,6 @@ void AROTDCharacter::DelayAndDisplayMuzzle()
 	CurrentWeapon->FP_PointLight->SetIntensity(0);
 }
 
-void AROTDCharacter::DelayAndDisplayLight()
-{
-	if (!CurrentWeapon)
-	{
-		return;
-	}
-	
-}
-
 void AROTDCharacter::TestInitWeaponData()
 {
 	UWorld* const World = GetWorld();
@@ -431,4 +433,57 @@ void AROTDCharacter::TestInitWeaponData()
 	WeaponMap.Add(EWeapon::EW_Pisto, 1);
 	WeaponMap.Add(EWeapon::EW_Rifle, 1);
 	WeaponMap.Add(EWeapon::EW_Snipe, 0);
+}
+
+void AROTDCharacter::OnGunFire()
+{
+	// Camera Shot
+	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
+	FVector TraceStart = FirstCamera->GetComponentLocation();
+
+	// 子弹精度
+	float BulletSpread = 120.f;
+	float calu = BulletSpread * -1;
+	float x = FMath::RandRange(calu, BulletSpread);
+	float y = FMath::RandRange(calu, BulletSpread);
+	float z = FMath::RandRange(calu, BulletSpread);
+
+	FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
+
+	FHitResult Hit;
+	FCollisionQueryParams queryParam;
+	queryParam.bReturnPhysicalMaterial = true;
+	queryParam.AddIgnoredActor(this);
+	bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
+
+	if (isHit)
+	{
+		// 判断击中的是什么物体，然后生成不同的效果
+		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(SurfaceType_Default);
+		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType_Default);
+		UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType_Default);
+
+		UWorld* const World = GetWorld();
+
+		if (BulletDecalClass != nullptr && BulletImpactClass != nullptr)
+		{
+			if (World != nullptr)
+			{
+				//ApplyDamageTo(Hit);
+
+				FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
+				if (BulletHole)
+				{
+					ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+					BulletDecal->SetBulletHoleMaterial(BulletHole);
+				}
+
+				if (ImpactParticle)
+				{
+					ABulletImpactEffect* BulletImpact = World->SpawnActor<ABulletImpactEffect>(BulletImpactClass, Hit.Location, Rotator1);
+					BulletImpact->SetNiagaraSysAsset(ImpactParticle);
+				}
+			}
+		}
+	}
 }

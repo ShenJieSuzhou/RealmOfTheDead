@@ -3,6 +3,7 @@
 #include "ROTDGameMode.h"
 #include "ROTDCharacter.h"
 #include "ShootingHUD.h"
+#include "Util/ShootingMaterialUtil.h"
 #include "UObject/ConstructorHelpers.h"
 
 AROTDGameMode::AROTDGameMode()
@@ -16,4 +17,24 @@ AROTDGameMode::AROTDGameMode()
 
 	// use our custom HUD class
 	HUDClass = AShootingHUD::StaticClass();
+}
+
+void AROTDGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+	
+	FShootingMaterialUtil::GetInstance()->GetResLoadDelegate().BindUObject(this, &AROTDGameMode::OnMaterialLoaded);
+	FShootingMaterialUtil::GetInstance()->PreloadMaterials();
+}
+
+void AROTDGameMode::OnMaterialLoaded(bool result)
+{
+	if (result)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("OnMaterialLoaded Success!"));
+	}
+	else
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("OnMaterialLoaded Failed!"));
+	}
 }

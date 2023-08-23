@@ -97,6 +97,10 @@ protected:
 	void EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 	void TouchUpdate(const ETouchIndex::Type FingerIndex, const FVector Location);
 	TouchData	TouchItem;
+
+	UClass* BulletDecalClass;
+
+	UClass* BulletImpactClass;
 	
 protected:
 	// APawn interface
@@ -122,9 +126,6 @@ public:
 	UFUNCTION()
 	void DelayAndDisplayMuzzle();
 
-	UFUNCTION()
-	void DelayAndDisplayLight();
-
 	// ÇÐ»»ÎäÆ÷
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);
@@ -136,6 +137,8 @@ public:
 	// Fire
 	UFUNCTION(BlueprintCallable)
 	void OnFire();
+
+	void OnGunFire();
 
 	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 
