@@ -272,7 +272,25 @@ void AROTDCharacter::Reload()
 	{
 		if (CurrentWeapon->GunName == "AK47")
 		{
+			// Play Reload montage
+			UAnimMontage* ReloadAK = CurrentWeapon->ReloadAnimation;
+			if (ReloadAK != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(ReloadAK, false);
+			}
 
+			// Load static asset
+			FString AKReloadMontage = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Reload_Montage.ANIM_ArK-47_Reload_Montage'"));
+			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *AKReloadMontage));
+			if (assetMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(assetMontage, 1.f);
+				}
+			}
 		}
 		break;
 	}
@@ -341,7 +359,32 @@ void AROTDCharacter::OnFire()
 	{
 		if (CurrentWeapon->GunName == "AK47")
 		{
+			// Muzzle Flash
+			this->MuzzleFlash();
 
+			// GunFire
+			this->OnGunFire();
+
+			// Play gun fire montage
+			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+			if (GunFireMontage != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+			}
+
+			// Play Arm fire montage
+			// AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'
+			FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+			if (ArmFireMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+				}
+			}
 		}
 		break;
 	}
