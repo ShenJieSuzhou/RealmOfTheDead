@@ -316,6 +316,22 @@ void AROTDCharacter::OnFire()
 	case EWeapon::EW_Knife:
 	{
 		// Play Knife Attack Animation
+		if (CurrentWeapon->GunName == "NepaleseArmyKnife")
+		{
+			// Play Arm fire montage
+			FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
+			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+			if (ArmFireMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+				}
+			}
+		}
+
 		break;
 	}
 	case EWeapon::EW_Pisto:
