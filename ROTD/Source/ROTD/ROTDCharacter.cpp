@@ -370,18 +370,38 @@ void AROTDCharacter::OnFire()
 				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
 			}
 
-			// Play Arm fire montage
-			FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
-			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-			if (ArmFireMontage != nullptr)
+			// 
+			if(IsAiming)
 			{
-				// Get the animation object for the arms mesh
-				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-				if (AnimInstance != nullptr)
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
 				{
-					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
 				}
 			}
+			else
+			{
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
+				{
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
+				}
+			}
+			
 		}
 		else if (CurrentWeapon->GunName == "Glock")
 		{
@@ -407,17 +427,34 @@ void AROTDCharacter::OnFire()
 				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
 			}
 
-			// Play Arm fire montage
-			// AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'
-			FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
-			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-			if (ArmFireMontage != nullptr)
+			if (IsAiming)
 			{
-				// Get the animation object for the arms mesh
-				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-				if (AnimInstance != nullptr)
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
 				{
-					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
+				}
+			}
+			else
+			{
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
+				{
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
 				}
 			}
 		}
