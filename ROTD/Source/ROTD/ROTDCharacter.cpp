@@ -8,6 +8,7 @@
 #include "Components/InputComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "Util/ShootingUtil.h"
 #include "CusActor/BulletHole.h"
 #include "CusActor/BulletImpactEffect.h"
@@ -47,12 +48,26 @@ void AROTDCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	// Hands
+	EmptyHands = NULL;
+	// Knife
+	WeaponKnife = NULL;
+	// Pisto 
+	WeaponPisto = NULL;
+	// Rifle
+	WeaponRifle = NULL;
+	// Snipe
+	WeaponSnipe = NULL;
+
 	// Just for Test
 	this->TestInitWeaponData();
 
 	//Blueprint
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
 	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
+
+	IsAiming = false;
+	hud = Cast<AShootingHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -168,6 +183,7 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 		if (CurrentWeapon) {
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
+		CurrentWeapon = EmptyHands;
 		break;
 	case 1:
 		// Ø°Ê×
@@ -235,6 +251,8 @@ void AROTDCharacter::Reload()
 {
 	switch (CurrentWeapon->WeaponType)
 	{
+	case EWeapon::EW_Hands:
+		break;
 	case EWeapon::EW_Knife:
 		break;
 	case EWeapon::EW_Pisto:
@@ -313,6 +331,8 @@ void AROTDCharacter::OnFire()
 
 	switch (CurrentWeapon->WeaponType)
 	{
+	case EWeapon::EW_Hands:
+		break;
 	case EWeapon::EW_Knife:
 	{
 		// Play Knife Attack Animation
@@ -331,7 +351,6 @@ void AROTDCharacter::OnFire()
 				}
 			}
 		}
-
 		break;
 	}
 	case EWeapon::EW_Pisto:
@@ -413,6 +432,63 @@ void AROTDCharacter::OnFire()
 	}
 }
 
+void AROTDCharacter::OnAimDownSight()
+{
+	if(CurrentWeapon == nullptr)
+	{
+		return;
+	}
+
+	if (CurrentWeapon->WeaponType == EWeapon::EW_Knife || CurrentWeapon->WeaponType == EWeapon::EW_Hands)
+	{
+		return;
+	}
+
+	IsAiming = true;
+	hud->SetCrossWidgetVisible(false);
+
+	//if (CurWeaponType == EWeapon::EW_AWP)
+	//{
+	//	CurrentWeapon->SetHidden(true);
+	//}
+}
+
+void AROTDCharacter::OnRecoverAimDownSight()
+{
+	if (CurrentWeapon == nullptr)
+	{
+		return;
+	}
+
+	if (CurrentWeapon->WeaponType == EWeapon::EW_Knife || CurrentWeapon->WeaponType == EWeapon::EW_Hands)
+	{
+		return;
+	}
+
+	IsAiming = false;
+	hud->SetCrossWidgetVisible(true);
+
+	//if (CurWeaponType == EWeapon::EW_AWP)
+	//{
+	//	CurrentWeapon->SetHidden(false);
+	//}
+}
+
+void AROTDCharacter::DropMagazine()
+{
+
+}
+
+void AROTDCharacter::InsertMagazine()
+{
+
+}
+
+void AROTDCharacter::ReloadMagazine()
+{
+
+}
+
 void AROTDCharacter::MuzzleFlash()
 {
 	if (!CurrentWeapon)
@@ -449,6 +525,18 @@ void AROTDCharacter::TestInitWeaponData()
 	FVector Localtion = FVector(0.f, 0.f, 0.f);
 	FRotator Rotator = FRotator(0.f);
 
+	// Empty
+	FString HandsStr = GetEmptyHands();
+	UClass* EmptyHandsClass = LoadClass<AWeaponBase>(nullptr, *HandsStr);
+
+	if (EmptyHandsClass != nullptr)
+	{
+		if (World != nullptr)
+		{
+			EmptyHands = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(EmptyHandsClass, Localtion, Rotator));
+		}
+	}
+
 	// knife
 	FString KnifeStr = GetKnife();
 	UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
@@ -470,7 +558,6 @@ void AROTDCharacter::TestInitWeaponData()
 		if (World != nullptr)
 		{
 			WeaponPisto = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponPistoClass, Localtion, Rotator));
-			//WeaponPisto->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
 		}
 	}
 
@@ -483,11 +570,10 @@ void AROTDCharacter::TestInitWeaponData()
 		if (World != nullptr)
 		{
 			WeaponRifle = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponRifleClass, Localtion, Rotator));
-			//WeaponAK->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
-			//WeaponAK->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
 	}
 
+	WeaponMap.Add(EWeapon::EW_Hands, 1);
 	WeaponMap.Add(EWeapon::EW_Knife, 1);
 	WeaponMap.Add(EWeapon::EW_Pisto, 1);
 	WeaponMap.Add(EWeapon::EW_Rifle, 1);

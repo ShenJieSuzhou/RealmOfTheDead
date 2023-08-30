@@ -20,6 +20,7 @@ class USoundBase;
 UENUM()
 enum class EWeapon : uint8
 {
+	EW_Hands,
 	EW_Knife,
 	EW_Pisto,
 	EW_Rifle,

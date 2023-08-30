@@ -34,3 +34,15 @@ void AShootingHUD::BeginPlay()
 	CrossWidget->AddToViewport();
 }
 
+void AShootingHUD::SetCrossWidgetVisible(bool isVisible)
+{
+	if (isVisible)
+	{
+		CrossWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		CrossWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "WeaponBase.h"
+#include "ShootingHUD.h"
 #include "ROTDCharacter.generated.h"
 
 class UInputComponent;
@@ -47,9 +48,14 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnUseItem OnUseItem;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsAiming;
+
 	// Current Weapons
 	AWeaponBase* CurrentWeapon;
 
+	// Hands
+	AWeaponBase* EmptyHands;
 	// Knife
 	AWeaponBase* WeaponKnife;
 	// Pisto 
@@ -61,6 +67,9 @@ public:
 
 	// ÎäÆ÷±³°ü
 	TMap<EWeapon, int32> WeaponMap;
+
+	// Ê®×ÖÃé×¼
+	AShootingHUD* hud;
 
 protected:
 	
@@ -138,7 +147,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnFire();
 
+	UFUNCTION(BlueprintCallable)
+	void OnAimDownSight();
+
+	UFUNCTION(BlueprintCallable)
+	void OnRecoverAimDownSight();
+
+	UFUNCTION(BlueprintCallable)
+	void DropMagazine();
+
+	UFUNCTION(BlueprintCallable)
+	void InsertMagazine();
+
+	UFUNCTION(BlueprintCallable)
+	void ReloadMagazine();
+
 	void OnGunFire();
+
+	FString GetEmptyHands() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Hands_BP.Hands_BP'"); }
 
 	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 

@@ -33,7 +33,6 @@ AWeaponBase::AWeaponBase()
 	FP_Muzzle = CreateDefaultSubobject<UNiagaraComponent>(TEXT("MuzzleFlash"));
 	FP_Muzzle->SetVisibility(false);
 	FP_Muzzle->AttachToComponent(FP_Gun, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Fire_FX_Slot"));
-	//FP_Muzzle->SetupAttachment(FP_Gun);
 }
 
 // Called when the game starts or when spawned
@@ -47,5 +46,4 @@ void AWeaponBase::BeginPlay()
 void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }

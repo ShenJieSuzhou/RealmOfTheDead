@@ -22,6 +22,8 @@ public:
 
 	virtual void BeginPlay() override;
 
+	void SetCrossWidgetVisible(bool isVisible);
+
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
