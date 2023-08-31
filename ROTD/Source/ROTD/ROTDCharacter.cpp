@@ -59,6 +59,21 @@ void AROTDCharacter::BeginPlay()
 	// Snipe
 	WeaponSnipe = NULL;
 
+	IsReloading = false;
+	CanFire = true;
+
+	// Reload Ammo Delay
+	ReloadAmmoLatentInfo.Linkage = 0;
+	ReloadAmmoLatentInfo.CallbackTarget = this;
+	ReloadAmmoLatentInfo.ExecutionFunction = "ReloadAmmoDelay";
+	ReloadAmmoLatentInfo.UUID = __LINE__;//行号为ID
+
+	// Fire Delay
+	GunFireLatentInfo.Linkage = 0;
+	GunFireLatentInfo.CallbackTarget = this;
+	GunFireLatentInfo.ExecutionFunction = "GunFireDelay";
+	GunFireLatentInfo.UUID = __LINE__;//行号为ID
+
 	// Just for Test
 	this->TestInitWeaponData();
 
@@ -176,6 +191,11 @@ bool AROTDCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInpu
 
 void AROTDCharacter::SwitchWeapons(int32 Type)
 {
+	if(IsReloading)
+	{
+		return;
+	}
+
 	switch (Type)
 	{
 	case 0:
@@ -249,6 +269,11 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 
 void AROTDCharacter::Reload()
 {
+	if(IsReloading)
+	{
+		return;
+	}
+
 	switch (CurrentWeapon->WeaponType)
 	{
 	case EWeapon::EW_Hands:
@@ -259,6 +284,8 @@ void AROTDCharacter::Reload()
 	{
 		if(CurrentWeapon->GunName == "Magnum")
 		{
+			IsReloading = true;
+
 			// Play Reload montage
 			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
 			if (ReloadM != nullptr)
@@ -278,6 +305,8 @@ void AROTDCharacter::Reload()
 					AnimInstance->Montage_Play(assetMontage, 1.f);
 				}
 			}
+			
+			UKismetSystemLibrary::Delay(this, 5.5f, ReloadAmmoLatentInfo);
 		} 
 		else if(CurrentWeapon->GunName == "Glock")
 		{
@@ -290,6 +319,7 @@ void AROTDCharacter::Reload()
 	{
 		if (CurrentWeapon->GunName == "AK47")
 		{
+			IsReloading = true;
 			// Play Reload montage
 			UAnimMontage* ReloadAK = CurrentWeapon->ReloadAnimation;
 			if (ReloadAK != nullptr)
@@ -309,6 +339,8 @@ void AROTDCharacter::Reload()
 					AnimInstance->Montage_Play(assetMontage, 1.f);
 				}
 			}
+
+			UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
 		}
 		break;
 	}
@@ -328,6 +360,16 @@ void AROTDCharacter::OnFire()
 	{
 		return;
 	}
+		
+	if(IsReloading)
+	{
+		return;
+	}
+
+	if(!CanFire)
+	{
+		return;
+	}
 
 	switch (CurrentWeapon->WeaponType)
 	{
@@ -335,73 +377,83 @@ void AROTDCharacter::OnFire()
 		break;
 	case EWeapon::EW_Knife:
 	{
-		// Play Knife Attack Animation
-		if (CurrentWeapon->GunName == "NepaleseArmyKnife")
+		if(CanFire)
 		{
-			// Play Arm fire montage
-			FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
-			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-			if (ArmFireMontage != nullptr)
+			CanFire = false;
+			// Play Knife Attack Animation
+			if (CurrentWeapon->GunName == "NepaleseArmyKnife")
 			{
-				// Get the animation object for the arms mesh
-				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-				if (AnimInstance != nullptr)
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
 				{
-					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
 				}
+				UKismetSystemLibrary::Delay(this, 1.6f, GunFireLatentInfo);
 			}
 		}
+		
 		break;
 	}
 	case EWeapon::EW_Pisto:
 	{
 		if (CurrentWeapon->GunName == "Magnum")
 		{
-			// Muzzle Flash
-			this->MuzzleFlash();
-
-			// GunFire
-			this->OnGunFire();
-
-			// Play gun fire montage
-			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
-			if (GunFireMontage != nullptr)
+			if (CanFire)
 			{
-				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
-			}
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
 
-			// 
-			if(IsAiming)
-			{
-				// Play Arm fire montage
-				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
-				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-				if (ArmFireMontage != nullptr)
+				// GunFire
+				this->OnGunFire();
+
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
 				{
-					// Get the animation object for the arms mesh
-					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-					if (AnimInstance != nullptr)
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
+
+				// 
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
 					{
-						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
 					}
 				}
-			}
-			else
-			{
-				// Play Arm fire montage
-				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
-				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-				if (ArmFireMontage != nullptr)
+				else
 				{
-					// Get the animation object for the arms mesh
-					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-					if (AnimInstance != nullptr)
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
 					{
-						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
 					}
 				}
+				UKismetSystemLibrary::Delay(this, 0.5f, GunFireLatentInfo);
 			}
-			
 		}
 		else if (CurrentWeapon->GunName == "Glock")
 		{
@@ -414,48 +466,53 @@ void AROTDCharacter::OnFire()
 	{
 		if (CurrentWeapon->GunName == "AK47")
 		{
-			// Muzzle Flash
-			this->MuzzleFlash();
-
-			// GunFire
-			this->OnGunFire();
-
-			// Play gun fire montage
-			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
-			if (GunFireMontage != nullptr)
+			if(CanFire)
 			{
-				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
-			}
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
 
-			if (IsAiming)
-			{
-				// Play Arm fire montage
-				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
-				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-				if (ArmFireMontage != nullptr)
+				// GunFire
+				this->OnGunFire();
+
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
 				{
-					// Get the animation object for the arms mesh
-					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-					if (AnimInstance != nullptr)
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
+
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
 					{
-						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
 					}
 				}
-			}
-			else
-			{
-				// Play Arm fire montage
-				FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
-				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-				if (ArmFireMontage != nullptr)
+				else
 				{
-					// Get the animation object for the arms mesh
-					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-					if (AnimInstance != nullptr)
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
 					{
-						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
 					}
 				}
+				UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
 			}
 		}
 		break;
@@ -554,6 +611,28 @@ void AROTDCharacter::DelayAndDisplayMuzzle()
 	}
 	CurrentWeapon->FP_Muzzle->SetActive(false);
 	CurrentWeapon->FP_PointLight->SetIntensity(0);
+}
+
+
+void AROTDCharacter::ReloadAmmoDelay()
+{
+	if (!CurrentWeapon)
+	{
+		return;
+	}
+
+	IsReloading = false;
+}
+
+
+void AROTDCharacter::GunFireDelay()
+{
+	if (!CurrentWeapon)
+	{
+		return;
+	}
+
+	CanFire = true;
 }
 
 void AROTDCharacter::TestInitWeaponData()

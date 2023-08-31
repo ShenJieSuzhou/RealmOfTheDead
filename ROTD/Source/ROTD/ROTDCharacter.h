@@ -51,6 +51,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsAiming;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsReloading;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool CanFire;
+	
+	FLatentActionInfo ReloadAmmoLatentInfo;
+
+	FLatentActionInfo GunFireLatentInfo;
+
 	// Current Weapons
 	AWeaponBase* CurrentWeapon;
 
@@ -134,6 +144,12 @@ public:
 
 	UFUNCTION()
 	void DelayAndDisplayMuzzle();
+
+	UFUNCTION()
+	void ReloadAmmoDelay();
+
+	UFUNCTION()
+	void GunFireDelay();
 
 	// ÇÐ»»ÎäÆ÷
 	UFUNCTION(BlueprintCallable)
