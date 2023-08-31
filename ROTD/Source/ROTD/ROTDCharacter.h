@@ -182,6 +182,9 @@ public:
 	void InsertMagazine();
 
 	UFUNCTION(BlueprintCallable)
+	void CloseCylinder();
+
+	UFUNCTION(BlueprintCallable)
 	void ReloadMagazine();
 
 	void OnGunFire();

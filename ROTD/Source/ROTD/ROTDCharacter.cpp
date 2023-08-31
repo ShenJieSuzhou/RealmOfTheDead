@@ -286,6 +286,8 @@ void AROTDCharacter::Reload()
 		{
 			IsReloading = true;
 
+
+
 			// Play Reload montage
 			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
 			if (ReloadM != nullptr)
@@ -587,17 +589,40 @@ void AROTDCharacter::OnRecoverAimDownSight()
 
 void AROTDCharacter::DropMagazine()
 {
-
+	if (CurrentWeapon->ReloadDropSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadDropSound, GetActorLocation());
+	}
 }
 
 void AROTDCharacter::InsertMagazine()
 {
+	if (CurrentWeapon->ReloadInsertSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadInsertSound, GetActorLocation());
+	}
+}
 
+
+void AROTDCharacter::CloseCylinder()
+{
+	if (CurrentWeapon->GunName == "Magnum")
+	{
+		FString CloseSoundPath = FString(TEXT("SoundCue'/Game/ROTD/Sounds/Gun/gun_revolver_pistol_cylinder_close_04_Cue.gun_revolver_pistol_cylinder_close_04_Cue'"));
+		USoundBase* CloseSound = Cast<USoundBase>(LoadObject<USoundBase>(nullptr, *CloseSoundPath));
+		if (CloseSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, CloseSound, GetActorLocation());
+		}
+	}
 }
 
 void AROTDCharacter::ReloadMagazine()
 {
-
+	if (CurrentWeapon->ReloadLoadSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadLoadSound, GetActorLocation());
+	}
 }
 
 void AROTDCharacter::MuzzleFlash()
@@ -715,6 +740,11 @@ void AROTDCharacter::TestInitWeaponData()
 
 void AROTDCharacter::OnGunFire()
 {
+	if (CurrentWeapon->FireSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->FireSound, GetActorLocation());
+	}
+
 	// Camera Shot
 	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
 	FVector TraceStart = FirstCamera->GetComponentLocation();
