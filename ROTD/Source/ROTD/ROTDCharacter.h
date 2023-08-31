@@ -61,6 +61,9 @@ public:
 
 	FLatentActionInfo GunFireLatentInfo;
 
+	// 连发定时器
+	FTimerHandle AutomaticHandle;
+
 	// Current Weapons
 	AWeaponBase* CurrentWeapon;
 
@@ -162,6 +165,9 @@ public:
 	// Fire
 	UFUNCTION(BlueprintCallable)
 	void OnFire();
+
+	UFUNCTION(BlueprintCallable)
+	void OnStopFire();
 
 	UFUNCTION(BlueprintCallable)
 	void OnAimDownSight();

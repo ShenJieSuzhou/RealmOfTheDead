@@ -515,6 +515,7 @@ void AROTDCharacter::OnFire()
 				UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
 			}
 		}
+		GetWorldTimerManager().SetTimer(AutomaticHandle, this, &AROTDCharacter::OnFire, 0.12f, true);
 		break;
 	}
 	case EWeapon::EW_Snipe:
@@ -524,6 +525,22 @@ void AROTDCharacter::OnFire()
 	default:
 		break;
 	}
+}
+
+
+void AROTDCharacter::OnStopFire()
+{
+	if (CurrentWeapon == nullptr)
+	{
+		return;
+	}
+
+	if(CurrentWeapon->WeaponType != EWeapon::EW_Rifle)
+	{
+		return;
+	}
+
+	GetWorldTimerManager().ClearTimer(AutomaticHandle);
 }
 
 void AROTDCharacter::OnAimDownSight()
