@@ -24,3 +24,7 @@ ROTD/Intermediate
 ROTD/Binaries/Win64/ROTDEditor.target
 ROTD/Binaries/Win64/UnrealEditor-ROTD.dll
 ROTD/Binaries/Win64/UnrealEditor-ROTD.pdb
+ROTD/Binaries/Win64/ROTDEditor.target
+ROTD/Binaries/Win64/UnrealEditor-ROTD.dll
+ROTD/Binaries/Win64/UnrealEditor-ROTD.pdb
+ROTD/Binaries/Win64/UnrealEditor.modules
