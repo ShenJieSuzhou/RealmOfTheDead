@@ -285,9 +285,6 @@ void AROTDCharacter::Reload()
 		if(CurrentWeapon->GunName == "Magnum")
 		{
 			IsReloading = true;
-
-
-
 			// Play Reload montage
 			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
 			if (ReloadM != nullptr)
@@ -768,8 +765,12 @@ void AROTDCharacter::OnGunFire()
 	{
 		// 判断击中的是什么物体，然后生成不同的效果
 		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(SurfaceType_Default);
-		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType_Default);
-		UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType_Default);
+		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType_Default);
+		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType_Default);
+
+		EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
+		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
+		UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
 
 		UWorld* const World = GetWorld();
 
