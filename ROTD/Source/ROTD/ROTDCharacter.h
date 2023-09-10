@@ -145,6 +145,8 @@ public:
 
 	void MuzzleFlash();
 
+	void ApplyDamageTo(FHitResult Hit);
+
 	UFUNCTION()
 	void DelayAndDisplayMuzzle();
 

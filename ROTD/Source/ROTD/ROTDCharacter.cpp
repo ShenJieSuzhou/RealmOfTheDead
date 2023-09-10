@@ -642,6 +642,16 @@ void AROTDCharacter::MuzzleFlash()
 }
 
 
+void AROTDCharacter::ApplyDamageTo(FHitResult Hit)
+{
+	float damage = FMath::RandRange(10.f, 25.f);
+	AActor* DamagedActor = Hit.GetActor();
+	FHitResult HitOut = Hit;
+	FVector Direction = Hit.ImpactNormal;
+	TSubclassOf<UDamageType> DamageType;
+	UGameplayStatics::ApplyPointDamage(DamagedActor, damage, Direction, HitOut, nullptr, this, DamageType);
+}
+
 void AROTDCharacter::DelayAndDisplayMuzzle()
 {
 	if (!CurrentWeapon)
@@ -778,7 +788,7 @@ void AROTDCharacter::OnGunFire()
 		{
 			if (World != nullptr)
 			{
-				//ApplyDamageTo(Hit);
+				ApplyDamageTo(Hit);
 
 				FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
 				if (BulletHole)
