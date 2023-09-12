@@ -9,6 +9,7 @@
 #include "Components/PointLightComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Engine/Texture2D.h"
 #include "NiagaraComponent.h"
 #include "WeaponBase.generated.h"
 
@@ -87,6 +88,9 @@ public:
 	float BulletSpread;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int MagazineBullets;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	int MaxAmmoCount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -97,6 +101,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	bool CanAutomatic;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	class UTexture2D* GunIcon;
 
 public:	
 	// Sets default values for this actor's properties

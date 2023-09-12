@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "CrossMarkWidget.h"
+#include "Weapons/WeaponBase.h"
+#include "ROTDHealthWeaponWidget.h"
 #include "ShootingHUD.generated.h"
 
 UCLASS()
@@ -14,6 +16,8 @@ class AShootingHUD : public AHUD
 	~AShootingHUD();
 public:
 	UCrossMarkWidget* CrossWidget;
+	UROTDHealthWeaponWidget* HealthWeaponWidget;
+
 public:
 	AShootingHUD();
 
@@ -23,6 +27,10 @@ public:
 	virtual void BeginPlay() override;
 
 	void SetCrossWidgetVisible(bool isVisible);
+
+	void UpdateAmmo(int currBullets, int TotalBullets);
+
+	void SwitchWeapon(AWeaponBase* weapon);
 
 private:
 	/** Crosshair asset pointer */
