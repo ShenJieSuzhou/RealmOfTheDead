@@ -7,7 +7,7 @@
 
 void FShootingMaterialUtil::PreloadMaterials()
 {	
-	// 同步加载资源
+	// 同锟斤拷锟斤拷锟斤拷锟斤拷源
 	TArray<FSoftObjectPath> CommonMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType_Default);
 	if(!RequestSyncLoad(CommonMaterial, BulletsCommon))
 	{

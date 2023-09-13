@@ -88,6 +88,9 @@ public:
 	float BulletSpread;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int MagazineVolum;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	int MagazineBullets;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)

@@ -14,13 +14,13 @@ public:
 		return &sFShootConfigs;
 	}
 
-	// 根据材质获取对应弹孔贴图
+	// 锟斤拷锟捷诧拷锟绞伙拷取锟斤拷应锟斤拷锟斤拷锟斤拷图
 	TArray<FSoftObjectPath> GetBulletDecalWithType(EPhysicalSurface type);
 
-	// 根据材质获取对应粒子
+	// 锟斤拷锟捷诧拷锟绞伙拷取锟斤拷应锟斤拷锟斤拷
 	FString GetParticleSystemWithType(EPhysicalSurface type);
 
-	// 根据材质获取对应的蓝图路径
+	// 锟斤拷锟捷诧拷锟绞伙拷取锟斤拷应锟斤拷锟斤拷图路锟斤拷
 	FString GetBPClassPathWithType(EPhysicalSurface type);
 };
 

@@ -30,7 +30,7 @@ public:
 	UFUNCTION()
 	void OnMaterialLoaded(bool result);
 
-	// вйт╢╪стьмЙ╠о
+	// О©╫О©╫т╢О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	UFUNCTION(BlueprintImplementableEvent, Category = "Mainmenu")
 	void AssetsLoadComplete();
 };

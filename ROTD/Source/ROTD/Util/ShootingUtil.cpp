@@ -3,7 +3,7 @@
 
 #include "ShootingUtil.h"
 
-// »ñÈ¡»÷ÖÐµÄ²ÄÖÊ
+// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½
 EPhysicalSurface FShootingUtil::GetPhysicalSurfaceType(UPhysicalMaterial* material)
 {
 	if(material == NULL)
@@ -175,7 +175,7 @@ UMaterialInterface* FShootingUtil::RandomGenerateBulletHole(EPhysicalSurface typ
 	return materialIns;
 }
 
-// »ñÈ¡»÷ÖÐÁ£×ÓÐ§¹û
+// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
 UNiagaraSystem* FShootingUtil::GetImpactParticleSyatem(EPhysicalSurface type)
 {
 	UNiagaraSystem* Niagara = NULL;

@@ -8,7 +8,7 @@ void UROTDHealthWeaponWidget::UpdateAmmo(int currBullets, int TotalBullets)
 	FString sCurrent = FString::FromInt(currBullets);
 	CurBulletsNum->SetText(FText::FromString(sCurrent));
 
-	// хГ╧Шп║сз10©её╛отй╬╨Ли╚
+	// О©╫О©╫О©╫п║О©╫О©╫10О©╫еёО©╫О©╫О©╫й╬О©╫О©╫и╚
 	if(currBullets < 5)
 	{
 		FSlateColor newColor = FSlateColor(FLinearColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f));

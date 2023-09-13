@@ -29,7 +29,7 @@ void AGameEntryModeBase::OnMaterialLoaded(bool result)
 {
 	if (result)
 	{
-		// Òþ²Ø Loading ²¢¿ªÆô StartGame °´Å¥
+		// ï¿½ï¿½ï¿½ï¿½ Loading ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ StartGame ï¿½ï¿½Å¥
 		AssetsLoadComplete();
 	}
 	else

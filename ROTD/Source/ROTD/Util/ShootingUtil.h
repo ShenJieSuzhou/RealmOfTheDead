@@ -18,12 +18,12 @@ public:
 		return &sFShootingUtil;
 	}
 
-	// »ñÈ¡»÷ÖÐµÄ²ÄÖÊ
+	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½
 	EPhysicalSurface GetPhysicalSurfaceType(UPhysicalMaterial* material);
 
-	// ¸ù¾Ý²ÄÖÊËæ»úÉú³Éµ¯¿×
+	// ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½
 	UMaterialInterface* RandomGenerateBulletHole(EPhysicalSurface type);
 
-	// »ñÈ¡»÷ÖÐÁ£×ÓÐ§¹û
+	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
 	UNiagaraSystem* GetImpactParticleSyatem(EPhysicalSurface type);
 };

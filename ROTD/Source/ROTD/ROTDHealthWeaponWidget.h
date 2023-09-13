@@ -19,31 +19,31 @@ class ROTD_API UROTDHealthWeaponWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	// 角色的生命值
+	// 锟斤拷色锟斤拷锟斤拷锟斤拷值
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* HealthVolumBar;
 
-	// 当前弹夹的子弹
+	// 锟斤拷前锟斤拷锟叫碉拷锟接碉拷
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* CurBulletsNum;
 
-	// 这一类型武器的子弹总量
+	// 锟斤拷一锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟接碉拷锟斤拷锟斤拷
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* BulletsMax;
 
-	// 当前武器icon
+	// 锟斤拷前锟斤拷锟斤拷icon
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UImage* CurWeaponImg;
 
-	// 任务提示
+	// 锟斤拷锟斤拷锟斤拷示
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TaskDetailStr;
 
-	// 任务数字统计
+	// 锟斤拷锟斤拷锟斤拷锟斤拷统锟斤拷
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TaskProcess;
 
-	// 扩展显示
+	// 锟斤拷展锟斤拷示
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* ExtraStr;
 

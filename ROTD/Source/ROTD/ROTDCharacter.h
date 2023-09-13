@@ -61,7 +61,7 @@ public:
 
 	FLatentActionInfo GunFireLatentInfo;
 
-	// Á¬·¢¶¨Ê±Æ÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	FTimerHandle AutomaticHandle;
 
 	// Current Weapons
@@ -78,10 +78,10 @@ public:
 	// Snipe
 	AWeaponBase* WeaponSnipe;
 
-	// ÎäÆ÷±³°ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	TMap<EWeapon, int32> WeaponMap;
 
-	// Ê®×ÖÃé×¼
+	// Ê®ï¿½ï¿½ï¿½ï¿½×¼
 	AShootingHUD* hud;
 
 protected:
@@ -156,11 +156,11 @@ public:
 	UFUNCTION()
 	void GunFireDelay();
 
-	// ÇÐ»»ÎäÆ÷
+	// ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);
 
-	// Reload µ¯Ò©
+	// Reload ï¿½ï¿½Ò©
 	UFUNCTION(BlueprintCallable)
 	void Reload();
 

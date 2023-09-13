@@ -66,13 +66,13 @@ void AROTDCharacter::BeginPlay()
 	ReloadAmmoLatentInfo.Linkage = 0;
 	ReloadAmmoLatentInfo.CallbackTarget = this;
 	ReloadAmmoLatentInfo.ExecutionFunction = "ReloadAmmoDelay";
-	ReloadAmmoLatentInfo.UUID = __LINE__;//ÐÐºÅÎªID
+	ReloadAmmoLatentInfo.UUID = __LINE__;//ï¿½Ðºï¿½ÎªID
 
 	// Fire Delay
 	GunFireLatentInfo.Linkage = 0;
 	GunFireLatentInfo.CallbackTarget = this;
 	GunFireLatentInfo.ExecutionFunction = "GunFireDelay";
-	GunFireLatentInfo.UUID = __LINE__;//ÐÐºÅÎªID
+	GunFireLatentInfo.UUID = __LINE__;//ï¿½Ðºï¿½ÎªID
 
 	//Blueprint
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
@@ -200,14 +200,14 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	switch (Type)
 	{
 	case 0:
-		// ¿ÕÊÖ
+		// ï¿½ï¿½ï¿½ï¿½
 		if (CurrentWeapon) {
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
 		CurrentWeapon = EmptyHands;
 		break;
 	case 1:
-		// Ø°Ê×
+		// Ø°ï¿½ï¿½
 		{
 			//if(WeaponMap.Find(EWeapon::EW_Knife) == 0)
 			//{
@@ -223,7 +223,7 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 		}
 		break;
 	case 2:
-		// ÊÖÇ¹
+		// ï¿½ï¿½Ç¹
 	{
 		//if (WeaponMap.Find(EWeapon::EW_Pisto) == 0)
 		//{
@@ -239,7 +239,7 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	}
 		break;
 	case 3:
-		// ³å·æÇ¹
+		// ï¿½ï¿½ï¿½Ç¹
 	{	
 		//if (WeaponMap.Find(EWeapon::EW_Rifle) == 0)
 		//{
@@ -255,7 +255,7 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	}
 		break;
 	case 4:
-		// ¾Ñ»÷Ç¹
+		// ï¿½Ñ»ï¿½Ç¹
 		//if (WeaponMap.Find(EWeapon::EW_Snipe) == 0)
 		//{
 		//	return;
@@ -411,6 +411,15 @@ void AROTDCharacter::OnFire()
 	}
 	case EWeapon::EW_Pisto:
 	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
+
 		if (CurrentWeapon->GunName == "Magnum")
 		{
 			if (CanFire)
@@ -472,6 +481,15 @@ void AROTDCharacter::OnFire()
 	}
 	case EWeapon::EW_Rifle:
 	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
+
 		if (CurrentWeapon->GunName == "AK47")
 		{
 			if(CanFire)
@@ -528,6 +546,14 @@ void AROTDCharacter::OnFire()
 	}
 	case EWeapon::EW_Snipe:
 	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
 		break;
 	}
 	default:
@@ -646,7 +672,7 @@ void AROTDCharacter::MuzzleFlash()
 	LatentInfo.Linkage = 0;
 	LatentInfo.CallbackTarget = this;
 	LatentInfo.ExecutionFunction = "DelayAndDisplayMuzzle";
-	LatentInfo.UUID = __LINE__;//ÐÐºÅÎªID
+	LatentInfo.UUID = __LINE__;//ï¿½Ðºï¿½ÎªID
 	UKismetSystemLibrary::Delay(this, 0.1f, LatentInfo);
 }
 
@@ -765,7 +791,7 @@ void AROTDCharacter::OnGunFire()
 	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
 	FVector TraceStart = FirstCamera->GetComponentLocation();
 
-	// ×Óµ¯¾«¶È
+	// ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
 	float BulletSpread = 120.f;
 	float calu = BulletSpread * -1;
 	float x = FMath::RandRange(calu, BulletSpread);
@@ -782,7 +808,7 @@ void AROTDCharacter::OnGunFire()
 
 	if (isHit)
 	{
-		// ÅÐ¶Ï»÷ÖÐµÄÊÇÊ²Ã´ÎïÌå£¬È»ºóÉú³É²»Í¬µÄÐ§¹û
+		// ï¿½Ð¶Ï»ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½å£¬È»ï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½Í¬ï¿½ï¿½Ð§ï¿½ï¿½
 		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(SurfaceType_Default);
 		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType_Default);
 		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType_Default);
@@ -814,4 +840,7 @@ void AROTDCharacter::OnGunFire()
 			}
 		}
 	}
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }

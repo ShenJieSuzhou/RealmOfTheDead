@@ -9,7 +9,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 	case SurfaceType_Default:
 	{
-		// Í¨ÓÃ
+		// Í¨ï¿½ï¿½
 		TArray<FSoftObjectPath> StringArray;
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_1.MI_Generic_1'")));
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_2.MI_Generic_2'")));
@@ -21,7 +21,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 		break;
 	case SurfaceType1:
 	{
-		// ½ðÊô
+		// ï¿½ï¿½ï¿½ï¿½
 		TArray<FSoftObjectPath> StringArray;
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_1.MI_Metal_Solid_1'")));
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_2.MI_Metal_Solid_2'")));
@@ -53,7 +53,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 		break;
 	case SurfaceType4:
 	{
-		// É³µØ
+		// É³ï¿½ï¿½
 		TArray<FSoftObjectPath> StringArray;
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_1.MI_Sand_1'")));
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_2.MI_Sand_2'")));
@@ -77,7 +77,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 		break;
 	case SurfaceType6:
 	{
-		// ²£Á§
+		// ï¿½ï¿½ï¿½ï¿½
 		TArray<FSoftObjectPath> StringArray;
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Glass_Common_Mesh_Decals/MI_Glass_Common_1.MI_Glass_Common_1'")));
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Glass_Common_Mesh_Decals/MI_Glass_Common_2.MI_Glass_Common_2'")));
@@ -87,7 +87,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 		break;
 	case SurfaceType7:
 	{
-		// ²ÝµØ
+		// ï¿½Ýµï¿½
 		TArray<FSoftObjectPath> StringArray = {
 			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_1.MI_Ground_1'")),
 			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_2.MI_Ground_2'")),
@@ -108,7 +108,7 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_5.MI_Flesh_5'")));
 		return StringArray;
 	}
-		// Æ¤·ô
+		// Æ¤ï¿½ï¿½
 		break;
 	case SurfaceType9:
 		break;
@@ -235,7 +235,7 @@ FString FShootingConfigs::GetParticleSystemWithType(EPhysicalSurface type)
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Default.NS_Impact_Default'");
 		break;
 	case SurfaceType1:
-		// ½ðÊô
+		// ï¿½ï¿½ï¿½ï¿½
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Metal.NS_Impact_Metal'");
 		break;
 	case SurfaceType2:
@@ -247,7 +247,7 @@ FString FShootingConfigs::GetParticleSystemWithType(EPhysicalSurface type)
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Water.NS_Impact_Water'");
 		break;
 	case SurfaceType4:
-		// É³×Ó
+		// É³ï¿½ï¿½
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Sand.NS_Impact_Sand'");
 		break;
 	case SurfaceType5:
@@ -255,15 +255,15 @@ FString FShootingConfigs::GetParticleSystemWithType(EPhysicalSurface type)
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Brick.NS_Impact_Brick'");
 		break;
 	case SurfaceType6:
-		// ²£Á§
+		// ï¿½ï¿½ï¿½ï¿½
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Glass.NS_Impact_Glass'");
 		break;
 	case SurfaceType7:
-		// Ö²Îï
+		// Ö²ï¿½ï¿½
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Grass.NS_Impact_Grass'");
 		break;
 	case SurfaceType8:
-		// Æ¤·ô
+		// Æ¤ï¿½ï¿½
 		return TEXT("NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Blood.NS_Impact_Blood'");
 		break;
 	case SurfaceType9:
@@ -391,7 +391,7 @@ FString FShootingConfigs::GetBPClassPathWithType(EPhysicalSurface type)
 		return TEXT("Blueprint'/Game/ShootingPawn/Blueprints/BulletHoles/Common_BP.Common_BP_C'");
 		break;
 	case SurfaceType1:
-		// ½ðÊô
+		// ï¿½ï¿½ï¿½ï¿½
 		return TEXT("Blueprint'/Game/ShootingPawn/Blueprints/BulletHoles/Metal_BP.Metal_BP_C'");
 		break;
 	case SurfaceType2:
@@ -403,7 +403,7 @@ FString FShootingConfigs::GetBPClassPathWithType(EPhysicalSurface type)
 		return TEXT("");
 		break;
 	case SurfaceType4:
-		// É³×Ó
+		// É³ï¿½ï¿½
 		return TEXT("");
 		break;
 	case SurfaceType5:
@@ -411,15 +411,15 @@ FString FShootingConfigs::GetBPClassPathWithType(EPhysicalSurface type)
 		return TEXT("");
 		break;
 	case SurfaceType6:
-		// ²£Á§
+		// ï¿½ï¿½ï¿½ï¿½
 		return TEXT("");
 		break;
 	case SurfaceType7:
-		// Ö²Îï
+		// Ö²ï¿½ï¿½
 		return TEXT("Blueprint'/Game/ShootingPawn/Blueprints/BulletHoles/Glass_BP.Glass_BP_C'");
 		break;
 	case SurfaceType8:
-		// Æ¤·ô
+		// Æ¤ï¿½ï¿½
 		return TEXT("");
 		break;
 	case SurfaceType9:

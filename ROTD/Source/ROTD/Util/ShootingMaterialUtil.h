@@ -11,7 +11,7 @@
 #include "Math/UnrealMathUtility.h"
 
 /**
- * 资源加载回调
+ * 锟斤拷源锟斤拷锟截回碉拷
  */
 DECLARE_DELEGATE_OneParam(FMaterialLoadDelegate, bool);
 
@@ -24,7 +24,7 @@ public:
 		return &sMaterialUtil;
 	}
 
-	// 预加载材质
+	// 预锟斤拷锟截诧拷锟斤拷
 	void PreloadMaterials();
 
 	FMaterialLoadDelegate& GetResLoadDelegate();
@@ -50,13 +50,13 @@ public:
 	UObject* GetVFBlood();
 
 private:
-	// 异步加载单个资源
+	// 锟届步锟斤拷锟截碉拷锟斤拷锟斤拷源
 	void RequestAsyncLoad(FString MaterialPath);
 
-	// 同步批量加载资源
+	// 同锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷源
 	bool RequestSyncLoad(TArray<FSoftObjectPath> ResToLoad, TArray<UObject*>& Resources);
 
-	// 同步加载资源
+	// 同锟斤拷锟斤拷锟斤拷锟斤拷源
 	bool RequestSyncLoadOne(FSoftObjectPath ResToLoad, UObject*& Resource);
 
 private:
