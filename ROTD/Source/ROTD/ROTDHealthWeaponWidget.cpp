@@ -9,7 +9,7 @@ void UROTDHealthWeaponWidget::UpdateAmmo(int currBullets, int TotalBullets)
 	CurBulletsNum->SetText(FText::FromString(sCurrent));
 
 	// 如果小于10颗，显示红色
-	if(currBullets < 10)
+	if(currBullets < 5)
 	{
 		FSlateColor newColor = FSlateColor(FLinearColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f));
 		CurBulletsNum->SetColorAndOpacity(newColor);
@@ -33,5 +33,5 @@ void UROTDHealthWeaponWidget::SwitchWeapon(AWeaponBase* curWeapon)
 	}
 
 	this->DisplayWeapon = curWeapon;
-
+	CurWeaponImg->SetBrushFromTexture(curWeapon->GunIcon);
 }

@@ -191,7 +191,7 @@ public:
 
 	void OnGunFire();
 
-	FString GetEmptyHands() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Hands_BP.Hands_BP'"); }
+	FString GetEmptyHands() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Hands_BP.Hands_BP_C'"); }
 
 	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
 

@@ -74,15 +74,16 @@ void AROTDCharacter::BeginPlay()
 	GunFireLatentInfo.ExecutionFunction = "GunFireDelay";
 	GunFireLatentInfo.UUID = __LINE__;//ÐÐºÅÎªID
 
-	// Just for Test
-	this->TestInitWeaponData();
-
 	//Blueprint
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
 	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
 
 	IsAiming = false;
 	hud = Cast<AShootingHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+	// Just for Test
+	this->TestInitWeaponData();
+	SwitchWeapons(0);
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -264,6 +265,14 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	default:
 		break;
 	}
+
+	if (hud == NULL)
+	{
+		return;
+	}
+
+	hud->SwitchWeapon(CurrentWeapon);
+	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
 
