@@ -291,6 +291,11 @@ void AROTDCharacter::Reload()
 		break;
 	case EWeapon::EW_Pisto:
 	{
+		if(CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
+		
 		if(CurrentWeapon->GunName == "Magnum")
 		{
 			IsReloading = true;
@@ -321,10 +326,28 @@ void AROTDCharacter::Reload()
 
 		}
 
+		if((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+
 		break;
 	}
 	case EWeapon::EW_Rifle:
 	{
+		if (CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
+
 		if (CurrentWeapon->GunName == "AK47")
 		{
 			IsReloading = true;
@@ -350,10 +373,42 @@ void AROTDCharacter::Reload()
 
 			UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
 		}
+
+		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+
 		break;
 	}
 	case EWeapon::EW_Snipe:
 	{
+		if (CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
+
+		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+
 		break;
 	}
 	default:
