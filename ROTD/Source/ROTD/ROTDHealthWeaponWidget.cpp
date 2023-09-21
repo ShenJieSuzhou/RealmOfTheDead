@@ -35,3 +35,14 @@ void UROTDHealthWeaponWidget::SwitchWeapon(AWeaponBase* curWeapon)
 	this->DisplayWeapon = curWeapon;
 	CurWeaponImg->SetBrushFromTexture(curWeapon->GunIcon);
 }
+
+void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float MaxHealth)
+{
+	if(HealthVolumBar == nullptr)
+	{
+		return;
+	}
+	
+	float percent = CurrentHealth / MaxHealth;
+	HealthVolumBar->SetPercent(percent);
+}

@@ -32,6 +32,8 @@ public:
 
 	void SwitchWeapon(AWeaponBase* weapon);
 
+	void UpdateHealth(float CurrentHealth, float MaxHealth);
+
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;

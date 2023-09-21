@@ -67,3 +67,7 @@ void AShootingHUD::SwitchWeapon(AWeaponBase* weapon)
 }
 
 
+void AShootingHUD::UpdateHealth(float CurrentHealth, float MaxHealth)
+{
+	HealthWeaponWidget->UpdateHealthProcessBar(CurrentHealth, MaxHealth);
+}

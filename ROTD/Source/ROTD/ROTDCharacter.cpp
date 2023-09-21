@@ -899,3 +899,11 @@ void AROTDCharacter::OnGunFire()
 	// �����ӵ�����ʾ
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
+
+void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)
+{
+	if(hud)
+	{
+		hud->UpdateHealth(CurrentHealth, MaxHealth);
+	}
+}

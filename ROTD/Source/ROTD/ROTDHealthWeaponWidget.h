@@ -52,6 +52,8 @@ public:
 	
 	void SwitchWeapon(AWeaponBase* curWeapon);
 
+	void UpdateHealthProcessBar(float CurrentHealth, float MaxHealth);
+
 private:
 	AWeaponBase* DisplayWeapon;
 };

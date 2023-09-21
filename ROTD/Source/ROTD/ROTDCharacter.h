@@ -189,6 +189,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReloadMagazine();
 
+	UFUNCTION(BlueprintCallable)
+	void UpdatePlayerHealth(float CurrentHealth, float MaxHealth);
+
 	void OnGunFire();
 
 	FString GetEmptyHands() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Hands_BP.Hands_BP_C'"); }
