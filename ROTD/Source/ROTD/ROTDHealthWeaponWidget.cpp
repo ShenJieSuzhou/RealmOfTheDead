@@ -44,5 +44,8 @@ void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float 
 	}
 	
 	float percent = CurrentHealth / MaxHealth;
+
+	UE_LOG(LogTemp, Log, TEXT("Health: %f"), percent);
+
 	HealthVolumBar->SetPercent(percent);
 }
