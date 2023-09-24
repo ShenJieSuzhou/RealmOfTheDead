@@ -907,3 +907,11 @@ void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)
 		hud->UpdateHealth(CurrentHealth, MaxHealth);
 	}
 }
+
+void AROTDCharacter::PlayerDieAndHideCross()
+{
+	if (hud)
+	{
+		hud->SetCrossWidgetVisible(false);
+	}
+}
