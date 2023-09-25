@@ -1,6 +1,6 @@
 
 ROTD/.vs/
-ROTD/Binaries/Win64/
+ROTD/Binaries/
 ROTD/Saved/
 ROTD/Content/BulletHoles
 ROTD/Content/BulletVFX
@@ -21,10 +21,3 @@ ROTD/Content/PostDistrict
 ROTD/Content/Zombie_Pack
 ROTD/DerivedDataCache
 ROTD/Intermediate
-ROTD/Binaries/Win64/ROTDEditor.target
-ROTD/Binaries/Win64/UnrealEditor-ROTD.dll
-ROTD/Binaries/Win64/UnrealEditor-ROTD.pdb
-ROTD/Binaries/Win64/ROTDEditor.target
-ROTD/Binaries/Win64/UnrealEditor-ROTD.dll
-ROTD/Binaries/Win64/UnrealEditor-ROTD.pdb
-ROTD/Binaries/Win64/UnrealEditor.modules
