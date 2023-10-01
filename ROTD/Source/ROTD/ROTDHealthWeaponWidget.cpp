@@ -32,6 +32,12 @@ void UROTDHealthWeaponWidget::SwitchWeapon(AWeaponBase* curWeapon)
 		return;
 	}
 
+	if(curWeapon->WeaponType == EWeapon::EW_Hands)
+	{
+		CurWeaponImg->SetVisibility(ESlateVisibility::Hidden);
+		return;
+	}
+	CurWeaponImg->SetVisibility(ESlateVisibility::Visible);
 	this->DisplayWeapon = curWeapon;
 	CurWeaponImg->SetBrushFromTexture(curWeapon->GunIcon);
 }
