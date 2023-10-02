@@ -67,6 +67,7 @@ public:
 	FTimerHandle AutomaticHandle;
 
 	// Current Weapons
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
 	AWeaponBase* CurrentWeapon;
 
 	// Hands
@@ -148,6 +149,8 @@ public:
 	void MuzzleFlash();
 
 	void ApplyDamageTo(FHitResult Hit);
+
+	void ShellEjection();
 
 	UFUNCTION()
 	void DelayAndDisplayMuzzle();

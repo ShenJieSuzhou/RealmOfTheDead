@@ -742,6 +742,26 @@ void AROTDCharacter::ApplyDamageTo(FHitResult Hit)
 	UGameplayStatics::ApplyPointDamage(DamagedActor, damage, Direction, HitOut, nullptr, this, DamageType);
 }
 
+void AROTDCharacter::ShellEjection()
+{
+	if(CurrentWeapon == NULL)
+	{
+		return;
+	}
+
+	//UWorld* const World = GetWorld();
+	//FVector Localtion = FVector(0.f, 0.f, 0.f);
+	//FRotator Rotator = FRotator(0.f);
+
+	////ShellEjection
+	//USkeletalMeshSocket const* mesh = CurrentWeapon->FP_Gun->GetSocketByName("ShellEjection");
+
+	//if (World != nullptr)
+	//{
+	//	EmptyHands = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(EmptyHandsClass, Localtion, Rotator));
+	//}
+}
+
 void AROTDCharacter::DelayAndDisplayMuzzle()
 {
 	if (!CurrentWeapon)
