@@ -862,6 +862,8 @@ void AROTDCharacter::OnGunFire()
 		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->FireSound, GetActorLocation());
 	}
 
+	CurrentWeapon->BulletShellDrop();
+
 	// Camera Shot
 	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
 	FVector TraceStart = FirstCamera->GetComponentLocation();
