@@ -9,6 +9,8 @@
 #include "NiagaraComponent.h"
 #include "../GameConfig/ShootingConfigs.h"
 #include "Math/UnrealMathUtility.h"
+#include "Engine/StreamableManager.h"
+#include "Engine/AssetManager.h"
 
 /**
  * ��Դ���ػص�
@@ -29,6 +31,78 @@ public:
 
 	FMaterialLoadDelegate& GetResLoadDelegate();
 
+	// Common 
+	void CommonMaterialDeferred();
+
+	// Metal
+	void MetalMaterialDeferred();
+
+	// Wood
+	void WoodMaterialDeferred();
+
+	// Water
+	void WaterMaterialDeferred();
+
+	// Water
+	void SandMaterialDeferred();
+	
+	// BrickMaterial
+	void BrickMaterialDeferred();
+
+	// GlassMaterial
+	void GlassMaterialDeferred();
+
+	// GroundMaterial
+	void GroundMaterialDeferred();
+
+	// Nigara Asset
+	void defaultVFDeferred();
+
+	void MetalVFDeferred();
+
+	void WoodVFDeferred();
+
+	void WaterVFDeferred();
+
+	void SandVFDeferred();
+
+	void BrickVFDeferred();
+
+	void GlassVFDeferred();
+
+	void GroundVFDeferred();
+
+	void BloodVFDeferred();
+	
+	// Check assets is loaded 
+	void CheckGameResLoad();
+
+public:
+	TArray<FSoftObjectPath> CommonMaterial;
+	
+	TArray<FSoftObjectPath> MetalMaterial;
+	
+	TArray<FSoftObjectPath> WoodMaterial;
+
+	TArray<FSoftObjectPath> WaterMaterial;
+
+	TArray<FSoftObjectPath> SandMaterial;
+
+	TArray<FSoftObjectPath> BrickMaterial;
+
+	TArray<FSoftObjectPath> GlassMaterial;
+
+	TArray<FSoftObjectPath> GroundMaterial;
+
+	FSoftObjectPath defaultVF;
+	FSoftObjectPath MetalVF;
+	FSoftObjectPath WoodVF;
+	FSoftObjectPath WaterVF;
+	FSoftObjectPath SandVF;
+	FSoftObjectPath BrickVF;
+	FSoftObjectPath GlassVF;
+	FSoftObjectPath GroundVF;
+	FSoftObjectPath BloodVF;
 public:
 	TArray<UObject*> GetBulletsWood();
 	TArray<UObject*> GetBulletsMetal();
@@ -50,13 +124,14 @@ public:
 	UObject* GetVFBlood();
 
 private:
-	// �첽���ص�����Դ
-	void RequestAsyncLoad(FString MaterialPath);
+	// Async load game assets
+	bool RequestAsyncLoad(TArray<FSoftObjectPath> ResToLoad, FStreamableDelegate DelegateToCall);
 
-	// ͬ������������Դ
+	bool RequestAsyncLoadSingle(FSoftObjectPath, FStreamableDelegate DelegateToCall);
+
+	// Sync load game assets
 	bool RequestSyncLoad(TArray<FSoftObjectPath> ResToLoad, TArray<UObject*>& Resources);
 
-	// ͬ��������Դ
 	bool RequestSyncLoadOne(FSoftObjectPath ResToLoad, UObject*& Resource);
 
 private:
@@ -77,6 +152,8 @@ private:
 	TArray<UObject*> BulletsBrick;
 
 	TArray<UObject*> Knife;
+
+	UObject* VF_Default;
 
 	UObject* VF_Ground;
 

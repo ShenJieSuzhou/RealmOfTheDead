@@ -2,131 +2,151 @@
 
 
 #include "ShootingMaterialUtil.h"
-#include "Engine/StreamableManager.h"
-#include "Engine/AssetManager.h"
+
 
 void FShootingMaterialUtil::PreloadMaterials()
 {	
-	// ͬ��������Դ
-	TArray<FSoftObjectPath> CommonMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType_Default);
-	if(!RequestSyncLoad(CommonMaterial, BulletsCommon))
+	// ͬ通用材质
+	CommonMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType_Default);
+	if(!RequestAsyncLoad(CommonMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::CommonMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType_Default Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> MatelMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType1);
-	if(!RequestSyncLoad(MatelMaterial, BulletsMetal))
+	MetalMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType1);
+	if(!RequestAsyncLoad(MetalMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::MetalMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType1 Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> WoodMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType2);
-	if (!RequestSyncLoad(WoodMaterial, BulletsWood))
+	WoodMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType2);
+	if (!RequestAsyncLoad(WoodMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WoodMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType2 Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> SandMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType4);
-	if (!RequestSyncLoad(SandMaterial, BulletsSand))
+	WaterMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType3);
+	if (!RequestAsyncLoad(WaterMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WaterMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType3 Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> BrickMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType5);
-	if (!RequestSyncLoad(BrickMaterial, BulletsBrick))
+	SandMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType4);
+	if (!RequestAsyncLoad(SandMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::SandMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType4 Error"));
+		return;
+	}
+	
+	BrickMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType5);
+	if (!RequestAsyncLoad(BrickMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::BrickMaterialDeferred)))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType5 Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> GlassMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType6);
-	if (!RequestSyncLoad(GlassMaterial, BulletsGlass))
+	GlassMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType6);
+	if (!RequestAsyncLoad(GlassMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::BrickMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType6 Error"));
 		return;
 	}
 
-	TArray<FSoftObjectPath> GroundMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType7);
-	if (!RequestSyncLoad(GroundMaterial, BulletsGround))
+	GroundMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType7);
+	if (!RequestAsyncLoad(GroundMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::GroundMaterialDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType7 Error"));
 		return;
 	}
 
-	FString defaultVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType_Default);
-	FString MetalVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType1);
-	FString WoodVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType2);
-	FString WaterVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType3);
-	FString SandVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType4);
-	FString BrickVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType5);
-	FString GlassVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType6);
-	FString GroundVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType7);
-	FString BloodVF = FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType8);
-
-	if (!RequestSyncLoadOne(FSoftObjectPath(defaultVF), VF_Common))
+	defaultVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType_Default));
+	if(!RequestAsyncLoadSingle(defaultVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::defaultVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load defaultVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(MetalVF), VF_Metal))
+	MetalVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType1));
+	if(!RequestAsyncLoadSingle(MetalVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::MetalVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load MetalVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(WoodVF), VF_Wood))
+	WoodVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType2));
+	if(!RequestAsyncLoadSingle(WoodVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WoodVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load WoodVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(SandVF), VF_Sand))
+	WaterVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType3));
+	if(!RequestAsyncLoadSingle(WaterVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WaterVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load WaterVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(BrickVF), VF_Brick))
+	SandVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType4));
+	if(!RequestAsyncLoadSingle(SandVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::SandVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load SandVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(GlassVF), VF_Glass))
+	BrickVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType5));
+	if(!RequestAsyncLoadSingle(BrickVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::BrickVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load BrickVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(GroundVF), VF_Ground))
+	GlassVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType6));
+	if(!RequestAsyncLoadSingle(GlassVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::GlassVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load GlassVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(WaterVF), VF_Water))
+	GroundVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType7));
+	if(!RequestAsyncLoadSingle(GroundVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::GroundVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load GroundVF Error"));
 		return;
 	}
 
-	if (!RequestSyncLoadOne(FSoftObjectPath(BloodVF), VF_Blood))
+	BloodVF = FSoftObjectPath(FShootingConfigs::GetInstance()->GetParticleSystemWithType(SurfaceType8));
+	if(!RequestAsyncLoadSingle(BloodVF, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::BloodVFDeferred)))
 	{
-		ResLoadDelegate.ExecuteIfBound(false);
+		UE_LOG(LogTemp, Error, TEXT("Load BloodVF Error"));
 		return;
 	}
-
-	ResLoadDelegate.ExecuteIfBound(true);
 }
 
-void FShootingMaterialUtil::RequestAsyncLoad(FString MaterialPath)
+bool FShootingMaterialUtil::RequestAsyncLoad(TArray<FSoftObjectPath> ResToLoad, FStreamableDelegate DelegateToCall)
 {
-
+	FStreamableManager& Streamable = UAssetManager::GetStreamableManager();
+	TSharedPtr<FStreamableHandle> SteamHandle = Streamable.RequestAsyncLoad(ResToLoad, DelegateToCall);
+	if (!SteamHandle.IsValid())
+	{	
+		return false;
+	}
+	return true;
+}
+ 
+bool FShootingMaterialUtil::RequestAsyncLoadSingle(FSoftObjectPath ResToLoad, FStreamableDelegate DelegateToCall)
+{
+	FStreamableManager& Streamable = UAssetManager::GetStreamableManager();
+	TSharedPtr<FStreamableHandle> SteamHandle = Streamable.RequestAsyncLoad(ResToLoad, DelegateToCall);
+	if (!SteamHandle.IsValid())
+	{
+		return false;
+	}
+	return true;
 }
 
 bool FShootingMaterialUtil::RequestSyncLoad(TArray<FSoftObjectPath> ResToLoad, TArray<UObject*>& Resources)
@@ -246,3 +266,203 @@ UObject* FShootingMaterialUtil::GetVFBlood()
 	return VF_Blood;
 }
 
+
+void FShootingMaterialUtil::CheckGameResLoad()
+{
+
+}
+
+//=========================================CALL BACK=============================================
+void FShootingMaterialUtil::CommonMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : CommonMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsGlass.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::MetalMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : MetalMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsMetal.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::WoodMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : WoodMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsWood.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::WaterMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : WaterMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsWater.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::SandMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : SandMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsSand.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::BrickMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : BrickMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsBrick.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::GlassMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : GlassMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsGlass.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::GroundMaterialDeferred()
+{
+	for (FSoftObjectPath SoftObj : GroundMaterial)
+	{
+		TAssetPtr<UObject> p_Obj(SoftObj);
+		UObject* Obj = p_Obj.Get();
+		if (Obj)
+		{
+			BulletsGround.Add(Obj);
+		}
+	}
+}
+
+void FShootingMaterialUtil::defaultVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(defaultVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Default = Obj;
+	}
+}
+
+void FShootingMaterialUtil::MetalVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(MetalVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Metal = Obj;
+	}
+}
+
+void FShootingMaterialUtil::WoodVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(WoodVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Wood = Obj;
+	}
+}
+
+void FShootingMaterialUtil::WaterVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(WaterVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Water = Obj;
+	}
+}
+
+void FShootingMaterialUtil::SandVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(SandVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Sand = Obj;
+	}
+}
+
+void FShootingMaterialUtil::BrickVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(BrickVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Brick = Obj;
+	}
+}
+
+void FShootingMaterialUtil::GlassVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(GlassVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Glass = Obj;
+	}
+}
+
+void FShootingMaterialUtil::GroundVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(GroundVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Ground = Obj;
+	}
+}
+
+void FShootingMaterialUtil::BloodVFDeferred()
+{
+	TAssetPtr<UObject> p_Obj(BloodVF);
+	UObject* Obj = p_Obj.Get();
+	if (Obj)
+	{
+		VF_Blood = Obj;
+	}
+}
