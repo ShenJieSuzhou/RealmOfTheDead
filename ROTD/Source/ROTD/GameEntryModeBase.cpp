@@ -29,11 +29,11 @@ void AGameEntryModeBase::OnMaterialLoaded(bool result)
 {
 	if (result)
 	{
-		// ���� Loading ������ StartGame ��ť
 		AssetsLoadComplete();
 	}
 	else
 	{
-		UE_LOG(LogTemp, Log, TEXT("22222"));
+		UE_LOG(LogTemp, Log, TEXT("ssets Load Error"));
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("Assets Load Error"));
 	}
 }

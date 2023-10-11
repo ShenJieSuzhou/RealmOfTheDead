@@ -28,12 +28,12 @@ void FShootingMaterialUtil::PreloadMaterials()
 		return;
 	}
 
-	WaterMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType3);
-	if (!RequestAsyncLoad(WaterMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WaterMaterialDeferred)))
-	{
-		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType3 Error"));
-		return;
-	}
+	//WaterMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType3);
+	//if (!RequestAsyncLoad(WaterMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::WaterMaterialDeferred)))
+	//{
+	//	UE_LOG(LogTemp, Error, TEXT("Load SurfaceType3 Error"));
+	//	return;
+	//}
 
 	SandMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType4);
 	if (!RequestAsyncLoad(SandMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::SandMaterialDeferred)))
@@ -269,7 +269,58 @@ UObject* FShootingMaterialUtil::GetVFBlood()
 
 void FShootingMaterialUtil::CheckGameResLoad()
 {
+	if (BulletsCommon.Num() != CommonMaterial.Num())
+	{
+		return;
+	}
 
+	if (BulletsMetal.Num() != MetalMaterial.Num())
+	{
+		return;
+	}
+
+	if (BulletsWood.Num() != WoodMaterial.Num())
+	{
+		
+		return;
+	}
+
+	//if (BulletsWater.Num() != WaterMaterial.Num())
+	//{
+	//	
+	//	return;
+	//}
+
+	if (BulletsSand.Num() != SandMaterial.Num())
+	{
+		
+		return;
+	}
+
+	if (BulletsBrick.Num() != BrickMaterial.Num())
+	{
+		
+		return;
+	}
+
+	if(BulletsGlass.Num() != GlassMaterial.Num())
+	{
+		return;
+	}
+
+	if (BulletsGround.Num() != GroundMaterial.Num())
+	{
+		
+		return;
+	}
+
+	if(!VF_Default || !VF_Ground || !VF_Wood || !VF_Glass || !VF_Metal || !VF_Water || !VF_Sand || !VF_Common || !VF_Brick || !VF_Blood)
+	{
+		
+		return;
+	}
+	
+	ResLoadDelegate.ExecuteIfBound(true);
 }
 
 //=========================================CALL BACK=============================================
@@ -297,6 +348,8 @@ void FShootingMaterialUtil::MetalMaterialDeferred()
 			BulletsMetal.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::WoodMaterialDeferred()
@@ -310,6 +363,8 @@ void FShootingMaterialUtil::WoodMaterialDeferred()
 			BulletsWood.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::WaterMaterialDeferred()
@@ -323,6 +378,8 @@ void FShootingMaterialUtil::WaterMaterialDeferred()
 			BulletsWater.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::SandMaterialDeferred()
@@ -336,6 +393,8 @@ void FShootingMaterialUtil::SandMaterialDeferred()
 			BulletsSand.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::BrickMaterialDeferred()
@@ -349,6 +408,8 @@ void FShootingMaterialUtil::BrickMaterialDeferred()
 			BulletsBrick.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::GlassMaterialDeferred()
@@ -362,6 +423,8 @@ void FShootingMaterialUtil::GlassMaterialDeferred()
 			BulletsGlass.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::GroundMaterialDeferred()
@@ -375,6 +438,8 @@ void FShootingMaterialUtil::GroundMaterialDeferred()
 			BulletsGround.Add(Obj);
 		}
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::defaultVFDeferred()
@@ -385,6 +450,8 @@ void FShootingMaterialUtil::defaultVFDeferred()
 	{
 		VF_Default = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::MetalVFDeferred()
@@ -395,6 +462,8 @@ void FShootingMaterialUtil::MetalVFDeferred()
 	{
 		VF_Metal = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::WoodVFDeferred()
@@ -405,6 +474,8 @@ void FShootingMaterialUtil::WoodVFDeferred()
 	{
 		VF_Wood = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::WaterVFDeferred()
@@ -415,6 +486,8 @@ void FShootingMaterialUtil::WaterVFDeferred()
 	{
 		VF_Water = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::SandVFDeferred()
@@ -425,6 +498,8 @@ void FShootingMaterialUtil::SandVFDeferred()
 	{
 		VF_Sand = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::BrickVFDeferred()
@@ -435,6 +510,8 @@ void FShootingMaterialUtil::BrickVFDeferred()
 	{
 		VF_Brick = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::GlassVFDeferred()
@@ -445,6 +522,8 @@ void FShootingMaterialUtil::GlassVFDeferred()
 	{
 		VF_Glass = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::GroundVFDeferred()
@@ -455,6 +534,8 @@ void FShootingMaterialUtil::GroundVFDeferred()
 	{
 		VF_Ground = Obj;
 	}
+
+	CheckGameResLoad();
 }
 
 void FShootingMaterialUtil::BloodVFDeferred()
@@ -465,4 +546,6 @@ void FShootingMaterialUtil::BloodVFDeferred()
 	{
 		VF_Blood = Obj;
 	}
+
+	CheckGameResLoad();
 }
