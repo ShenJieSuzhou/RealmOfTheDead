@@ -50,7 +50,7 @@ void FShootingMaterialUtil::PreloadMaterials()
 	}
 
 	GlassMaterial = FShootingConfigs::GetInstance()->GetBulletDecalWithType(SurfaceType6);
-	if (!RequestAsyncLoad(GlassMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::BrickMaterialDeferred)))
+	if (!RequestAsyncLoad(GlassMaterial, FStreamableDelegate::CreateRaw(this, &FShootingMaterialUtil::GlassMaterialDeferred)))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Load SurfaceType6 Error"));
 		return;
@@ -314,12 +314,13 @@ void FShootingMaterialUtil::CheckGameResLoad()
 		return;
 	}
 
-	if(!VF_Default || !VF_Ground || !VF_Wood || !VF_Glass || !VF_Metal || !VF_Water || !VF_Sand || !VF_Common || !VF_Brick || !VF_Blood)
+	if(!VF_Default || !VF_Ground || !VF_Wood || !VF_Glass || !VF_Metal || !VF_Water || !VF_Sand || !VF_Brick || !VF_Blood)
 	{
-		
+		UE_LOG(LogTemp, Log, TEXT("VF Res Load not ready"));
 		return;
 	}
 	
+	UE_LOG(LogTemp, Log, TEXT("Res Load complete"));
 	ResLoadDelegate.ExecuteIfBound(true);
 }
 
@@ -332,7 +333,7 @@ void FShootingMaterialUtil::CommonMaterialDeferred()
 		UObject* Obj = p_Obj.Get();
 		if (Obj)
 		{
-			BulletsGlass.Add(Obj);
+			BulletsCommon.Add(Obj);
 		}
 	}
 }
