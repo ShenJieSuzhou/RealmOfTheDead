@@ -25,8 +25,6 @@ class AROTDCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	
-
 public:
 	AROTDCharacter();
 

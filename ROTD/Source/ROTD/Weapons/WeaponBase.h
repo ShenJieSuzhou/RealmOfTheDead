@@ -53,6 +53,10 @@ public:
 
 	// Projectile class to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int32 WeaponID;
+
+	// Projectile class to spawn
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	EWeapon WeaponType;
 
 	/** Sound to play each time we fire */
