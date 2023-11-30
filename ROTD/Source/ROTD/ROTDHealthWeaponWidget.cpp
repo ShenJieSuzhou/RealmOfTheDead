@@ -55,3 +55,15 @@ void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float 
 
 	HealthVolumBar->SetPercent(percent);
 }
+
+void UROTDHealthWeaponWidget::DisplayInteractDetail(bool CanDisplay)
+{
+	if(CanDisplay)
+	{
+		InteractTip->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		InteractTip->SetVisibility(ESlateVisibility::Hidden);
+	}
+}

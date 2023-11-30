@@ -34,6 +34,9 @@ public:
 
 	void UpdateHealth(float CurrentHealth, float MaxHealth);
 
+	UFUNCTION(BlueprintCallable)
+	void DisplayInteractItemInfo(bool CanDisplay);
+
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;

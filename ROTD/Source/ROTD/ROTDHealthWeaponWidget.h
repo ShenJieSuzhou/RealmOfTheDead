@@ -7,6 +7,7 @@
 #include "Components/ProgressBar.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "Components/Border.h"
 #include "Weapons/WeaponBase.h"
 #include "ROTDHealthWeaponWidget.generated.h"
 
@@ -47,12 +48,18 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* ExtraStr;
 
+	// Interact Tip
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UBorder* InteractTip;
+
 public:
 	void UpdateAmmo(int currBullets, int TotalBullets);
 	
 	void SwitchWeapon(AWeaponBase* curWeapon);
 
 	void UpdateHealthProcessBar(float CurrentHealth, float MaxHealth);
+
+	void DisplayInteractDetail(bool CanDisplay);
 
 private:
 	AWeaponBase* DisplayWeapon;
