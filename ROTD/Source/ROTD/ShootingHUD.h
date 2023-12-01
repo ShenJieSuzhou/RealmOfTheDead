@@ -35,7 +35,10 @@ public:
 	void UpdateHealth(float CurrentHealth, float MaxHealth);
 
 	UFUNCTION(BlueprintCallable)
-	void DisplayInteractItemInfo(bool CanDisplay);
+	void CanDisplayInteractItemInfo(bool CanDisplay);
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateInteractItemInfo(FString Name, FString Detail, int Num);
 
 private:
 	/** Crosshair asset pointer */

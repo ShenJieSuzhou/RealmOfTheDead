@@ -56,7 +56,7 @@ void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float 
 	HealthVolumBar->SetPercent(percent);
 }
 
-void UROTDHealthWeaponWidget::DisplayInteractDetail(bool CanDisplay)
+void UROTDHealthWeaponWidget::CanDisplayInteractDetail(bool CanDisplay)
 {
 	if(CanDisplay)
 	{
@@ -66,4 +66,14 @@ void UROTDHealthWeaponWidget::DisplayInteractDetail(bool CanDisplay)
 	{
 		InteractTip->SetVisibility(ESlateVisibility::Hidden);
 	}
+}
+
+void UROTDHealthWeaponWidget::UpdateInteractItemInfo(FString Name, FString Detail, int Num)
+{
+	InteractItemName->SetText(FText::FromString(Name));
+
+	FString sNum = FString::FromInt(Num);
+	InteractItemNum->SetText(FText::FromString("X"+sNum));
+
+	InteractItemType->SetText(FText::FromString(Detail));
 }

@@ -52,6 +52,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UBorder* InteractTip;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock*  InteractItemName;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* InteractItemNum;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* InteractItemType;
+
 public:
 	void UpdateAmmo(int currBullets, int TotalBullets);
 	
@@ -59,7 +68,9 @@ public:
 
 	void UpdateHealthProcessBar(float CurrentHealth, float MaxHealth);
 
-	void DisplayInteractDetail(bool CanDisplay);
+	void CanDisplayInteractDetail(bool CanDisplay);
+
+	void UpdateInteractItemInfo(FString Name, FString Detail, int Num);
 
 private:
 	AWeaponBase* DisplayWeapon;

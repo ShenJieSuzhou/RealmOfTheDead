@@ -72,7 +72,12 @@ void AShootingHUD::UpdateHealth(float CurrentHealth, float MaxHealth)
 	HealthWeaponWidget->UpdateHealthProcessBar(CurrentHealth, MaxHealth);
 }
 
-void AShootingHUD::DisplayInteractItemInfo(bool CanDisplay)
+void AShootingHUD::CanDisplayInteractItemInfo(bool CanDisplay)
 {
-	HealthWeaponWidget->DisplayInteractDetail(CanDisplay);
+	HealthWeaponWidget->CanDisplayInteractDetail(CanDisplay);
+}
+
+void AShootingHUD::UpdateInteractItemInfo(FString Name, FString Detail, int Num)
+{
+	HealthWeaponWidget->UpdateInteractItemInfo(Name, Detail, Num);
 }
