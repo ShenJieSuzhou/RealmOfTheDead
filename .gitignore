@@ -1,8 +1,10 @@
 
 ROTD/.vs/
-ROTD/Binaries/
+ROTD/Binaries/Win64
 ROTD/Saved/
 ROTD/Content/BulletHoles
+ROTD/Content/__ExternalActors__
+ROTD/Content/__ExternalObjects__
 ROTD/Content/BulletVFX
 ROTD/Content/Footsteps_Sound_Effects_Pro
 ROTD/Content/FPWeapon
