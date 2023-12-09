@@ -307,7 +307,7 @@ void AROTDCharacter::Reload()
 			}
 
 			// Load static asset
-			FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
+			FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
 			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *MagnumReloadMontage));
 			if (assetMontage != nullptr)
 			{
@@ -359,7 +359,7 @@ void AROTDCharacter::Reload()
 			}
 
 			// Load static asset
-			FString AKReloadMontage = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Reload_Montage.ANIM_ArK-47_Reload_Montage'"));
+			FString AKReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Reload_Montage.ANIM_ArK-47_Reload_Montage'"));
 			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *AKReloadMontage));
 			if (assetMontage != nullptr)
 			{
@@ -497,7 +497,7 @@ void AROTDCharacter::OnFire()
 				if (IsAiming)
 				{
 					// Play Arm fire montage
-					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
 					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 					if (ArmFireMontage != nullptr)
 					{
@@ -512,7 +512,7 @@ void AROTDCharacter::OnFire()
 				else
 				{
 					// Play Arm fire montage
-					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
 					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 					if (ArmFireMontage != nullptr)
 					{
@@ -566,7 +566,7 @@ void AROTDCharacter::OnFire()
 				if (IsAiming)
 				{
 					// Play Arm fire montage
-					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
 					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 					if (ArmFireMontage != nullptr)
 					{
@@ -581,7 +581,7 @@ void AROTDCharacter::OnFire()
 				else
 				{
 					// Play Arm fire montage
-					FString assetPath = FString(TEXT("AnimMontage'/Game/IBFPSStarterPack/Animations/Arms/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
 					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 					if (ArmFireMontage != nullptr)
 					{
@@ -885,11 +885,6 @@ void AROTDCharacter::OnGunFire()
 
 	if (isHit)
 	{
-		// �жϻ��е���ʲô���壬Ȼ�����ɲ�ͬ��Ч��
-		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(SurfaceType_Default);
-		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType_Default);
-		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType_Default);
-
 		EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
 		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
 		UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);

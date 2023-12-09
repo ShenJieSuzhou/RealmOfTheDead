@@ -233,7 +233,7 @@ UObject* FShootingMaterialUtil::GetVFMetal()
 
 UObject* FShootingMaterialUtil::GetVFCommon()
 {
-	return VF_Common;
+	return VF_Default;
 }
 
 UObject* FShootingMaterialUtil::GetVFGlass()

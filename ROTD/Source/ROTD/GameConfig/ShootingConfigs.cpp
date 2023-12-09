@@ -11,11 +11,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// ͨ��
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_1.MI_Generic_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_2.MI_Generic_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_3.MI_Generic_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_4.MI_Generic_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Generic/MI_Generic_5.MI_Generic_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Generic/MI_Generic_1.MI_Generic_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Generic/MI_Generic_2.MI_Generic_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Generic/MI_Generic_3.MI_Generic_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Generic/MI_Generic_4.MI_Generic_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Generic/MI_Generic_5.MI_Generic_5'")));
 		return StringArray;
 	}
 		break;
@@ -23,11 +23,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// ����
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_1.MI_Metal_Solid_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_2.MI_Metal_Solid_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_3.MI_Metal_Solid_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_4.MI_Metal_Solid_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Metal_Solid/MI_Metal_Solid_5.MI_Metal_Solid_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Metal_Solid/MI_Metal_Solid_1.MI_Metal_Solid_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Metal_Solid/MI_Metal_Solid_2.MI_Metal_Solid_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Metal_Solid/MI_Metal_Solid_3.MI_Metal_Solid_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Metal_Solid/MI_Metal_Solid_4.MI_Metal_Solid_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Metal_Solid/MI_Metal_Solid_5.MI_Metal_Solid_5'")));
 		return StringArray;
 	}
 		break;
@@ -35,16 +35,16 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// ľͷ
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_1.MI_Wood_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_2.MI_Wood_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_3.MI_Wood_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_4.MI_Wood_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_5.MI_Wood_5'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_6.MI_Wood_6'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_7.MI_Wood_7'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_8.MI_Wood_8'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_9.MI_Wood_9'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Wood/MI_Wood_10.MI_Wood_10'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_1.MI_Wood_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_2.MI_Wood_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_3.MI_Wood_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_4.MI_Wood_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_5.MI_Wood_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_6.MI_Wood_6'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_7.MI_Wood_7'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_8.MI_Wood_8'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_9.MI_Wood_9'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Wood/MI_Wood_10.MI_Wood_10'")));
 		return StringArray;
 	}
 		break;
@@ -55,11 +55,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// ɳ��
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_1.MI_Sand_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_2.MI_Sand_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_3.MI_Sand_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_4.MI_Sand_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Sand/MI_Sand_5.MI_Sand_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_1.MI_Sand_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_2.MI_Sand_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_3.MI_Sand_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_4.MI_Sand_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_5.MI_Sand_5'")));
 		return StringArray;
 	}
 		break;
@@ -67,11 +67,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// שͷ
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Rock/MI_Rock_1.MI_Rock_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Rock/MI_Rock_2.MI_Rock_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Rock/MI_Rock_3.MI_Rock_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Rock/MI_Rock_4.MI_Rock_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Rock/MI_Rock_5.MI_Rock_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Rock/MI_Rock_1.MI_Rock_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Rock/MI_Rock_2.MI_Rock_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Rock/MI_Rock_3.MI_Rock_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Rock/MI_Rock_4.MI_Rock_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Rock/MI_Rock_5.MI_Rock_5'")));
 		return StringArray;
 	}
 		break;
@@ -79,9 +79,9 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// ����
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Glass_Common_Mesh_Decals/MI_Glass_Common_1.MI_Glass_Common_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Glass_Common_Mesh_Decals/MI_Glass_Common_2.MI_Glass_Common_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Glass_Common_Mesh_Decals/MI_Glass_Common_3.MI_Glass_Common_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Glass_Common_Mesh_Decals/MI_Glass_Common_1.MI_Glass_Common_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Glass_Common_Mesh_Decals/MI_Glass_Common_2.MI_Glass_Common_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Glass_Common_Mesh_Decals/MI_Glass_Common_3.MI_Glass_Common_3'")));
 		return StringArray;
 	}
 		break;
@@ -89,11 +89,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	{
 		// �ݵ�
 		TArray<FSoftObjectPath> StringArray = {
-			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_1.MI_Ground_1'")),
-			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_2.MI_Ground_2'")),
-			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_3.MI_Ground_3'")),
-			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_4.MI_Ground_4'")),
-			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Ground/MI_Ground_5.MI_Ground_5'"))
+			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Ground/MI_Ground_1.MI_Ground_1'")),
+			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Ground/MI_Ground_2.MI_Ground_2'")),
+			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Ground/MI_Ground_3.MI_Ground_3'")),
+			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Ground/MI_Ground_4.MI_Ground_4'")),
+			FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Ground/MI_Ground_5.MI_Ground_5'"))
 		};
 		return StringArray;
 	}
@@ -101,11 +101,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	case SurfaceType8:
 	{
 		TArray<FSoftObjectPath> StringArray;
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_1.MI_Flesh_1'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_2.MI_Flesh_2'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_3.MI_Flesh_3'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_4.MI_Flesh_4'")));
-		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/UWC_Bullet_Holes/Instances/Decals/Flesh/MI_Flesh_5.MI_Flesh_5'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Flesh/MI_Flesh_1.MI_Flesh_1'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Flesh/MI_Flesh_2.MI_Flesh_2'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Flesh/MI_Flesh_3.MI_Flesh_3'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Flesh/MI_Flesh_4.MI_Flesh_4'")));
+		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Flesh/MI_Flesh_5.MI_Flesh_5'")));
 		return StringArray;
 	}
 		// Ƥ��
