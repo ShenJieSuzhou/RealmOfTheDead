@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "WeaponBase.h"
 #include "ShootingHUD.h"
+#include "NiagaraFunctionLibrary.h"
 #include "ROTDCharacter.generated.h"
 
 class UInputComponent;

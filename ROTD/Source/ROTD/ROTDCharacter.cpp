@@ -887,7 +887,7 @@ void AROTDCharacter::OnGunFire()
 	{
 		EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
 		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
-		UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
+		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
 
 		UWorld* const World = GetWorld();
 
@@ -904,16 +904,17 @@ void AROTDCharacter::OnGunFire()
 					BulletDecal->SetBulletHoleMaterial(BulletHole);
 				}
 
-				if (ImpactParticle)
-				{
-					ABulletImpactEffect* BulletImpact = World->SpawnActor<ABulletImpactEffect>(BulletImpactClass, Hit.Location, Rotator1);
-					BulletImpact->SetNiagaraSysAsset(ImpactParticle);
-				}
+				//if (ImpactParticle)
+				//{
+				//	ABulletImpactEffect* BulletImpact = World->SpawnActor<ABulletImpactEffect>(BulletImpactClass, Hit.Location, Rotator1);
+				//	BulletImpact->SetNiagaraSysAsset(ImpactParticle);
+				//}
+
+				//UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NULL, Hit.Location, Rotator1);
 			}
 		}
 	}
 
-	// �����ӵ�����ʾ
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 

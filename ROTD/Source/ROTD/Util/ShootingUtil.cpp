@@ -175,7 +175,6 @@ UMaterialInterface* FShootingUtil::RandomGenerateBulletHole(EPhysicalSurface typ
 	return materialIns;
 }
 
-// ��ȡ��������Ч��
 UNiagaraSystem* FShootingUtil::GetImpactParticleSyatem(EPhysicalSurface type)
 {
 	UNiagaraSystem* Niagara = NULL;
