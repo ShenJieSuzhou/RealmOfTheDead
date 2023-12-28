@@ -10,8 +10,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Util/ShootingUtil.h"
-#include "CusActor/BulletHole.h"
-#include "CusActor/BulletImpactEffect.h"
+#include "FX/BulletHole.h"
+#include "FX/BulletImpactEffect.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -911,6 +911,19 @@ void AROTDCharacter::OnGunFire()
 				//}
 
 				//UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NULL, Hit.Location, Rotator1);
+
+				// knife
+				/*FString niagaraAssetPath = "NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Default.NS_Impact_Default'";
+				UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
+
+				if (WeaponKnifeClass != nullptr)
+				{
+					if (World != nullptr)
+					{
+						WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
+					}
+				}*/
+
 			}
 		}
 	}
