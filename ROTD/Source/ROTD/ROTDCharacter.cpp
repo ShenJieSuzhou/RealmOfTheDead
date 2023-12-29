@@ -868,7 +868,6 @@ void AROTDCharacter::OnGunFire()
 	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
 	FVector TraceStart = FirstCamera->GetComponentLocation();
 
-	// �ӵ�����
 	float BulletSpread = 120.f;
 	float calu = BulletSpread * -1;
 	float x = FMath::RandRange(calu, BulletSpread);
@@ -885,9 +884,12 @@ void AROTDCharacter::OnGunFire()
 
 	if (isHit)
 	{
-		EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
-		UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
+		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
+		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
 		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
+		
+		// Get Gamemode
+
 
 		UWorld* const World = GetWorld();
 

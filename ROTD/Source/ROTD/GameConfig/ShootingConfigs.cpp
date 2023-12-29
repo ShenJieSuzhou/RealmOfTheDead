@@ -49,11 +49,11 @@ TArray<FSoftObjectPath> FShootingConfigs::GetBulletDecalWithType(EPhysicalSurfac
 	}
 		break;
 	case SurfaceType3:
-		// ˮ
+		// 
 		break;
 	case SurfaceType4:
 	{
-		// ɳ��
+		// 
 		TArray<FSoftObjectPath> StringArray;
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_1.MI_Sand_1'")));
 		StringArray.Add(FSoftObjectPath(TEXT("MaterialInstanceConstant'/Game/ROTD/BulletHole/Sand/MI_Sand_2.MI_Sand_2'")));

@@ -23,18 +23,40 @@ void AROTDGameMode::InitGame(const FString& MapName, const FString& Options, FSt
 {
 	Super::InitGame(MapName, Options, ErrorMessage);
 	
-	FShootingMaterialUtil::GetInstance()->GetResLoadDelegate().BindUObject(this, &AROTDGameMode::OnMaterialLoaded);
-	FShootingMaterialUtil::GetInstance()->PreloadMaterials();
+	//FShootingMaterialUtil::GetInstance()->GetResLoadDelegate().BindUObject(this, &AROTDGameMode::OnMaterialLoaded);
+	//FShootingMaterialUtil::GetInstance()->PreloadMaterials();
 }
 
-void AROTDGameMode::OnMaterialLoaded(bool result)
+//void AROTDGameMode::OnMaterialLoaded(bool result)
+//{
+//	if (result)
+//	{
+//		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("OnMaterialLoaded Success!"));
+//	}
+//	else
+//	{
+//		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("OnMaterialLoaded Failed!"));
+//	}
+//}
+
+FBulletImpact AROTDGameMode::FindBulletImpact_Implementation(EImpactType Type, bool& success)
 {
-	if (result)
+	success = false;
+	FBulletImpact Impact;
+	if (BulletImpactDataBase == nullptr)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("OnMaterialLoaded Success!"));
+		// return a default object
+		return Impact;
 	}
-	else
+
+	for(int i = 0; i < BulletImpactDataBase->BulletImpactData.Num(); i++)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("OnMaterialLoaded Failed!"));
+		if(BulletImpactDataBase->BulletImpactData[i].Type == Type)
+		{
+			success = true;
+			return BulletImpactDataBase->BulletImpactData[i];
+		}
 	}
+
+	return Impact;
 }

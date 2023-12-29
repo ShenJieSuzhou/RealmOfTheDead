@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "FX/Definitions.h"
 #include "ROTDGameMode.generated.h"
 
 UCLASS(minimalapi)
@@ -16,8 +17,15 @@ public:
 
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 
-	UFUNCTION()
-	void OnMaterialLoaded(bool result);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "BulletImpact System")
+	FBulletImpact FindBulletImpact(EImpactType Type, bool& success);
+
+	FBulletImpact FindBulletImpact_Implementation(EImpactType Type, bool& success);
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BulletImpact System")
+	class UBulletImpactData* BulletImpactDataBase;
+
 };
 
 

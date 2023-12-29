@@ -7,13 +7,24 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Definitions.generated.h"
 
+UENUM()
+enum class EImpactType : uint8
+{
+	EImpact_Default,
+	EImpact_Brick,
+	EImpact_Wood,
+	EImpact_Sand,
+	EImpact_Glass
+};
+
+
 USTRUCT(BlueprintType)
 struct FBulletImpact
 {
 	GENERATED_USTRUCT_BODY()
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BulletImpact")
-	FName Name;
+	EImpactType Type;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BulletImpact")
 	TWeakObjectPtr<class UPhysicalMaterial> PhysMaterial;
