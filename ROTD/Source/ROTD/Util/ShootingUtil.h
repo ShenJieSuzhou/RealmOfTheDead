@@ -7,6 +7,7 @@
 #include "Chaos/ChaosEngineInterface.h"
 #include "../GameConfig/ShootingConfigs.h"
 #include "ShootingMaterialUtil.h"
+#include "../FX/Definitions.h"
 #include "Math/UnrealMathUtility.h"
 
 class FShootingUtil
@@ -18,12 +19,12 @@ public:
 		return &sFShootingUtil;
 	}
 
-	// ��ȡ���еĲ���
+	
+	EImpactType GetImpactType(UPhysicalMaterial* material);
+
 	EPhysicalSurface GetPhysicalSurfaceType(UPhysicalMaterial* material);
 
-	// ���ݲ���������ɵ���
 	UMaterialInterface* RandomGenerateBulletHole(EPhysicalSurface type);
 
-	// ��ȡ��������Ч��
 	UNiagaraSystem* GetImpactParticleSyatem(EPhysicalSurface type);
 };

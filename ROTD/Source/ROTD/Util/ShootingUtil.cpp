@@ -3,7 +3,161 @@
 
 #include "ShootingUtil.h"
 
-// ��ȡ���еĲ���
+EImpactType FShootingUtil::GetImpactType(UPhysicalMaterial* material)
+{
+	if (material == NULL)
+	{
+		return EImpactType::EImpact_Default;
+	}
+
+	EPhysicalSurface PhysicalSurface = UPhysicalMaterial::DetermineSurfaceType(material);
+	EImpactType Type;
+	switch (PhysicalSurface)
+	{
+	case SurfaceType_Default:
+		Type = EImpactType::EImpact_Default;
+		break;
+	case SurfaceType1:
+		Type = EImpactType::EImpact_Default;
+		break;
+	case SurfaceType2:
+		Type = EImpactType::EImpact_Wood;
+		break;
+	case SurfaceType3:
+		Type = EImpactType::EImpact_Default;
+		break;
+	case SurfaceType4:
+		Type = EImpactType::EImpact_Sand;
+		break;
+	case SurfaceType5:
+		Type = EImpactType::EImpact_Brick;
+		break;
+	case SurfaceType6:
+		Type = EImpactType::EImpact_Glass;
+		break;
+	case SurfaceType7:
+		Type = EImpactType::EImpact_Default;
+		break;
+	case SurfaceType8:
+		break;
+	case SurfaceType9:
+		break;
+	case SurfaceType10:
+		break;
+	case SurfaceType11:
+		break;
+	case SurfaceType12:
+		break;
+	case SurfaceType13:
+		break;
+	case SurfaceType14:
+		break;
+	case SurfaceType15:
+		break;
+	case SurfaceType16:
+		break;
+	case SurfaceType17:
+		break;
+	case SurfaceType18:
+		break;
+	case SurfaceType19:
+		break;
+	case SurfaceType20:
+		break;
+	case SurfaceType21:
+		break;
+	case SurfaceType22:
+		break;
+	case SurfaceType23:
+		break;
+	case SurfaceType24:
+		break;
+	case SurfaceType25:
+		break;
+	case SurfaceType26:
+		break;
+	case SurfaceType27:
+		break;
+	case SurfaceType28:
+		break;
+	case SurfaceType29:
+		break;
+	case SurfaceType30:
+		break;
+	case SurfaceType31:
+		break;
+	case SurfaceType32:
+		break;
+	case SurfaceType33:
+		break;
+	case SurfaceType34:
+		break;
+	case SurfaceType35:
+		break;
+	case SurfaceType36:
+		break;
+	case SurfaceType37:
+		break;
+	case SurfaceType38:
+		break;
+	case SurfaceType39:
+		break;
+	case SurfaceType40:
+		break;
+	case SurfaceType41:
+		break;
+	case SurfaceType42:
+		break;
+	case SurfaceType43:
+		break;
+	case SurfaceType44:
+		break;
+	case SurfaceType45:
+		break;
+	case SurfaceType46:
+		break;
+	case SurfaceType47:
+		break;
+	case SurfaceType48:
+		break;
+	case SurfaceType49:
+		break;
+	case SurfaceType50:
+		break;
+	case SurfaceType51:
+		break;
+	case SurfaceType52:
+		break;
+	case SurfaceType53:
+		break;
+	case SurfaceType54:
+		break;
+	case SurfaceType55:
+		break;
+	case SurfaceType56:
+		break;
+	case SurfaceType57:
+		break;
+	case SurfaceType58:
+		break;
+	case SurfaceType59:
+		break;
+	case SurfaceType60:
+		break;
+	case SurfaceType61:
+		break;
+	case SurfaceType62:
+		break;
+	case SurfaceType_Max:
+		break;
+	default:
+		break;
+	}
+
+	return Type;
+}
+
+
 EPhysicalSurface FShootingUtil::GetPhysicalSurfaceType(UPhysicalMaterial* material)
 {
 	if(material == NULL)

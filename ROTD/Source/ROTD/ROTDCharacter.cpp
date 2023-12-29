@@ -12,6 +12,7 @@
 #include "Util/ShootingUtil.h"
 #include "FX/BulletHole.h"
 #include "FX/BulletImpactEffect.h"
+#include "ROTDGameMode.h"
 #include "GameFramework/InputSettings.h"
 
 
@@ -884,49 +885,43 @@ void AROTDCharacter::OnGunFire()
 
 	if (isHit)
 	{
-		//EPhysicalSurface SurfaceType = FShootingUtil::GetInstance()->GetPhysicalSurfaceType(Hit.PhysMaterial.Get());
+		EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
 		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
 		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
 		
-		// Get Gamemode
+		// Retrieve BulletImpactData from GameMode
+		AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
+		bool Success = false;
+		FBulletImpact BulletImpact;
+		BulletImpact = GameMode->FindBulletImpact(Type, Success);
 
+		if(!Success)
+		{
+			return;
+		}
 
 		UWorld* const World = GetWorld();
-
-		if (BulletDecalClass != nullptr && BulletImpactClass != nullptr)
+		if (World != nullptr)
 		{
-			if (World != nullptr)
+			ApplyDamageTo(Hit);
+			FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
+			int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
+
+			if (!BulletImpact.BulletDecals[index])
 			{
-				ApplyDamageTo(Hit);
-
-				FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
-				if (BulletHole)
-				{
-					ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
-					BulletDecal->SetBulletHoleMaterial(BulletHole);
-				}
-
-				//if (ImpactParticle)
-				//{
-				//	ABulletImpactEffect* BulletImpact = World->SpawnActor<ABulletImpactEffect>(BulletImpactClass, Hit.Location, Rotator1);
-				//	BulletImpact->SetNiagaraSysAsset(ImpactParticle);
-				//}
-
-				//UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NULL, Hit.Location, Rotator1);
-
-				// knife
-				/*FString niagaraAssetPath = "NiagaraSystem'/Game/Realistic_Starter_VFX_Pack_Niagara/Niagara/Impact/NS_Impact_Default.NS_Impact_Default'";
-				UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
-
-				if (WeaponKnifeClass != nullptr)
-				{
-					if (World != nullptr)
-					{
-						WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
-					}
-				}*/
-
+				return;
 			}
+
+			UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
+
+			if (MaterialIns)
+			{
+				ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+				BulletDecal->SetBulletHoleMaterial(MaterialIns);
+			}
+
+			UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, Rotator1);
 		}
 	}
 
