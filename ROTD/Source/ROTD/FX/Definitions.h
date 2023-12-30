@@ -14,7 +14,12 @@ enum class EImpactType : uint8
 	EImpact_Brick,
 	EImpact_Wood,
 	EImpact_Sand,
-	EImpact_Glass
+	EImpact_Glass,
+	EImpact_Concrert,
+	EImpact_Skin,
+	EImpact_Water,
+	EImpact_Plants,
+	EImpact_Rubber
 };
 
 
