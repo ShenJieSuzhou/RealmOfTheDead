@@ -8,7 +8,18 @@ public class ROTD : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "Niagara", "PhysicsCore", "SlateCore"});
+		PublicDependencyModuleNames.AddRange(new string[] { 
+            "Core", 
+            "CoreUObject", 
+            "Engine", 
+            "InputCore", 
+            "HeadMountedDisplay", 
+            "Niagara", 
+            "PhysicsCore", 
+            "SlateCore", 
+            "UMG", 
+            "Slate", 
+            "MoviePlayer"});
 
         PrivateIncludePaths.AddRange(
            new string[] {

@@ -12,7 +12,7 @@
 #include "Util/ShootingUtil.h"
 #include "FX/BulletHole.h"
 #include "FX/BulletImpactEffect.h"
-#include "ROTDGameMode.h"
+#include "GameMode/ROTDGameMode.h"
 #include "GameFramework/InputSettings.h"
 
 

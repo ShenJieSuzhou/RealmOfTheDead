@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "./Util/ShootingMaterialUtil.h"
+#include "../Util/ShootingMaterialUtil.h"
 #include "GameEntryModeBase.generated.h"
 
 /**

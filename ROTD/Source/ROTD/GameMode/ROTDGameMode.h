@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "FX/Definitions.h"
+#include "../FX/Definitions.h"
 #include "ROTDGameMode.generated.h"
 
 UCLASS(minimalapi)

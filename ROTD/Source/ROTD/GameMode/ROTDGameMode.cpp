@@ -1,9 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ROTDGameMode.h"
-#include "ROTDCharacter.h"
-#include "ShootingHUD.h"
-#include "Util/ShootingMaterialUtil.h"
+#include "../ROTDCharacter.h"
+#include "../ShootingHUD.h"
+#include "../Util/ShootingMaterialUtil.h"
 #include "UObject/ConstructorHelpers.h"
 
 AROTDGameMode::AROTDGameMode()
