@@ -886,9 +886,7 @@ void AROTDCharacter::OnGunFire()
 	if (isHit)
 	{
 		EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
-		//UMaterialInterface* BulletHole = FShootingUtil::GetInstance()->RandomGenerateBulletHole(SurfaceType);
-		//UNiagaraSystem* ImpactParticle = FShootingUtil::GetInstance()->GetImpactParticleSyatem(SurfaceType);
-		
+	
 		// Retrieve BulletImpactData from GameMode
 		AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
 		bool Success = false;
@@ -905,19 +903,20 @@ void AROTDCharacter::OnGunFire()
 		{
 			ApplyDamageTo(Hit);
 			FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
-			int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
-
-			if (!BulletImpact.BulletDecals[index])
+			if(BulletImpact.BulletDecals.Num() != 0)
 			{
-				return;
-			}
+				int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
+				if (!BulletImpact.BulletDecals[index])
+				{
+					return;
+				}
 
-			UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
-
-			if (MaterialIns)
-			{
-				ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
-				BulletDecal->SetBulletHoleMaterial(MaterialIns);
+				UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
+				if (MaterialIns)
+				{
+					ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+					BulletDecal->SetBulletHoleMaterial(MaterialIns);
+				}
 			}
 
 			UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);

@@ -24,7 +24,7 @@ EImpactType FShootingUtil::GetImpactType(UPhysicalMaterial* material)
 		Type = EImpactType::EImpact_Wood;
 		break;
 	case SurfaceType3:
-		Type = EImpactType::EImpact_Default;
+		Type = EImpactType::EImpact_Water;
 		break;
 	case SurfaceType4:
 		Type = EImpactType::EImpact_Sand;
@@ -36,9 +36,10 @@ EImpactType FShootingUtil::GetImpactType(UPhysicalMaterial* material)
 		Type = EImpactType::EImpact_Glass;
 		break;
 	case SurfaceType7:
-		Type = EImpactType::EImpact_Default;
+		Type = EImpactType::EImpact_Plants;
 		break;
 	case SurfaceType8:
+		Type = EImpactType::EImpact_Skin;
 		break;
 	case SurfaceType9:
 		break;
@@ -151,6 +152,7 @@ EImpactType FShootingUtil::GetImpactType(UPhysicalMaterial* material)
 	case SurfaceType_Max:
 		break;
 	default:
+		Type = EImpactType::EImpact_Default;
 		break;
 	}
 
