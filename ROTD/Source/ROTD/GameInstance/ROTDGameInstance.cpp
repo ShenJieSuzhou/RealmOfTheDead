@@ -7,8 +7,8 @@ void UROTDGameInstance::Init()
 {
 	Super::Init();
 
-	FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UROTDGameInstance::BeginLoadingScreen);
-	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UROTDGameInstance::EndLoadingScreen);
+	/*FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &UROTDGameInstance::BeginLoadingScreen);
+	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UROTDGameInstance::EndLoadingScreen);*/
 }
 
 void UROTDGameInstance::BeginLoadingScreen_Implementation(const FString& MapName)
