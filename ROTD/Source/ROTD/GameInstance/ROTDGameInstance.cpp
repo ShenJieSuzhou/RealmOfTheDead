@@ -21,7 +21,7 @@ void UROTDGameInstance::BeginLoadingScreen_Implementation(const FString& MapName
 
 		if (PlayMovies)
 		{
-			LoadingScreen.MoviePaths = StringPaths;
+			LoadingScreen.MoviePaths.Add("nukesilo");
 		}
 
 		UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), LoadingScreenWidget);
