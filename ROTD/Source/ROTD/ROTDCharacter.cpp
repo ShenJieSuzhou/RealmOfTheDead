@@ -206,6 +206,8 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
 		CurrentWeapon = EmptyHands;
+
+
 		break;
 	case 1:
 		// ذ��
@@ -270,6 +272,17 @@ void AROTDCharacter::SwitchWeapons(int32 Type)
 	if (hud == NULL)
 	{
 		return;
+	}
+
+	if (CurrentWeapon == EmptyHands)
+	{
+		hud->PointWidget->SetVisibility(ESlateVisibility::Visible);
+		hud->CrossWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		hud->PointWidget->SetVisibility(ESlateVisibility::Hidden);
+		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
 	hud->SwitchWeapon(CurrentWeapon);

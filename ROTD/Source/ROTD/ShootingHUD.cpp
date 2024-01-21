@@ -32,6 +32,13 @@ void AShootingHUD::BeginPlay()
 	TSubclassOf<UCrossMarkWidget> CrossWidgetClass = LoadClass<UCrossMarkWidget>(NULL, *WidgetClassLoadPath);
 	CrossWidget = CreateWidget<UCrossMarkWidget>(GetWorld(), CrossWidgetClass);
 	CrossWidget->AddToViewport();
+	CrossWidget->SetVisibility(ESlateVisibility::Hidden);
+
+	// Point 
+	FString WidgetPointPath = FString(TEXT("WidgetBlueprint'/Game/ROTD/UI/XCircle_HUD.XCircle_HUD_C'"));
+	TSubclassOf<UUserWidget> PointWidgetClass = LoadClass<UUserWidget>(NULL, *WidgetPointPath);
+	PointWidget = CreateWidget<UUserWidget>(GetWorld(), PointWidgetClass);
+	PointWidget->AddToViewport();
 
 	FString HealthWeaponPath = FString(TEXT("WidgetBlueprint'/Game/ROTD/UI/Health_Weapon_WB.Health_Weapon_WB_C'"));
 	TSubclassOf<UROTDHealthWeaponWidget> HealthWeaponClass = LoadClass<UROTDHealthWeaponWidget>(NULL, *HealthWeaponPath);

@@ -17,6 +17,7 @@ class AShootingHUD : public AHUD
 public:
 	UCrossMarkWidget* CrossWidget;
 	UROTDHealthWeaponWidget* HealthWeaponWidget;
+	UUserWidget* PointWidget;
 
 public:
 	AShootingHUD();
