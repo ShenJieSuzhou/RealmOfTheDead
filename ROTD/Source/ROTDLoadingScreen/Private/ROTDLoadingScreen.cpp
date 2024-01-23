@@ -33,7 +33,16 @@ public:
 	void Construct(const FArguments& InArgs)
 	{
 		// Load version of the logo with text baked in, path is hardcoded because this loads very early in startup
-		static const FName LoadingScreenName(TEXT("/Game/ROTD/UI/BK_ROTD.BK_ROTD"));
+		//static const FName LoadingScreenName(TEXT("/Game/ROTD/UI/BK_ROTD.BK_ROTD"));
+		//Texture2D'/Game/ROTD/UI/T_ActionRPG_TransparentLogo.T_ActionRPG_TransparentLogo'
+		static const FName LoadingScreenName(TEXT("/Game/ROTD/UI/T_ActionRPG_TransparentLogo.T_ActionRPG_TransparentLogo"));
+		//UTexture2D* LoadingScreenTexture = FindObject<UTexture2D>(NULL, *LoadingScreenName.ToString());
+		//if (!LoadingScreenTexture)
+		//{
+		//	LoadingScreenTexture = LoadObject<UTexture2D>(NULL, *LoadingScreenName.ToString());
+		//}
+
+		//LoadingScreenBrush = FDeferredCleanupSlateBrush::CreateBrush(LoadingScreenTexture, FVector2D(LoadingScreenTexture->GetSurfaceWidth(), LoadingScreenTexture->GetSurfaceHeight()));
 
 		LoadingScreenBrush = MakeShareable(new FROTDLoadingScreenBrush(LoadingScreenName, FVector2D(1024, 256)));
 		
@@ -78,12 +87,12 @@ private:
 	/** Rather to show the ... indicator */
 	EVisibility GetLoadIndicatorVisibility() const
 	{
-		bool Vis =  GetMoviePlayer()->IsLoadingFinished();
 		return GetMoviePlayer()->IsLoadingFinished() ? EVisibility::Collapsed : EVisibility::Visible;
 	}
 	
 	/** Loading screen image brush */
 	TSharedPtr<FSlateDynamicImageBrush> LoadingScreenBrush;
+	//TSharedPtr<FDeferredCleanupSlateBrush> LoadingScreenBrush;
 };
 
 class FROTDLoadingScreenModule : public IROTDLoadingScreenModule
@@ -91,22 +100,26 @@ class FROTDLoadingScreenModule : public IROTDLoadingScreenModule
 public:
 	virtual void StartupModule() override
 	{
-		//// Force load for cooker reference
-		//LoadObject<UObject>(nullptr, TEXT("/Game/ROTD/UI/BK_ROTD.BK_ROTD") );
+		// Force load for cooker reference
+		LoadObject<UObject>(nullptr, TEXT("/Game/ROTD/UI/T_ActionRPG_TransparentLogo.T_ActionRPG_TransparentLogo"));
 
 		if (IsMoviePlayerEnabled())
 		{
-			GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FROTDLoadingScreenModule::OnPrepareLoadingScreen);
+			//GetMoviePlayer()->OnPrepareLoadingScreen().AddRaw(this, &FROTDLoadingScreenModule::OnPrepareLoadingScreen);
 
-			if (FParse::Param(FCommandLine::Get(), TEXT("CN")))
+			/*if (FParse::Param(FCommandLine::Get(), TEXT("CN")))
 			{
 				SetupLoadingMovie({ "LoadingScreenCN" }, 15);
 			}
 			else
 			{
-				SetupLoadingMovie({ "LoadingScreen" }, 8);
-			}
-			//CreateScreen();
+				SetupLoadingMovie({ "LoadingScreenCN" }, 15);
+			}*/
+		}
+
+		if (IsMoviePlayerEnabled())
+		{
+			CreateScreen();
 		}
 	}
 	
@@ -120,33 +133,33 @@ public:
 		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 	}
 
-	virtual void StartInGameLoadingScreen(bool bPlayUntilStopped, float PlayTime) override
-	{
-		FLoadingScreenAttributes LoadingScreen;
-		LoadingScreen.bAutoCompleteWhenLoadingCompletes = !bPlayUntilStopped;
-		LoadingScreen.bWaitForManualStop = bPlayUntilStopped;
-		LoadingScreen.bAllowEngineTick = bPlayUntilStopped;
-		LoadingScreen.MinimumLoadingScreenDisplayTime = PlayTime;
-		LoadingScreen.WidgetLoadingScreen = SNew(SRPGLoadingScreen);
-		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
-	}
+	//virtual void StartInGameLoadingScreen(bool bPlayUntilStopped, float PlayTime) override
+	//{
+	//	FLoadingScreenAttributes LoadingScreen;
+	//	LoadingScreen.bAutoCompleteWhenLoadingCompletes = !bPlayUntilStopped;
+	//	LoadingScreen.bWaitForManualStop = bPlayUntilStopped;
+	//	LoadingScreen.bAllowEngineTick = bPlayUntilStopped;
+	//	LoadingScreen.MinimumLoadingScreenDisplayTime = PlayTime;
+	//	LoadingScreen.WidgetLoadingScreen = SNew(SRPGLoadingScreen);
+	//	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+	//}
 
-	virtual void StopInGameLoadingScreen() override
-	{
-		GetMoviePlayer()->StopMovie();
-	}
+	//virtual void StopInGameLoadingScreen() override
+	//{
+	//	GetMoviePlayer()->StopMovie();
+	//}
 
 	virtual void SetupLoadingMovie(TArray<FString> MoviePaths, float MinimumLoadingScreenDisplayTime = -1.f) override
 	{
 		if (IsMoviePlayerEnabled())
 		{
-			LoadingScreenAttributes = FLoadingScreenAttributes();
-			LoadingScreenAttributes.bAutoCompleteWhenLoadingCompletes = true;
-			LoadingScreenAttributes.MinimumLoadingScreenDisplayTime = MinimumLoadingScreenDisplayTime;
-			LoadingScreenAttributes.MoviePaths = MoviePaths;
-			LoadingScreenAttributes.bMoviesAreSkippable = true;
-			LoadingScreenAttributes.PlaybackType = EMoviePlaybackType::MT_Normal;
-			LoadingScreenAttributes.bAllowEngineTick = false;
+			LoadingScreen = FLoadingScreenAttributes();
+			LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
+			LoadingScreen.MinimumLoadingScreenDisplayTime = MinimumLoadingScreenDisplayTime;
+			LoadingScreen.MoviePaths = MoviePaths;
+			LoadingScreen.bMoviesAreSkippable = true;
+			LoadingScreen.PlaybackType = EMoviePlaybackType::MT_Normal;
+			LoadingScreen.bAllowEngineTick = false;
 		}
 	}
 
@@ -157,21 +170,21 @@ public:
 			LoadingScreen = FLoadingScreenAttributes();
 			LoadingScreen.MinimumLoadingScreenDisplayTime = MinimumLoadingScreenDisplayTime;
 			LoadingScreen.bMoviesAreSkippable = false;
-			LoadingScreen.WidgetLoadingScreen = SNew(SSGLoadingScreen).CutsceneText(Tooltip);
+			LoadingScreen.WidgetLoadingScreen = SNew(SROTDLoadingScreen);
+			GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
 		}
 	}
 
-	//virtual void CreateScreen()
-	//{
-	//	LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
-	//	LoadingScreen.MinimumLoadingScreenDisplayTime = 3.f;
-	//	LoadingScreen.WidgetLoadingScreen = SNew(SRPGLoadingScreen);
-	//	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
-	//}
+	virtual void CreateScreen()
+	{
+		LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
+		LoadingScreen.MinimumLoadingScreenDisplayTime = 3.f;
+		LoadingScreen.WidgetLoadingScreen = SNew(SROTDLoadingScreen);
+		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+	}
 
 private:
 	FLoadingScreenAttributes LoadingScreen;
-
 };
 
 IMPLEMENT_GAME_MODULE(FROTDLoadingScreenModule, ROTDLoadingScreen);

@@ -12,11 +12,6 @@
 				"UMG",
 				"Engine"
 			]
-		},
-		{
-			"Name": "ActionRPGLoadingScreen",
-			"Type": "ClientOnly",
-			"LoadingPhase": "PreLoadingScreen"
 		}
 	],
 	"Plugins": [

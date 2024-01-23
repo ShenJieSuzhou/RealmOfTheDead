@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Modules/ModuleInterface.h"
+#include "Slate/DeferredCleanupSlateBrush.h"
 #include "Modules/ModuleManager.h"
 
 /** Module interface for this game's loading screens */
@@ -16,10 +17,10 @@ public:
 	}
 
 	/** Kicks off the loading screen for in game loading (not startup) */
-	virtual void StartInGameLoadingScreen(bool bPlayUntilStopped, float PlayTime) = 0;
+	//virtual void StartInGameLoadingScreen(bool bPlayUntilStopped, float PlayTime) = 0;
 
 	/** Stops the loading screen */
-	virtual void StopInGameLoadingScreen() = 0;
+	//virtual void StopInGameLoadingScreen() = 0;
 
 	virtual void SetupLoadingMovie(TArray<FString> MoviePaths, float MinimumLoadingScreenDisplayTime = -1.f) = 0;
 

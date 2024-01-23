@@ -5,12 +5,12 @@
 
 void UROTDBlueprintLibrary::PlayLoadingScreen(bool bPlayUntilStopped, float PlayTime)
 {
-	IActionRPGLoadingScreenModule& LoadingScreenModule = IActionRPGLoadingScreenModule::Get();
-	LoadingScreenModule.StartInGameLoadingScreen(bPlayUntilStopped, PlayTime);
+	//IActionRPGLoadingScreenModule& LoadingScreenModule = IActionRPGLoadingScreenModule::Get();
+	//LoadingScreenModule.StartInGameLoadingScreen(bPlayUntilStopped, PlayTime);
 }
 
 void UROTDBlueprintLibrary::StopLoadingScreen()
 {
-	IActionRPGLoadingScreenModule& LoadingScreenModule = IActionRPGLoadingScreenModule::Get();
-	LoadingScreenModule.StopInGameLoadingScreen();
+	//IActionRPGLoadingScreenModule& LoadingScreenModule = IActionRPGLoadingScreenModule::Get();
+	//LoadingScreenModule.StopInGameLoadingScreen();
 }

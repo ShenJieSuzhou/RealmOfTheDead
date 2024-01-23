@@ -30,9 +30,8 @@ public class ROTD : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(
             new string[] {
-                "ActionRPGLoadingScreen"
+                "ROTDLoadingScreen"
             }
         );
-
     }
 }
