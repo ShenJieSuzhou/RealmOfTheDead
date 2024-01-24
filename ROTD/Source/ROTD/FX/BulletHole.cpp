@@ -33,7 +33,7 @@ void ABulletHole::SetBulletHoleMaterial(UMaterialInterface* material)
 		if (material)
 		{
 			Decal->SetDecalMaterial(material);
-			Decal->DecalSize = FVector(10.f, 10.f, 10.f);
+			Decal->DecalSize = FVector(6.f, 6.f, 6.f);
 		}
 	}
 }
