@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "CrossMarkWidget.h"
-#include "Weapons/WeaponBase.h"
+//#include "Weapons/WeaponBase.h"
 #include "ROTDHealthWeaponWidget.h"
 #include "ShootingHUD.generated.h"
 
@@ -31,7 +31,7 @@ public:
 
 	void UpdateAmmo(int currBullets, int TotalBullets);
 
-	void SwitchWeapon(AWeaponBase* weapon);
+	//void SwitchWeapon(AWeaponBase* weapon);
 
 	void UpdateHealth(float CurrentHealth, float MaxHealth);
 

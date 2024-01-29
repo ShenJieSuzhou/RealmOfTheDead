@@ -50,3 +50,30 @@ public:
 	TArray<FBulletImpact> BulletImpactData;
 };
 
+
+UCLASS(BlueprintType)
+class UROTDItems : public UDataAsset
+{
+	GENERATED_BODY()
+public:
+	/** User-visible short name */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	FText ItemName;
+
+	/** User-visible long description */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	FText ItemDescription;
+
+	/** Icon to display */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	FSlateBrush ItemIcon;
+
+	/** Price in game */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	int32 Price;
+
+	/** Maximum number of instances that can be in inventory at once, <= 0 means infinite */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Max)
+	int32 MaxCount;
+};
+

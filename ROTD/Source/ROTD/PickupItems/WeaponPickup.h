@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PickUpItemBase.h"
 #include "GameFramework/Actor.h"
 #include "Engine/EngineTypes.h"
 #include "Sound/SoundBase.h"
@@ -11,7 +12,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Engine/Texture2D.h"
 #include "NiagaraComponent.h"
-#include "WeaponBase.generated.h"
+#include "WeaponPickup.generated.h"
 
 class USkeletalMeshComponent;
 class USceneComponent;
@@ -29,7 +30,7 @@ enum class EWeapon : uint8
 };
 
 UCLASS()
-class ROTD_API AWeaponBase : public AActor
+class ROTD_API AWeaponPickup : public APickUpItemBase
 {
 	GENERATED_BODY()
 	
@@ -117,7 +118,7 @@ public:
 
 public:	
 	// Sets default values for this actor's properties
-	AWeaponBase();
+	AWeaponPickup();
 
 protected:
 	// Called when the game starts or when spawned

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "WeaponBase.h"
+#include "PickupItems/WeaponPickup.h"
 #include "ShootingHUD.h"
 #include "NiagaraFunctionLibrary.h"
 #include "ROTDCharacter.generated.h"
@@ -62,28 +62,25 @@ public:
 
 	FLatentActionInfo GunFireLatentInfo;
 
-	// ������ʱ��
 	FTimerHandle AutomaticHandle;
 
-	// Current Weapons
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
-	AWeaponBase* CurrentWeapon;
+	//// Current Weapons
+	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
+	//AWeaponBase* CurrentWeapon;
 
-	// Hands
-	AWeaponBase* EmptyHands;
-	// Knife
-	AWeaponBase* WeaponKnife;
-	// Pisto 
-	AWeaponBase* WeaponPisto;
-	// Rifle
-	AWeaponBase* WeaponRifle;
-	// Snipe
-	AWeaponBase* WeaponSnipe;
+	//// Hands
+	//AWeaponBase* EmptyHands;
+	//// Knife
+	//AWeaponBase* WeaponKnife;
+	//// Pisto 
+	//AWeaponBase* WeaponPisto;
+	//// Rifle
+	//AWeaponBase* WeaponRifle;
+	//// Snipe
+	//AWeaponBase* WeaponSnipe;
 
-	// ��������
-	TMap<EWeapon, int32> WeaponMap;
+	//TMap<EWeapon, int32> WeaponMap;
 
-	// ʮ����׼
 	AShootingHUD* hud;
 
 protected:
@@ -160,11 +157,11 @@ public:
 	UFUNCTION()
 	void GunFireDelay();
 
-	// �л�����
+	// Switch Weapon
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(int32 Type);
 
-	// Reload ��ҩ
+	// Reload 
 	UFUNCTION(BlueprintCallable)
 	void Reload();
 
