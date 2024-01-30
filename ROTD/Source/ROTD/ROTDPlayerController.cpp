@@ -15,6 +15,8 @@ void AROTDPlayerController::InventoryItemChanged(bool bAdded, UROTDItems* Item)
 
 bool AROTDPlayerController::AddInventoryItem(UROTDItems* NewItem, int32 ItemCount /*= 1*/, int32 ItemLevel /*= 1*/, bool bAutoSlot /*= true*/)
 {
+	
+
 	return true;
 }
 

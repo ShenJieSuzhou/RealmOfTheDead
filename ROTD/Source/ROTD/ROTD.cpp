@@ -5,3 +5,5 @@
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ROTD, "ROTD" );
  
+/** Logging definitions */
+DEFINE_LOG_CATEGORY(LogROTD);
