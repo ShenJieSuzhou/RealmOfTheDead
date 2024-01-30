@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Inventory/ROTDInventoryInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "ROTDPlayerController.generated.h"
 
@@ -10,8 +11,66 @@
  * 
  */
 UCLASS()
-class ROTD_API AROTDPlayerController : public APlayerController
+class ROTD_API AROTDPlayerController : public APlayerController, public UROTDInventoryInterface
 {
 	GENERATED_BODY()
 	
+public:
+	AROTDPlayerController() {}
+
+	virtual void BeginPlay() override;
+
+	/** Called after the inventory was changed and we notified all delegates */
+	void InventoryItemChanged(bool bAdded, UROTDItems* Item);
+
+	/** Adds a new inventory item, will add it to an empty slot if possible. If the item supports count you can add more than one count. It will also update the level when adding if required */
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	bool AddInventoryItem(UROTDItems* NewItem, int32 ItemCount = 1, int32 ItemLevel = 1, bool bAutoSlot = true);
+
+	/** Remove an inventory item, will also remove from slots. A remove count of <= 0 means to remove all copies */
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	bool RemoveInventoryItem(UROTDItems* RemovedItem, int32 RemoveCount = 1);
+
+	/** Returns all inventory items of a given type. If none is passed as type it will return all */
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	void GetInventoryItems(TArray<UROTDItems*>& Items);
+
+	/** Returns number of instances of this item found in the inventory. This uses count from GetItemData */
+	UFUNCTION(BlueprintPure, Category = Inventory)
+	int32 GetInventoryItemCount(UROTDItems* Item) const;
+
+	/** Returns the item data associated with an item. Returns false if none found */
+	UFUNCTION(BlueprintPure, Category = Inventory)
+	bool GetInventoryItemData(UROTDItems* Item, int& Count) const;
+
+	// Implement IRPGInventoryInterface
+	virtual const TMap<UROTDItems*, int>& GetInventoryDataMap() const override
+	{
+		return InventoryData;
+	}
+
+	virtual FOnInventoryItemChangedNative& GetInventoryItemChangedDelegate() override
+	{
+		return OnInventoryItemChangedNative;
+	}
+
+	/** Calls the inventory update callbacks */
+	void NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item);
+
+	// Primary Weapon 
+
+	// Second Weapon
+
+	// Thrid Weapon
+
+public:
+	/** Map of all items owned by this player, from definition to data */
+	TMap<UROTDItems*, int> InventoryData;
+
+	/** Delegate called when an inventory item has been added or removed */
+	FOnInventoryItemChanged OnInventoryItemChanged;
+
+	/** Native version above, called before BP delegate */
+	FOnInventoryItemChangedNative OnInventoryItemChangedNative;
+
 };

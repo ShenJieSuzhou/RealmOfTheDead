@@ -64,22 +64,9 @@ public:
 
 	FTimerHandle AutomaticHandle;
 
-	//// Current Weapons
-	//UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
-	//AWeaponBase* CurrentWeapon;
-
-	//// Hands
-	//AWeaponBase* EmptyHands;
-	//// Knife
-	//AWeaponBase* WeaponKnife;
-	//// Pisto 
-	//AWeaponBase* WeaponPisto;
-	//// Rifle
-	//AWeaponBase* WeaponRifle;
-	//// Snipe
-	//AWeaponBase* WeaponSnipe;
-
-	//TMap<EWeapon, int32> WeaponMap;
+	// Current Weapons
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
+	AWeaponPickup* CurrentWeapon;
 
 	AShootingHUD* hud;
 
