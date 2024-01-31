@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ROTD.h"
 #include "Inventory/ROTDInventoryInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "ROTDPlayerController.generated.h"
@@ -25,7 +26,7 @@ public:
 
 	/** Adds a new inventory item, will add it to an empty slot if possible. If the item supports count you can add more than one count. It will also update the level when adding if required */
 	UFUNCTION(BlueprintCallable, Category = Inventory)
-	bool AddInventoryItem(UROTDItems* NewItem, int32 ItemCount = 1, int32 ItemLevel = 1, bool bAutoSlot = true);
+	bool AddInventoryItem(UROTDItems* NewItem, int32 ItemCount = 1, bool bAutoSlot = true);
 
 	/** Remove an inventory item, will also remove from slots. A remove count of <= 0 means to remove all copies */
 	UFUNCTION(BlueprintCallable, Category = Inventory)
@@ -38,10 +39,6 @@ public:
 	/** Returns number of instances of this item found in the inventory. This uses count from GetItemData */
 	UFUNCTION(BlueprintPure, Category = Inventory)
 	int32 GetInventoryItemCount(UROTDItems* Item) const;
-
-	/** Returns the item data associated with an item. Returns false if none found */
-	UFUNCTION(BlueprintPure, Category = Inventory)
-	bool GetInventoryItemData(UROTDItems* Item, int& Count) const;
 
 	// Implement IRPGInventoryInterface
 	virtual const TMap<UROTDItems*, int>& GetInventoryDataMap() const override

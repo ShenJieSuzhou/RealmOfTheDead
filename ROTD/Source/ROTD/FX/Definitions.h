@@ -58,6 +58,9 @@ class UROTDItems : public UDataAsset
 public:
 	/** User-visible short name */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	FText ItemID;
+	/** User-visible short name */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	FText ItemName;
 
 	/** User-visible long description */
