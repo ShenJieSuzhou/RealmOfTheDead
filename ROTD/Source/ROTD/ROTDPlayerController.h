@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ROTD.h"
+#include "ROTDItems/ROTDWeaponItem.h"
 #include "Inventory/ROTDInventoryInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "ROTDPlayerController.generated.h"
@@ -55,12 +56,18 @@ public:
 	void NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item);
 
 	// Primary Weapon 
+	UROTDItems* PrimaryWeapon;
 
 	// Second Weapon
+	UROTDItems* SecondWeapon;
 
-	// Thrid Weapon
+	// Thrid Weapon (Only for sniper)
+	UROTDItems* ThridWeapon;
 
-public:
+	// Fourth Weapon 
+	UROTDItems* FourthWeapon;
+
+private:
 	/** Map of all items owned by this player, from definition to data */
 	TMap<UROTDItems*, int> InventoryData;
 

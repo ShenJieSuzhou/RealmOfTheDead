@@ -51,6 +51,17 @@ public:
 };
 
 
+UENUM()
+enum class EItemType : uint8
+{
+	EItem_Knife,
+	EItem_Pisto,
+	EItem_Rifle,
+	EItem_Snipe,
+	EItem_MediaSupply,
+	EItem_AmmoSupply
+};
+
 UCLASS(BlueprintType)
 class UROTDItems : public UDataAsset
 {
@@ -59,6 +70,11 @@ public:
 	/** User-visible short name */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	FText ItemID;
+
+	/** User-visible short name */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	EItemType ItemType;
+
 	/** User-visible short name */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	FText ItemName;

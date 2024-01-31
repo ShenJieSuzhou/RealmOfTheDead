@@ -31,6 +31,31 @@ bool AROTDPlayerController::AddInventoryItem(UROTDItems* NewItem, int32 ItemCoun
 	// Find current item data, which may be empty
 	int OldCount = GetInventoryItemCount(NewItem);
 
+	// 判断能否添加，是否数量已到最大值
+	if(OldCount >= NewItem->MaxCount)
+	{
+		UE_LOG(LogROTD, Warning, TEXT("AddInventoryItem: Item reach maxcount!"));
+		return false;
+	}
+
+	// 是什么类型的物品
+	if(NewItem->ItemType == EItemType::EItem_Rifle)
+	{
+		PrimaryWeapon = NewItem;
+	}
+	else if(NewItem->ItemType == EItemType::EItem_Pisto)
+	{
+		SecondWeapon = NewItem;
+	}
+	else if(NewItem->ItemType == EItemType::EItem_Snipe)
+	{
+		ThridWeapon = NewItem;
+	}
+	else if (NewItem->ItemType == EItemType::EItem_Knife)
+	{
+		FourthWeapon = NewItem;
+	}
+
 	// Find modified data
 	int NewCount = OldCount + ItemCount;
 
@@ -71,6 +96,28 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 	{
 		// Wasn't found
 		return false;
+	}
+
+	// 是什么类型的物品
+	if (RemovedItem->ItemType == EItemType::EItem_Rifle)
+	{
+		delete PrimaryWeapon;
+		PrimaryWeapon = NULL;
+	}
+	else if (RemovedItem->ItemType == EItemType::EItem_Pisto)
+	{
+		delete SecondWeapon;
+		SecondWeapon = NULL;
+	}
+	else if (RemovedItem->ItemType == EItemType::EItem_Snipe)
+	{
+		delete ThridWeapon;
+		ThridWeapon = NULL;
+	}
+	else if (RemovedItem->ItemType == EItemType::EItem_Knife)
+	{
+		delete FourthWeapon;
+		FourthWeapon = NULL;
 	}
 
 	// If RemoveCount <= 0, delete all
@@ -130,10 +177,8 @@ int32 AROTDPlayerController::GetInventoryItemCount(UROTDItems* Item) const
 void AROTDPlayerController::NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item)
 {
 	// Notify native before blueprint
+	// 通知 character 切换武器（刀，手枪，AK）
 	OnInventoryItemChangedNative.Broadcast(bAdded, Item);
 	OnInventoryItemChanged.Broadcast(bAdded, Item);
-
-	// Call BP update event
-	InventoryItemChanged(bAdded, Item);
 }
 

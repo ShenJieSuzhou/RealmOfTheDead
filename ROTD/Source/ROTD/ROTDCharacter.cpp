@@ -49,17 +49,17 @@ void AROTDCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	//// Hands
-	//EmptyHands = NULL;
-	//// Knife
-	//WeaponKnife = NULL;
-	//// Pisto 
-	//WeaponPisto = NULL;
-	//// Rifle
-	//WeaponRifle = NULL;
-	//// Snipe
-	//WeaponSnipe = NULL;
-
+	// 绑定背包事件
+	AROTDPlayerController *PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if(PlayerController)
+	{
+		PlayerController->GetInventoryItemChangedDelegate().AddUObject(this, &AROTDCharacter::PickUpWeapons);
+	}
+	else
+	{
+		UE_LOG(LogROTD, Warning, TEXT("AROTDPlayerController return NULL"));
+	}
+	
 	IsReloading = false;
 	CanFire = true;
 
@@ -191,83 +191,52 @@ bool AROTDCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInpu
 	return false;
 }
 
-void AROTDCharacter::SwitchWeapons(int32 Type)
+void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 {
-	//if(IsReloading)
-	//{
-	//	return;
-	//}
+	if(!IsAdded)
+	{
+		return;
+	}
 
-	//switch (Type)
-	//{
-	//case 0:
-	//	// ����
-	//	if (CurrentWeapon) {
-	//		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	//	}
-	//	CurrentWeapon = EmptyHands;
+	if (IsReloading)
+	{
+		return;
+	}
 
+	UROTDWeaponItem* WeaponItem = (UROTDWeaponItem*)Item;
+	if (!WeaponItem) return;
 
-	//	break;
-	//case 1:
-	//	// ذ��
-	//	{
-	//		//if(WeaponMap.Find(EWeapon::EW_Knife) == 0)
-	//		//{
-	//		//	return;
-	//		//}
+	if(Item->ItemType == EItemType::EItem_Rifle)
+	{
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
 
-	//		if(CurrentWeapon){
-	//			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	//		}
+		CurrentWeapon = Cast<AWeaponPickup>(WeaponItem->WeaponActor);
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+	}
+	else if(Item->ItemType == EItemType::EItem_Pisto)
+	{
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
 
-	//		CurrentWeapon = WeaponKnife;
-	//		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
-	//	}
-	//	break;
-	//case 2:
-	//	// ��ǹ
-	//{
-	//	//if (WeaponMap.Find(EWeapon::EW_Pisto) == 0)
-	//	//{
-	//	//	return;
-	//	//}
+		CurrentWeapon = Cast<AWeaponPickup>(WeaponItem->WeaponActor);
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
+	}
+	else if(Item->ItemType == EItemType::EItem_Knife)
+	{
+		if(CurrentWeapon){
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
 
-	//	if (CurrentWeapon) {
-	//		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	//	}
-
-	//	CurrentWeapon = WeaponPisto;
-	//	CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
-	//}
-	//	break;
-	//case 3:
-	//	// ���ǹ
-	//{	
-	//	//if (WeaponMap.Find(EWeapon::EW_Rifle) == 0)
-	//	//{
-	//	//	return;
-	//	//}
-
-	//	if (CurrentWeapon) {
-	//		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	//	}
-
-	//	CurrentWeapon = WeaponRifle;
-	//	CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
-	//}
-	//	break;
-	//case 4:
-	//	// �ѻ�ǹ
-	//	//if (WeaponMap.Find(EWeapon::EW_Snipe) == 0)
-	//	//{
-	//	//	return;
-	//	//}
-
-	//	break;
-	//default:
-	//	break;
-	//}
+		CurrentWeapon = Cast<AWeaponPickup>(WeaponItem->WeaponActor);
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
+	}
+	else if(Item->ItemType == EItemType::EItem_Snipe)
+	{
+		
+	}
 
 	//if (hud == NULL)
 	//{

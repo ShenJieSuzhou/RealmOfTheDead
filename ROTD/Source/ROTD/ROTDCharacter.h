@@ -7,6 +7,7 @@
 #include "PickupItems/WeaponPickup.h"
 #include "ShootingHUD.h"
 #include "NiagaraFunctionLibrary.h"
+#include "ROTDPlayerController.h"
 #include "ROTDCharacter.generated.h"
 
 class UInputComponent;
@@ -144,9 +145,8 @@ public:
 	UFUNCTION()
 	void GunFireDelay();
 
-	// Switch Weapon
-	UFUNCTION(BlueprintCallable)
-	void SwitchWeapons(int32 Type);
+	// Weapon Pack
+	void PickUpWeapons(bool IsAdded, UROTDItems* Item);
 
 	// Reload 
 	UFUNCTION(BlueprintCallable)
