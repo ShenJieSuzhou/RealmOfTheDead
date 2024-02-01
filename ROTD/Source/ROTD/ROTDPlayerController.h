@@ -52,6 +52,11 @@ public:
 		return OnInventoryItemChangedNative;
 	}
 
+	virtual FOnInventoryWeaponChanged& GetInventoryWeaponChangedDelegate() override
+	{
+		return OnInventoryWeaponChanged;
+	}
+
 	/** Calls the inventory update callbacks */
 	void NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item);
 
@@ -72,7 +77,7 @@ private:
 	TMap<UROTDItems*, int> InventoryData;
 
 	/** Delegate called when an inventory item has been added or removed */
-	FOnInventoryItemChanged OnInventoryItemChanged;
+	FOnInventoryWeaponChanged OnInventoryWeaponChanged;
 
 	/** Native version above, called before BP delegate */
 	FOnInventoryItemChangedNative OnInventoryItemChangedNative;

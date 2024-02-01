@@ -10,6 +10,7 @@
 #include "Components/Border.h"
 #include "SupplyPickup.h"
 #include "WeaponPickup.h"
+#include "ROTDItems/ROTDWeaponItem.h"
 #include "ROTDHealthWeaponWidget.generated.h"
 
 /**
@@ -58,7 +59,7 @@ public:
 public:
 	void UpdateAmmo(int currBullets, int TotalBullets);
 	
-	//void SwitchWeapon(AWeaponBase* curWeapon);
+	void SwitchWeapon(UROTDWeaponItem* curWeapon);
 
 	void UpdateHealthProcessBar(float CurrentHealth, float MaxHealth);
 

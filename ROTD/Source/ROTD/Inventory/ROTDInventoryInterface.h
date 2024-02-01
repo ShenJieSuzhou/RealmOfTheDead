@@ -12,5 +12,8 @@ public:
 
 	/** Gets the delegate for inventory item changes */
 	virtual FOnInventoryItemChangedNative& GetInventoryItemChangedDelegate() = 0;
+
+	/** Gets the delegate for inventory item changes */
+	virtual FOnInventoryWeaponChanged& GetInventoryWeaponChangedDelegate() = 0;
 };
 

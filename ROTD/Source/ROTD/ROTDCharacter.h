@@ -58,7 +58,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool CanFire;
-	
+
 	FLatentActionInfo ReloadAmmoLatentInfo;
 
 	FLatentActionInfo GunFireLatentInfo;
@@ -69,7 +69,12 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
 	AWeaponPickup* CurrentWeapon;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int WeaponType;
+
 	AShootingHUD* hud;
+
+	TMap<AWeaponPickup*, int> OwnedWeapons;
 
 protected:
 	
@@ -185,13 +190,7 @@ public:
 
 	void OnGunFire();
 
-	FString GetEmptyHands() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Hands_BP.Hands_BP_C'"); }
-
-	FString GetKnife() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/NepaleseArmyKnife_BP.NepaleseArmyKnife_BP_C'"); }
-
-	FString GetPisto() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/Magnum_BP.Magnum_BP_C'"); }
-
-	FString GetRifle() const { return TEXT("Blueprint'/Game/ROTD/Blueprint/Weapons/AK_BP.AK_BP_C'"); }
+	void SwitchWeapons(int Index);
 
 	void TestInitWeaponData();
 

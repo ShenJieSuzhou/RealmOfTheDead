@@ -31,7 +31,7 @@ public:
 
 	void UpdateAmmo(int currBullets, int TotalBullets);
 
-	//void SwitchWeapon(AWeaponBase* weapon);
+	void SwitchWeapon(UROTDWeaponItem* WeaponItem);
 
 	void UpdateHealth(float CurrentHealth, float MaxHealth);
 

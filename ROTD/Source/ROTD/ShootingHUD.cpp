@@ -63,16 +63,15 @@ void AShootingHUD::UpdateAmmo(int currBullets, int TotalBullets)
 	HealthWeaponWidget->UpdateAmmo(currBullets, TotalBullets);
 }
 
-//void AShootingHUD::SwitchWeapon(AWeaponBase* weapon)
-//{
-//	if(weapon == NULL)
-//	{
-//		return;
-//	}
-//
-//	HealthWeaponWidget->SwitchWeapon(weapon);
-//}
-
+void AShootingHUD::SwitchWeapon(UROTDWeaponItem* WeaponItem)
+{
+	if(WeaponItem == NULL)
+	{
+		return;
+	}
+	
+	HealthWeaponWidget->SwitchWeapon(WeaponItem);
+}
 
 void AShootingHUD::UpdateHealth(float CurrentHealth, float MaxHealth)
 {

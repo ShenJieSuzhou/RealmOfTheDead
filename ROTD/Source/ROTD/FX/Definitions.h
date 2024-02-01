@@ -101,5 +101,5 @@ public:
 };
 
 /** Delegate called when an inventory item changes */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventoryItemChanged, bool, bAdded, UROTDItems*, Item);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInventoryItemChangedNative, bool, UROTDItems*);
+DECLARE_DELEGATE_TwoParams(FOnInventoryWeaponChanged, bool, UROTDItems*);

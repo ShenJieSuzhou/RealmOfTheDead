@@ -24,23 +24,18 @@ void UROTDHealthWeaponWidget::UpdateAmmo(int currBullets, int TotalBullets)
 	BulletsMax->SetText(FText::FromString(sTotal));
 }
 
-//void UROTDHealthWeaponWidget::SwitchWeapon(AWeaponBase* curWeapon)
-//{
-//	if(curWeapon == NULL)
-//	{
-//		//UE_LOG(LogTemp, Log, "Weapon cannot be null");
-//		return;
-//	}
-//
-//	if(curWeapon->WeaponType == EWeapon::EW_Hands)
-//	{
-//		CurWeaponImg->SetVisibility(ESlateVisibility::Hidden);
-//		return;
-//	}
-//	CurWeaponImg->SetVisibility(ESlateVisibility::Visible);
-//	this->DisplayWeapon = curWeapon;
-//	CurWeaponImg->SetBrushFromTexture(curWeapon->GunIcon);
-//}
+void UROTDHealthWeaponWidget::SwitchWeapon(UROTDWeaponItem* curWeapon)
+{
+	if(curWeapon == NULL)
+	{
+		//UE_LOG(LogTemp, Log, "Weapon cannot be null");
+		CurWeaponImg->SetVisibility(ESlateVisibility::Hidden);
+		return;
+	}
+
+	CurWeaponImg->SetVisibility(ESlateVisibility::Visible);
+	CurWeaponImg->SetBrushFromTexture((UTexture2D*)curWeapon->ItemIcon.GetResourceObject());
+}
 
 void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float MaxHealth)
 {
