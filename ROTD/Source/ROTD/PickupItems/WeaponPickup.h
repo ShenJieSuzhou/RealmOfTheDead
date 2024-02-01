@@ -23,10 +23,10 @@ UENUM()
 enum class EWeapon : uint8
 {
 	EW_Hands,
-	EW_Knife,
-	EW_Pisto,
-	EW_Rifle,
-	EW_Snipe
+	EW_Knife, //1
+	EW_Pisto, //2
+	EW_Rifle, //3
+	EW_Snipe  //4
 };
 
 UCLASS()

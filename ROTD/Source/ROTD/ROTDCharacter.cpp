@@ -211,59 +211,7 @@ void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 	UROTDWeaponItem* WeaponItem = (UROTDWeaponItem*)Item;
 	if (!WeaponItem) return;
 
-	// Spawn weapon
-	if (CurrentWeapon) {
-		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	}
-	CurrentWeapon = World->SpawnActor<AWeaponPickup>(WeaponItem->WeaponActor, Localtion, Rotator);
-
-	if(Item->ItemType == EItemType::EItem_Rifle)
-	{
-		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
-		WeaponType = (int)EWeapon::EW_Rifle;
-	}
-	else if(Item->ItemType == EItemType::EItem_Pisto)
-	{
-		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
-		WeaponType = (int)EWeapon::EW_Pisto;
-	}
-	else if(Item->ItemType == EItemType::EItem_Knife)
-	{
-		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
-		WeaponType = (int)EWeapon::EW_Knife;
-	}
-	else if(Item->ItemType == EItemType::EItem_Snipe)
-	{
-		WeaponType = (int)EWeapon::EW_Snipe;
-	}
-	else
-	{
-		if (CurrentWeapon) {
-			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-		}
-	}
-
-	// 将捡到的武器缓存，方便切换武器的时候反复SpawnActor
-	OwnedWeapons.Add(CurrentWeapon, WeaponType);
-
-	// WidgetUI update 
-	if (hud == NULL)
-	{
-		return;
-	}
-
-	if (!CurrentWeapon)
-	{
-		hud->PointWidget->SetVisibility(ESlateVisibility::Visible);
-		hud->CrossWidget->SetVisibility(ESlateVisibility::Hidden);
-	}
-	else
-	{
-		hud->PointWidget->SetVisibility(ESlateVisibility::Hidden);
-		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
-	}
-
-	hud->SwitchWeapon(WeaponItem);
+	
 	//hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
@@ -918,9 +866,158 @@ void AROTDCharacter::OnGunFire()
 	//hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
-void AROTDCharacter::SwitchWeapons(int Index)
+void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 {
-	// 
+	switch (CurrWeaponType)
+	{// 如果当前是步枪，切换顺序：步枪->手枪->狙击枪->刀
+	case EWeapon::EW_Rifle:
+		if(SecondWeapon)
+		{
+			WeaponType = 2;
+			CurrentWeapon = SecondWeapon;
+		}
+		else if(ThridWeapon)
+		{
+			WeaponType = 4;
+			CurrentWeapon = ThridWeapon;
+		}
+		else if(FourthWeapon)
+		{
+			WeaponType = 1;
+			CurrentWeapon = FourthWeapon;
+		}
+		else
+		{
+			WeaponType = 3;
+			CurrentWeapon = PrimaryWeapon;
+		}
+		break;
+	case EWeapon::EW_Pisto:
+		if(ThridWeapon)
+		{
+			WeaponType = 4;
+			CurrentWeapon = ThridWeapon;
+		}
+		else if(FourthWeapon)
+		{
+			WeaponType = 1;
+			CurrentWeapon = FourthWeapon;
+		}
+		else if (PrimaryWeapon)
+		{
+			WeaponType = 3;
+			CurrentWeapon = PrimaryWeapon;
+		}
+		else
+		{
+			WeaponType = 2;
+			CurrentWeapon = SecondWeapon;
+		}
+		break;
+	case EWeapon::EW_Knife:
+		if(PrimaryWeapon)
+		{
+			WeaponType = 3;
+			CurrentWeapon = PrimaryWeapon;
+		}
+		else if(SecondWeapon)
+		{
+			WeaponType = 2;
+			CurrentWeapon = SecondWeapon;
+		}
+		else if(ThridWeapon)
+		{
+			WeaponType = 4;
+			CurrentWeapon = ThridWeapon;
+		}
+		else
+		{
+			WeaponType = 1;
+			CurrentWeapon = FourthWeapon;
+		}
+		break;
+	case EWeapon::EW_Snipe:
+		if (FourthWeapon)
+		{
+			WeaponType = 1;
+			CurrentWeapon = FourthWeapon;
+		}
+		else if (PrimaryWeapon)
+		{
+			WeaponType = 3;
+			CurrentWeapon = PrimaryWeapon;
+		}
+		else if (SecondWeapon)
+		{
+			WeaponType = 2;
+			CurrentWeapon = SecondWeapon;
+		}
+		else
+		{
+			WeaponType = 4;
+			CurrentWeapon = ThridWeapon;
+		}
+	default:
+		break;
+	}
+}
+
+void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
+{
+	// Spawn weapon
+	if (CurrentWeapon) {
+		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+	}
+	CurrentWeapon = World->SpawnActor<AWeaponPickup>(WeaponItem->WeaponActor, Localtion, Rotator);
+
+	if (Item->ItemType == EItemType::EItem_Rifle)
+	{
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+		WeaponType = (int)EWeapon::EW_Rifle;
+		PrimaryWeapon = CurrentWeapon;
+	}
+	else if (Item->ItemType == EItemType::EItem_Pisto)
+	{
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
+		WeaponType = (int)EWeapon::EW_Pisto;
+		SecondWeapon = CurrentWeapon;
+	}
+	else if (Item->ItemType == EItemType::EItem_Knife)
+	{
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
+		WeaponType = (int)EWeapon::EW_Knife;
+		FourthWeapon = CurrentWeapon;
+	}
+	else if (Item->ItemType == EItemType::EItem_Snipe)
+	{
+		WeaponType = (int)EWeapon::EW_Snipe;
+		ThridWeapon = CurrentWeapon;
+	}
+	else
+	{
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+	}
+
+	// WidgetUI update 
+	if (hud == NULL)
+	{
+		return;
+	}
+
+	if (!CurrentWeapon)
+	{
+		hud->PointWidget->SetVisibility(ESlateVisibility::Visible);
+		hud->CrossWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		hud->PointWidget->SetVisibility(ESlateVisibility::Hidden);
+		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+
+	hud->SwitchWeapon(WeaponItem);
 }
 
 void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)

@@ -74,7 +74,17 @@ public:
 
 	AShootingHUD* hud;
 
-	TMap<AWeaponPickup*, int> OwnedWeapons;
+	// Primary Weapon 
+	AWeaponPickup* PrimaryWeapon = NULL;
+
+	// Second Weapon
+	AWeaponPickup* SecondWeapon = NULL;
+
+	// Thrid Weapon (Only for sniper)
+	AWeaponPickup* ThridWeapon = NULL;
+
+	// Fourth Weapon 
+	AWeaponPickup* FourthWeapon = NULL;
 
 protected:
 	
@@ -190,9 +200,9 @@ public:
 
 	void OnGunFire();
 
-	void SwitchWeapons(int Index);
+	UFUNCTION(BlueprintCallable)
+	void SwitchWeapons(EWeapon CurrWeaponType);
 
-	void TestInitWeaponData();
-
+	void EquipWeapon(AWeaponPickup* Weapon);
 };
 
