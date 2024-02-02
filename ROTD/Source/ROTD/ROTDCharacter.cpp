@@ -80,12 +80,9 @@ void AROTDCharacter::BeginPlay()
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
 	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
 
+	WeaponType = 0;
 	IsAiming = false;
 	hud = Cast<AShootingHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
-
-	// Just for Test
-	//this->TestInitWeaponData();
-	//SwitchWeapons(0);
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -222,22 +219,18 @@ void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 
 	if (Item->ItemType == EItemType::EItem_Rifle)
 	{
-		WeaponType = (int)EWeapon::EW_Rifle;
 		PrimaryWeapon = PickupWeapon;
 	}
 	else if (Item->ItemType == EItemType::EItem_Pisto)
 	{
-		WeaponType = (int)EWeapon::EW_Pisto;
 		SecondWeapon = PickupWeapon;
 	}
 	else if (Item->ItemType == EItemType::EItem_Knife)
 	{
-		WeaponType = (int)EWeapon::EW_Knife;
 		FourthWeapon = PickupWeapon;
 	}
 	else if (Item->ItemType == EItemType::EItem_Snipe)
 	{
-		WeaponType = (int)EWeapon::EW_Snipe;
 		ThridWeapon = PickupWeapon;
 	}
 
@@ -899,99 +892,98 @@ void AROTDCharacter::OnGunFire()
 void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 {
 	switch (CurrWeaponType)
-	{// 如果当前是步枪，切换顺序：步枪->手枪->狙击枪->刀
+	{	// 如果当前是步枪，切换顺序：步枪->手枪->狙击枪->刀
 	case EWeapon::EW_Rifle:
 		if(SecondWeapon)
 		{
 			WeaponType = 2;
-			CurrentWeapon = SecondWeapon;
 		}
 		else if(ThridWeapon)
 		{
 			WeaponType = 4;
-			CurrentWeapon = ThridWeapon;
 		}
 		else if(FourthWeapon)
 		{
 			WeaponType = 1;
-			CurrentWeapon = FourthWeapon;
 		}
 		else
 		{
 			WeaponType = 3;
-			CurrentWeapon = PrimaryWeapon;
 		}
 		break;
 	case EWeapon::EW_Pisto:
 		if(ThridWeapon)
 		{
 			WeaponType = 4;
-			CurrentWeapon = ThridWeapon;
 		}
 		else if(FourthWeapon)
 		{
 			WeaponType = 1;
-			CurrentWeapon = FourthWeapon;
 		}
 		else if (PrimaryWeapon)
 		{
 			WeaponType = 3;
-			CurrentWeapon = PrimaryWeapon;
 		}
 		else
 		{
 			WeaponType = 2;
-			CurrentWeapon = SecondWeapon;
 		}
 		break;
 	case EWeapon::EW_Knife:
 		if(PrimaryWeapon)
 		{
 			WeaponType = 3;
-			CurrentWeapon = PrimaryWeapon;
 		}
 		else if(SecondWeapon)
 		{
 			WeaponType = 2;
-			CurrentWeapon = SecondWeapon;
 		}
 		else if(ThridWeapon)
 		{
 			WeaponType = 4;
-			CurrentWeapon = ThridWeapon;
 		}
 		else
 		{
 			WeaponType = 1;
-			CurrentWeapon = FourthWeapon;
 		}
 		break;
 	case EWeapon::EW_Snipe:
 		if (FourthWeapon)
 		{
 			WeaponType = 1;
-			CurrentWeapon = FourthWeapon;
 		}
 		else if (PrimaryWeapon)
 		{
 			WeaponType = 3;
-			CurrentWeapon = PrimaryWeapon;
 		}
 		else if (SecondWeapon)
 		{
 			WeaponType = 2;
-			CurrentWeapon = SecondWeapon;
 		}
 		else
 		{
-			WeaponType = 4;
-			CurrentWeapon = ThridWeapon;
+			WeaponType = 4;	
 		}
 	default:
 		break;
 	}
 
-	this->EquipWeapon(CurrentWeapon);
+	if(WeaponType == 1)
+	{
+		this->EquipWeapon(FourthWeapon);
+	}
+	else if(WeaponType == 2)
+	{
+		this->EquipWeapon(SecondWeapon);
+	}
+	else if(WeaponType == 3)
+	{
+		this->EquipWeapon(PrimaryWeapon);
+	}
+	else if(WeaponType == 4)
+	{
+		this->EquipWeapon(ThridWeapon);
+	}
 }
 
 void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
@@ -1014,13 +1006,14 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Pisto)
 	{
+		WeaponType = 2;
 		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
-		WeaponType = (int)EWeapon::EW_Pisto;
+		
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Knife)
 	{
-		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
 		WeaponType = (int)EWeapon::EW_Knife;
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Snipe)
 	{
@@ -1050,7 +1043,7 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
-	hud->SwitchWeapon((UROTDWeaponItem*)CurrentWeapon->ItemType);
+	//hud->SwitchWeapon((UROTDWeaponItem*)CurrentWeapon->ItemType);
 }
 
 void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)
