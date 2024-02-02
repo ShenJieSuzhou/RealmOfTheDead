@@ -53,7 +53,6 @@ void AROTDCharacter::BeginPlay()
 	AROTDPlayerController *PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if(PlayerController)
 	{
-		//PlayerController->GetInventoryItemChangedDelegate().AddUObject(this, &AROTDCharacter::PickUpWeapons);
 		PlayerController->GetInventoryWeaponChangedDelegate().BindUObject(this, &AROTDCharacter::PickUpWeapons);
 	}
 	else
@@ -246,343 +245,343 @@ void AROTDCharacter::Reload()
 		return;
 	}
 
-	//switch (CurrentWeapon->WeaponType)
-	//{
-	//case EWeapon::EW_Hands:
-	//	break;
-	//case EWeapon::EW_Knife:
-	//	break;
-	//case EWeapon::EW_Pisto:
-	//{
-	//	if(CurrentWeapon->MaxAmmoCount == 0)
-	//	{
-	//		return;
-	//	}
-	//	
-	//	if(CurrentWeapon->GunName == "Magnum")
-	//	{
-	//		IsReloading = true;
-	//		// Play Reload montage
-	//		UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
-	//		if (ReloadM != nullptr)
-	//		{
-	//			CurrentWeapon->FP_Gun->PlayAnimation(ReloadM, false);
-	//		}
+	switch (CurrentWeapon->WeaponType)
+	{
+	case EWeapon::EW_Hands:
+		break;
+	case EWeapon::EW_Knife:
+		break;
+	case EWeapon::EW_Pisto:
+	{
+		if(CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
+		
+		if(CurrentWeapon->GunName == "Magnum")
+		{
+			IsReloading = true;
+			// Play Reload montage
+			UAnimMontage* ReloadM = CurrentWeapon->ReloadAnimation;
+			if (ReloadM != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(ReloadM, false);
+			}
 
-	//		// Load static asset
-	//		FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
-	//		UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *MagnumReloadMontage));
-	//		if (assetMontage != nullptr)
-	//		{
-	//			// Get the animation object for the arms mesh
-	//			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//			if (AnimInstance != nullptr)
-	//			{
-	//				AnimInstance->Montage_Play(assetMontage, 1.f);
-	//			}
-	//		}
-	//		
-	//		UKismetSystemLibrary::Delay(this, 5.5f, ReloadAmmoLatentInfo);
-	//	} 
-	//	else if(CurrentWeapon->GunName == "Glock")
-	//	{
+			// Load static asset
+			FString MagnumReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Reload_Montage.ANIM_44_Magnum_Reload_Montage'"));
+			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *MagnumReloadMontage));
+			if (assetMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(assetMontage, 1.f);
+				}
+			}
+			
+			UKismetSystemLibrary::Delay(this, 5.5f, ReloadAmmoLatentInfo);
+		} 
+		else if(CurrentWeapon->GunName == "Glock")
+		{
 
-	//	}
+		}
 
-	//	if((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
-	//	{
-	//		CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-	//		CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-	//		CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
-	//	}
-	//	else
-	//	{
-	//		CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-	//		CurrentWeapon->MaxAmmoCount = 0;
-	//	}
-	//	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+		if((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
-	//	break;
-	//}
-	//case EWeapon::EW_Rifle:
-	//{
-	//	if (CurrentWeapon->MaxAmmoCount == 0)
-	//	{
-	//		return;
-	//	}
+		break;
+	}
+	case EWeapon::EW_Rifle:
+	{
+		if (CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
 
-	//	if (CurrentWeapon->GunName == "AK47")
-	//	{
-	//		IsReloading = true;
-	//		// Play Reload montage
-	//		UAnimMontage* ReloadAK = CurrentWeapon->ReloadAnimation;
-	//		if (ReloadAK != nullptr)
-	//		{
-	//			CurrentWeapon->FP_Gun->PlayAnimation(ReloadAK, false);
-	//		}
+		if (CurrentWeapon->GunName == "AK47")
+		{
+			IsReloading = true;
+			// Play Reload montage
+			UAnimMontage* ReloadAK = CurrentWeapon->ReloadAnimation;
+			if (ReloadAK != nullptr)
+			{
+				CurrentWeapon->FP_Gun->PlayAnimation(ReloadAK, false);
+			}
 
-	//		// Load static asset
-	//		FString AKReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Reload_Montage.ANIM_ArK-47_Reload_Montage'"));
-	//		UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *AKReloadMontage));
-	//		if (assetMontage != nullptr)
-	//		{
-	//			// Get the animation object for the arms mesh
-	//			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//			if (AnimInstance != nullptr)
-	//			{
-	//				AnimInstance->Montage_Play(assetMontage, 1.f);
-	//			}
-	//		}
+			// Load static asset
+			FString AKReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Reload_Montage.ANIM_ArK-47_Reload_Montage'"));
+			UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *AKReloadMontage));
+			if (assetMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(assetMontage, 1.f);
+				}
+			}
 
-	//		UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
-	//	}
+			UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
+		}
 
-	//	if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
-	//	{
-	//		CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-	//		CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-	//		CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
-	//	}
-	//	else
-	//	{
-	//		CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-	//		CurrentWeapon->MaxAmmoCount = 0;
-	//	}
-	//	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
-	//	break;
-	//}
-	//case EWeapon::EW_Snipe:
-	//{
-	//	if (CurrentWeapon->MaxAmmoCount == 0)
-	//	{
-	//		return;
-	//	}
+		break;
+	}
+	case EWeapon::EW_Snipe:
+	{
+		if (CurrentWeapon->MaxAmmoCount == 0)
+		{
+			return;
+		}
 
-	//	if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
-	//	{
-	//		CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-	//		CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-	//		CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
-	//	}
-	//	else
-	//	{
-	//		CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-	//		CurrentWeapon->MaxAmmoCount = 0;
-	//	}
-	//	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		{
+			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		}
+		else
+		{
+			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+			CurrentWeapon->MaxAmmoCount = 0;
+		}
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
-	//	break;
-	//}
-	//default:
-	//	break;
-	//}
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 
 void AROTDCharacter::OnFire()
 {
-	//if(!CurrentWeapon)
-	//{
-	//	return;
-	//}
-	//	
-	//if(IsReloading)
-	//{
-	//	return;
-	//}
+	if(!CurrentWeapon)
+	{
+		return;
+	}
+		
+	if(IsReloading)
+	{
+		return;
+	}
 
-	//if(!CanFire)
-	//{
-	//	return;
-	//}
+	if(!CanFire)
+	{
+		return;
+	}
 
-	//switch (CurrentWeapon->WeaponType)
-	//{
-	//case EWeapon::EW_Hands:
-	//	break;
-	//case EWeapon::EW_Knife:
-	//{
-	//	if(CanFire)
-	//	{
-	//		CanFire = false;
-	//		// Play Knife Attack Animation
-	//		if (CurrentWeapon->GunName == "NepaleseArmyKnife")
-	//		{
-	//			// Play Arm fire montage
-	//			FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
-	//			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-	//			if (ArmFireMontage != nullptr)
-	//			{
-	//				// Get the animation object for the arms mesh
-	//				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//				if (AnimInstance != nullptr)
-	//				{
-	//					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
-	//				}
-	//			}
-	//			UKismetSystemLibrary::Delay(this, 1.6f, GunFireLatentInfo);
-	//		}
-	//	}
-	//	
-	//	break;
-	//}
-	//case EWeapon::EW_Pisto:
-	//{
-	//	if (CurrentWeapon->MagazineBullets < 1)
-	//	{
-	//		if (CurrentWeapon->DryFireSound != nullptr)
-	//		{
-	//			UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
-	//		}
-	//		return;
-	//	}
+	switch (CurrentWeapon->WeaponType)
+	{
+	case EWeapon::EW_Hands:
+		break;
+	case EWeapon::EW_Knife:
+	{
+		if(CanFire)
+		{
+			CanFire = false;
+			// Play Knife Attack Animation
+			if (CurrentWeapon->GunName == "NepaleseArmyKnife")
+			{
+				// Play Arm fire montage
+				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
+				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+				if (ArmFireMontage != nullptr)
+				{
+					// Get the animation object for the arms mesh
+					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+					}
+				}
+				UKismetSystemLibrary::Delay(this, 1.6f, GunFireLatentInfo);
+			}
+		}
+		
+		break;
+	}
+	case EWeapon::EW_Pisto:
+	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
 
-	//	if (CurrentWeapon->GunName == "Magnum")
-	//	{
-	//		if (CanFire)
-	//		{
-	//			CanFire = false;
-	//			// Muzzle Flash
-	//			this->MuzzleFlash();
+		if (CurrentWeapon->GunName == "Magnum")
+		{
+			if (CanFire)
+			{
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
 
-	//			// GunFire
-	//			this->OnGunFire();
+				// GunFire
+				this->OnGunFire();
 
-	//			// Play gun fire montage
-	//			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
-	//			if (GunFireMontage != nullptr)
-	//			{
-	//				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
-	//			}
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
+				{
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
 
-	//			// 
-	//			if (IsAiming)
-	//			{
-	//				// Play Arm fire montage
-	//				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
-	//				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-	//				if (ArmFireMontage != nullptr)
-	//				{
-	//					// Get the animation object for the arms mesh
-	//					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//					if (AnimInstance != nullptr)
-	//					{
-	//						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
-	//					}
-	//				}
-	//			}
-	//			else
-	//			{
-	//				// Play Arm fire montage
-	//				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
-	//				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-	//				if (ArmFireMontage != nullptr)
-	//				{
-	//					// Get the animation object for the arms mesh
-	//					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//					if (AnimInstance != nullptr)
-	//					{
-	//						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
-	//					}
-	//				}
-	//			}
-	//			UKismetSystemLibrary::Delay(this, 0.5f, GunFireLatentInfo);
-	//		}
-	//	}
-	//	else if (CurrentWeapon->GunName == "Glock")
-	//	{
+				// 
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_Magnum_ADS_Fire_Montage.ANIM_Magnum_ADS_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				else
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_44_Magnum_Fire_Montage.ANIM_44_Magnum_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				UKismetSystemLibrary::Delay(this, 0.5f, GunFireLatentInfo);
+			}
+		}
+		else if (CurrentWeapon->GunName == "Glock")
+		{
 
-	//	}
+		}
 
-	//	break;
-	//}
-	//case EWeapon::EW_Rifle:
-	//{
-	//	if (CurrentWeapon->MagazineBullets < 1)
-	//	{
-	//		if (CurrentWeapon->DryFireSound != nullptr)
-	//		{
-	//			UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
-	//		}
-	//		return;
-	//	}
+		break;
+	}
+	case EWeapon::EW_Rifle:
+	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
 
-	//	if (CurrentWeapon->GunName == "AK47")
-	//	{
-	//		if(CanFire)
-	//		{
-	//			CanFire = false;
-	//			// Muzzle Flash
-	//			this->MuzzleFlash();
+		if (CurrentWeapon->GunName == "AK47")
+		{
+			if(CanFire)
+			{
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
 
-	//			// GunFire
-	//			this->OnGunFire();
+				// GunFire
+				this->OnGunFire();
 
-	//			// Play gun fire montage
-	//			UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
-	//			if (GunFireMontage != nullptr)
-	//			{
-	//				CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
-	//			}
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
+				{
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
 
-	//			if (IsAiming)
-	//			{
-	//				// Play Arm fire montage
-	//				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
-	//				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-	//				if (ArmFireMontage != nullptr)
-	//				{
-	//					// Get the animation object for the arms mesh
-	//					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//					if (AnimInstance != nullptr)
-	//					{
-	//						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
-	//					}
-	//				}
-	//			}
-	//			else
-	//			{
-	//				// Play Arm fire montage
-	//				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
-	//				UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
-	//				if (ArmFireMontage != nullptr)
-	//				{
-	//					// Get the animation object for the arms mesh
-	//					UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//					if (AnimInstance != nullptr)
-	//					{
-	//						AnimInstance->Montage_Play(ArmFireMontage, 1.f);
-	//					}
-	//				}
-	//			}
-	//			UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
-	//		}
-	//	}
-	//	GetWorldTimerManager().SetTimer(AutomaticHandle, this, &AROTDCharacter::OnFire, 0.12f, true);
-	//	break;
-	//}
-	//case EWeapon::EW_Snipe:
-	//{
-	//	if (CurrentWeapon->MagazineBullets < 1)
-	//	{
-	//		if (CurrentWeapon->DryFireSound != nullptr)
-	//		{
-	//			UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
-	//		}
-	//		return;
-	//	}
-	//	break;
-	//}
-	//default:
-	//	break;
-	//}
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_ADS-Fire_Montage.ANIM_ArK-47_ADS-Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				else
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
+			}
+		}
+		GetWorldTimerManager().SetTimer(AutomaticHandle, this, &AROTDCharacter::OnFire, 0.12f, true);
+		break;
+	}
+	case EWeapon::EW_Snipe:
+	{
+		if (CurrentWeapon->MagazineBullets < 1)
+		{
+			if (CurrentWeapon->DryFireSound != nullptr)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->DryFireSound, GetActorLocation());
+			}
+			return;
+		}
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 
 void AROTDCharacter::OnStopFire()
 {
-	/*if (CurrentWeapon == nullptr)
+	if (CurrentWeapon == nullptr)
 	{
 		return;
 	}
@@ -592,12 +591,12 @@ void AROTDCharacter::OnStopFire()
 		return;
 	}
 
-	GetWorldTimerManager().ClearTimer(AutomaticHandle);*/
+	GetWorldTimerManager().ClearTimer(AutomaticHandle);
 }
 
 void AROTDCharacter::OnAimDownSight()
 {
-	/*if(CurrentWeapon == nullptr)
+	if(CurrentWeapon == nullptr)
 	{
 		return;
 	}
@@ -608,17 +607,12 @@ void AROTDCharacter::OnAimDownSight()
 	}
 
 	IsAiming = true;
-	hud->SetCrossWidgetVisible(false);*/
-
-	//if (CurWeaponType == EWeapon::EW_AWP)
-	//{
-	//	CurrentWeapon->SetHidden(true);
-	//}
+	hud->SetCrossWidgetVisible(false);
 }
 
 void AROTDCharacter::OnRecoverAimDownSight()
 {
-	/*if (CurrentWeapon == nullptr)
+	if (CurrentWeapon == nullptr)
 	{
 		return;
 	}
@@ -629,34 +623,29 @@ void AROTDCharacter::OnRecoverAimDownSight()
 	}
 
 	IsAiming = false;
-	hud->SetCrossWidgetVisible(true);*/
-
-	//if (CurWeaponType == EWeapon::EW_AWP)
-	//{
-	//	CurrentWeapon->SetHidden(false);
-	//}
+	hud->SetCrossWidgetVisible(true);
 }
 
 void AROTDCharacter::DropMagazine()
 {
-	/*if (CurrentWeapon->ReloadDropSound != nullptr)
+	if (CurrentWeapon->ReloadDropSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadDropSound, GetActorLocation());
-	}*/
+	}
 }
 
 void AROTDCharacter::InsertMagazine()
 {
-	/*if (CurrentWeapon->ReloadInsertSound != nullptr)
+	if (CurrentWeapon->ReloadInsertSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadInsertSound, GetActorLocation());
-	}*/
+	}
 }
 
 
 void AROTDCharacter::CloseCylinder()
 {
-	/*if (CurrentWeapon->GunName == "Magnum")
+	if (CurrentWeapon->GunName == "Magnum")
 	{
 		FString CloseSoundPath = FString(TEXT("SoundCue'/Game/ROTD/Sounds/Gun/gun_revolver_pistol_cylinder_close_04_Cue.gun_revolver_pistol_cylinder_close_04_Cue'"));
 		USoundBase* CloseSound = Cast<USoundBase>(LoadObject<USoundBase>(nullptr, *CloseSoundPath));
@@ -664,34 +653,34 @@ void AROTDCharacter::CloseCylinder()
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, CloseSound, GetActorLocation());
 		}
-	}*/
+	}
 }
 
 void AROTDCharacter::ReloadMagazine()
 {
-	/*if (CurrentWeapon->ReloadLoadSound != nullptr)
+	if (CurrentWeapon->ReloadLoadSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadLoadSound, GetActorLocation());
-	}*/
+	}
 }
 
 void AROTDCharacter::MuzzleFlash()
 {
-	//if (!CurrentWeapon)
-	//{
-	//	return;
-	//}
+	if (!CurrentWeapon)
+	{
+		return;
+	}
 
-	//CurrentWeapon->FP_PointLight->SetIntensity(10000.0f);
-	//CurrentWeapon->FP_Muzzle->SetActive(true);
+	CurrentWeapon->FP_PointLight->SetIntensity(10000.0f);
+	CurrentWeapon->FP_Muzzle->SetActive(true);
 
-	//// Delay 0.1
-	//FLatentActionInfo LatentInfo;
-	//LatentInfo.Linkage = 0;
-	//LatentInfo.CallbackTarget = this;
-	//LatentInfo.ExecutionFunction = "DelayAndDisplayMuzzle";
-	//LatentInfo.UUID = __LINE__;//�к�ΪID
-	//UKismetSystemLibrary::Delay(this, 0.1f, LatentInfo);
+	// Delay 0.1
+	FLatentActionInfo LatentInfo;
+	LatentInfo.Linkage = 0;
+	LatentInfo.CallbackTarget = this;
+	LatentInfo.ExecutionFunction = "DelayAndDisplayMuzzle";
+	LatentInfo.UUID = __LINE__;//�к�ΪID
+	UKismetSystemLibrary::Delay(this, 0.1f, LatentInfo);
 }
 
 
@@ -707,186 +696,120 @@ void AROTDCharacter::ApplyDamageTo(FHitResult Hit)
 
 void AROTDCharacter::ShellEjection()
 {
-	/*if(CurrentWeapon == NULL)
+	if(CurrentWeapon == NULL)
 	{
 		return;
-	}*/
+	}
 
-	//UWorld* const World = GetWorld();
-	//FVector Localtion = FVector(0.f, 0.f, 0.f);
-	//FRotator Rotator = FRotator(0.f);
+	UWorld* const World = GetWorld();
+	FVector Localtion = FVector(0.f, 0.f, 0.f);
+	FRotator Rotator = FRotator(0.f);
 
-	////ShellEjection
-	//USkeletalMeshSocket const* mesh = CurrentWeapon->FP_Gun->GetSocketByName("ShellEjection");
-
-	//if (World != nullptr)
-	//{
-	//	EmptyHands = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(EmptyHandsClass, Localtion, Rotator));
-	//}
+	//ShellEjection
+	USkeletalMeshSocket const* mesh = CurrentWeapon->FP_Gun->GetSocketByName("ShellEjection");
 }
 
 void AROTDCharacter::DelayAndDisplayMuzzle()
 {
-	/*if (!CurrentWeapon)
+	if (!CurrentWeapon)
 	{
 		return;
 	}
 	CurrentWeapon->FP_Muzzle->SetActive(false);
-	CurrentWeapon->FP_PointLight->SetIntensity(0);*/
+	CurrentWeapon->FP_PointLight->SetIntensity(0);
 }
 
 
 void AROTDCharacter::ReloadAmmoDelay()
 {
-	/*if (!CurrentWeapon)
+	if (!CurrentWeapon)
 	{
 		return;
 	}
 
-	IsReloading = false;*/
+	IsReloading = false;
 }
 
 
 void AROTDCharacter::GunFireDelay()
 {
-	/*if (!CurrentWeapon)
+	if (!CurrentWeapon)
 	{
 		return;
 	}
 
-	CanFire = true;*/
+	CanFire = true;
 }
-
-//void AROTDCharacter::TestInitWeaponData()
-//{
-	//UWorld* const World = GetWorld();
-	//FVector Localtion = FVector(0.f, 0.f, 0.f);
-	//FRotator Rotator = FRotator(0.f);
-
-	//// Empty
-	//FString HandsStr = GetEmptyHands();
-	//UClass* EmptyHandsClass = LoadClass<AWeaponBase>(nullptr, *HandsStr);
-
-	//if (EmptyHandsClass != nullptr)
-	//{
-	//	if (World != nullptr)
-	//	{
-	//		EmptyHands = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(EmptyHandsClass, Localtion, Rotator));
-	//	}
-	//}
-
-	//// knife
-	//FString KnifeStr = GetKnife();
-	//UClass* WeaponKnifeClass = LoadClass<AWeaponBase>(nullptr, *KnifeStr);
-
-	//if (WeaponKnifeClass != nullptr)
-	//{
-	//	if (World != nullptr)
-	//	{
-	//		WeaponKnife = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponKnifeClass, Localtion, Rotator));
-	//	}
-	//}
-	//
-	//// Pisto
-	//FString PistoStr = GetPisto();
-	//UClass* WeaponPistoClass = LoadClass<AWeaponBase>(nullptr, *PistoStr);
-
-	//if (WeaponPistoClass != nullptr)
-	//{
-	//	if (World != nullptr)
-	//	{
-	//		WeaponPisto = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponPistoClass, Localtion, Rotator));
-	//	}
-	//}
-
-	//// Rifle
-	//FString RifleStr = GetRifle();
-	//UClass* WeaponRifleClass = LoadClass<AWeaponBase>(nullptr, *RifleStr);
-
-	//if (WeaponRifleClass != nullptr)
-	//{
-	//	if (World != nullptr)
-	//	{
-	//		WeaponRifle = Cast<AWeaponBase>(World->SpawnActor<AWeaponBase>(WeaponRifleClass, Localtion, Rotator));
-	//	}
-	//}
-
-	//WeaponMap.Add(EWeapon::EW_Hands, 1);
-	//WeaponMap.Add(EWeapon::EW_Knife, 1);
-	//WeaponMap.Add(EWeapon::EW_Pisto, 1);
-	//WeaponMap.Add(EWeapon::EW_Rifle, 1);
-	//WeaponMap.Add(EWeapon::EW_Snipe, 0);
-//}
 
 void AROTDCharacter::OnGunFire()
 {
-	//if (CurrentWeapon->FireSound != nullptr)
-	//{
-	//	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->FireSound, GetActorLocation());
-	//}
+	if (CurrentWeapon->FireSound != nullptr)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->FireSound, GetActorLocation());
+	}
 
-	//CurrentWeapon->BulletShellDrop();
+	CurrentWeapon->BulletShellDrop();
 
-	//// Camera Shot
-	//UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
-	//FVector TraceStart = FirstCamera->GetComponentLocation();
+	// Camera Shot
+	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
+	FVector TraceStart = FirstCamera->GetComponentLocation();
 
-	//float BulletSpread = 120.f;
-	//float calu = BulletSpread * -1;
-	//float x = FMath::RandRange(calu, BulletSpread);
-	//float y = FMath::RandRange(calu, BulletSpread);
-	//float z = FMath::RandRange(calu, BulletSpread);
+	float BulletSpread = 120.f;
+	float calu = BulletSpread * -1;
+	float x = FMath::RandRange(calu, BulletSpread);
+	float y = FMath::RandRange(calu, BulletSpread);
+	float z = FMath::RandRange(calu, BulletSpread);
 
-	//FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
+	FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
 
-	//FHitResult Hit;
-	//FCollisionQueryParams queryParam;
-	//queryParam.bReturnPhysicalMaterial = true;
-	//queryParam.AddIgnoredActor(this);
-	//bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
+	FHitResult Hit;
+	FCollisionQueryParams queryParam;
+	queryParam.bReturnPhysicalMaterial = true;
+	queryParam.AddIgnoredActor(this);
+	bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
 
-	//if (isHit)
-	//{
-	//	EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
-	//
-	//	// Retrieve BulletImpactData from GameMode
-	//	AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
-	//	bool Success = false;
-	//	FBulletImpact BulletImpact;
-	//	BulletImpact = GameMode->FindBulletImpact(Type, Success);
+	if (isHit)
+	{
+		EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
+	
+		// Retrieve BulletImpactData from GameMode
+		AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
+		bool Success = false;
+		FBulletImpact BulletImpact;
+		BulletImpact = GameMode->FindBulletImpact(Type, Success);
 
-	//	if(!Success)
-	//	{
-	//		return;
-	//	}
+		if(!Success)
+		{
+			return;
+		}
 
-	//	UWorld* const World = GetWorld();
-	//	if (World != nullptr)
-	//	{
-	//		ApplyDamageTo(Hit);
-	//		FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
-	//		if(BulletImpact.BulletDecals.Num() != 0)
-	//		{
-	//			int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
-	//			if (!BulletImpact.BulletDecals[index])
-	//			{
-	//				return;
-	//			}
+		UWorld* const World = GetWorld();
+		if (World != nullptr)
+		{
+			ApplyDamageTo(Hit);
+			FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
+			if(BulletImpact.BulletDecals.Num() != 0)
+			{
+				int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
+				if (!BulletImpact.BulletDecals[index])
+				{
+					return;
+				}
 
-	//			UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
-	//			if (MaterialIns)
-	//			{
-	//				ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
-	//				BulletDecal->SetBulletHoleMaterial(MaterialIns);
-	//			}
-	//		}
+				UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
+				if (MaterialIns)
+				{
+					ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+					BulletDecal->SetBulletHoleMaterial(MaterialIns);
+				}
+			}
 
-	//		UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
-	//		UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, Rotator1);
-	//	}
-	//}
+			UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, Rotator1);
+		}
+	}
 
-	//hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
 void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
@@ -1043,7 +966,7 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
-	//hud->SwitchWeapon((UROTDWeaponItem*)CurrentWeapon->ItemType);
+	hud->SwitchWeapon((UROTDWeaponItem*)CurrentWeapon->ItemType);
 }
 
 void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)
