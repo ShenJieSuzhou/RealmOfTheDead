@@ -180,12 +180,16 @@ int32 AROTDPlayerController::GetInventoryItemCount(UROTDItems* Item) const
 
 void AROTDPlayerController::NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item)
 {
-	// Notify native before blueprint
-	OnInventoryItemChangedNative.Broadcast(bAdded, Item);
+	
 	// Í¨Öª character ÇÐ»»ÎäÆ÷£¨µ¶£¬ÊÖÇ¹£¬AK£©
 	if(Item->ItemType == EItemType::EItem_Knife || Item->ItemType == EItemType::EItem_Pisto || Item->ItemType == EItemType::EItem_Rifle || Item->ItemType == EItemType::EItem_Snipe)
 	{
 		OnInventoryWeaponChanged.ExecuteIfBound(bAdded, Item);
+	}
+	else
+	{
+		// Notify native before blueprint
+		OnInventoryItemChangedNative.Broadcast(bAdded, Item);
 	}
 }
 

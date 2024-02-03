@@ -50,10 +50,11 @@ void AROTDCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	// 绑定背包事件
-	AROTDPlayerController *PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if(PlayerController)
 	{
 		PlayerController->GetInventoryWeaponChangedDelegate().BindUObject(this, &AROTDCharacter::PickUpWeapons);
+		PlayerController->GetInventoryItemChangedDelegate().AddUObject(this, &AROTDCharacter::InventoryItemChanged);
 	}
 	else
 	{
@@ -238,6 +239,47 @@ void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 }
 
 
+void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
+{
+	if(!Item) return;
+
+	if(Item->ItemType == EItemType::EItem_RifleAmmoSupply)
+	{
+		if(PrimaryWeapon)
+		{
+			if(IsAdded)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+			}
+		}
+	}
+	else if(Item->ItemType == EItemType::EItem_PistoAmmoSupply)
+	{
+		if(SecondWeapon)
+		{
+			if (IsAdded)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				SecondWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+			}
+		}
+	}
+	else if(Item->ItemType == EItemType::EItem_MediaSupply)
+	{
+		
+	}
+	else
+	{
+		// Sinper Todo 
+	}
+	
+	if(!CurrentWeapon) return;
+	
+	// 刷新数据
+	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+}
+
 void AROTDCharacter::Reload()
 {
 	if(IsReloading)
@@ -300,7 +342,7 @@ void AROTDCharacter::Reload()
 			CurrentWeapon->MaxAmmoCount = 0;
 		}
 		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
-
+		
 		break;
 	}
 	case EWeapon::EW_Rifle:
@@ -809,6 +851,8 @@ void AROTDCharacter::OnGunFire()
 		}
 	}
 
+	// 更新背包子弹
+	//PlayerController->RemoveInventoryItem(CurrentWeapon->ItemType, 1);
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
@@ -966,7 +1010,9 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 		hud->CrossWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
+	// 刷新武器以及子弹
 	hud->SwitchWeapon((UROTDWeaponItem*)CurrentWeapon->ItemType);
+	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 
 void AROTDCharacter::UpdatePlayerHealth(float CurrentHealth, float MaxHealth)

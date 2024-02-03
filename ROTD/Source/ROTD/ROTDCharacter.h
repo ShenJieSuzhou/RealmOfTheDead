@@ -86,6 +86,8 @@ public:
 	// Fourth Weapon 
 	AWeaponPickup* FourthWeapon = NULL;
 
+	AROTDPlayerController* PlayerController;
+
 protected:
 	
 	/** Fires a projectile. */
@@ -162,6 +164,8 @@ public:
 
 	// Weapon Pack
 	void PickUpWeapons(bool IsAdded, UROTDItems* Item);
+	// ItemChanged, like bullet, medical supply 
+	void InventoryItemChanged(bool IsAdded, UROTDItems* Item);
 
 	// Reload 
 	UFUNCTION(BlueprintCallable)
