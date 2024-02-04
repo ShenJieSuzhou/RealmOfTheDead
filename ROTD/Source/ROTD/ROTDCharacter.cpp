@@ -721,7 +721,7 @@ void AROTDCharacter::MuzzleFlash()
 	LatentInfo.Linkage = 0;
 	LatentInfo.CallbackTarget = this;
 	LatentInfo.ExecutionFunction = "DelayAndDisplayMuzzle";
-	LatentInfo.UUID = __LINE__;//�к�ΪID
+	LatentInfo.UUID = __LINE__;
 	UKismetSystemLibrary::Delay(this, 0.1f, LatentInfo);
 }
 
