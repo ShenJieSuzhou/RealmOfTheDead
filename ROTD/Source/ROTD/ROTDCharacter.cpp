@@ -852,7 +852,7 @@ void AROTDCharacter::OnGunFire()
 	}
 
 	// 更新背包子弹
-	//PlayerController->RemoveInventoryItem(CurrentWeapon->ItemType, 1);
+	PlayerController->RemoveInventoryItem(CurrentWeapon->Ammo, 1);
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 }
 

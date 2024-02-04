@@ -101,6 +101,9 @@ public:
 	int MaxAmmoCount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UROTDItems* Ammo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	float Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
