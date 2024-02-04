@@ -261,7 +261,7 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 			if (IsAdded)
 			{
 				int Count = PlayerController->GetInventoryItemCount(Item);
-				SecondWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+				SecondWeapon->MaxAmmoCount = Count - SecondWeapon->MagazineBullets;
 			}
 		}
 	}
