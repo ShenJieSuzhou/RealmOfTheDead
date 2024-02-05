@@ -972,7 +972,7 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 	UWorld* const World = GetWorld();
 	FVector Localtion = FVector(0.f, 0.f, 0.f);
 	FRotator Rotator = FRotator(0.f);
-	UClass* AntivirusClass = LoadClass<ABulletHole>(nullptr, TEXT("'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP_C'")); 
+	UClass* AntivirusClass = LoadClass<ASupplyPickup>(nullptr, TEXT("'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP_C'"));
 	// Spawn Supply 
 	ASupplyPickup* Pickup = World->SpawnActor<ASupplyPickup>(AntivirusClass, Localtion, Rotator);
 
