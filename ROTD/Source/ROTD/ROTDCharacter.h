@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "PickupItems/WeaponPickup.h"
+#include "ROTDItems/ROTDSupplyItem.h"
 #include "ShootingHUD.h"
 #include "NiagaraFunctionLibrary.h"
 #include "ROTDPlayerController.h"
@@ -68,6 +69,9 @@ public:
 	// Current Weapons
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
 	AWeaponPickup* CurrentWeapon;
+
+	// Medial Supple
+	UROTDSupplyItem* AntiVirusSupply;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int WeaponType;
@@ -206,6 +210,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SwitchWeapons(EWeapon CurrWeaponType);
+
+	UFUNCTION(BlueprintCallable)
+	void TreatSelf(EWeapon CurrWeaponType);
 
 	void EquipWeapon(AWeaponPickup* Weapon);
 };

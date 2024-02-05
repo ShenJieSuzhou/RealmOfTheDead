@@ -14,6 +14,13 @@ class USceneComponent;
 class UAnimMontage;
 class USoundBase;
 
+UENUM()
+enum class ETreatment : uint8
+{
+	ET_Antivirus // Ç¿Á¦¿¹ÉúËØ
+};
+
+
 UCLASS()
 class ROTD_API ASupplyPickup : public APickUpItemBase
 {
@@ -34,6 +41,10 @@ public:
 	/** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UAnimMontage* UsedAnimation;
+
+	// Projectile class to spawn
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	ETreatment TreatmentType;
 public:	
 	// Sets default values for this actor's properties
 	ASupplyPickup();

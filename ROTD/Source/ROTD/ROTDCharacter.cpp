@@ -267,7 +267,11 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 	}
 	else if(Item->ItemType == EItemType::EItem_MediaSupply)
 	{
-		
+		// 刷新药品补给的数量 
+		if(!AntiVirusSupply)
+		{
+			AntiVirusSupply = (UROTDSupplyItem*)Item;
+		}
 	}
 	else
 	{
@@ -950,6 +954,57 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 	else if(WeaponType == 4)
 	{
 		this->EquipWeapon(ThridWeapon);
+	}
+}
+
+void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
+{
+	// 背包中是否还有抗生素
+	if(!AntiVirusSupply) return;
+	int Count = PlayerController->GetInventoryItemCount((UROTDItems *)AntiVirusSupply);
+	if(Count <= 0)
+	{
+		return;
+	}
+	
+	// Blueprint'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP'
+
+	UWorld* const World = GetWorld();
+	FVector Localtion = FVector(0.f, 0.f, 0.f);
+	FRotator Rotator = FRotator(0.f);
+	UClass* AntivirusClass = LoadClass<ABulletHole>(nullptr, TEXT("'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP_C'")); 
+	// Spawn Supply 
+	ASupplyPickup* Pickup = World->SpawnActor<ASupplyPickup>(AntivirusClass, Localtion, Rotator);
+
+	if(!Pickup)
+	{
+		return;
+	}
+
+	if (CurrentWeapon) {
+		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+	}
+
+	Pickup->FP_Supply->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Supply_Antivirus"));
+
+	// Play gun fire montage
+	UAnimMontage* SyringsMontage = Pickup->UsedAnimation;
+	if (SyringsMontage != nullptr)
+	{
+		Pickup->FP_Supply->PlayAnimation(SyringsMontage, false);
+	}
+
+	// Play Arm fire montage
+	FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Syringe_03_Using_Montage.Anim_Hands_Syringe_03_Using_Montage'"));
+	UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+	if (ArmFireMontage != nullptr)
+	{
+			// Get the animation object for the arms mesh
+		UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+		if (AnimInstance != nullptr)
+		{
+			AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+		}
 	}
 }
 
