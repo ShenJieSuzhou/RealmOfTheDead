@@ -8,7 +8,6 @@ void UROTDHealthWeaponWidget::UpdateAmmo(int currBullets, int TotalBullets)
 	FString sCurrent = FString::FromInt(currBullets);
 	CurBulletsNum->SetText(FText::FromString(sCurrent));
 
-	// ���С��10�ţ���ʾ��ɫ
 	if(currBullets < 5)
 	{
 		FSlateColor newColor = FSlateColor(FLinearColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f));
@@ -71,4 +70,28 @@ void UROTDHealthWeaponWidget::UpdateInteractItemInfo(FString Name, FString Detai
 	InteractItemNum->SetText(FText::FromString("X"+sNum));
 
 	InteractItemType->SetText(FText::FromString(Detail));
+}
+
+void UROTDHealthWeaponWidget::CanShowWeaponPanel(bool CanDisplay)
+{
+	if(CanDisplay)
+	{
+		WeaponPanel->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		WeaponPanel->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UROTDHealthWeaponWidget::CanShowMedialSlot(bool CanDisplay)
+{
+	if(CanDisplay)
+	{
+		MediaSupply->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		MediaSupply->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

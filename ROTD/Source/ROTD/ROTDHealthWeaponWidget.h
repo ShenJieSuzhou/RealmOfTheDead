@@ -7,6 +7,7 @@
 #include "Components/ProgressBar.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "Components/CanvasPanel.h"
 #include "Components/Border.h"
 #include "SupplyPickup.h"
 #include "WeaponPickup.h"
@@ -56,9 +57,20 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* InteractItemType;
 
+	// Weapon Panel
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UCanvasPanel* WeaponPanel;
+
+	// Medical
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UUserWidget* MediaSupply;
+
 public:
 	void UpdateAmmo(int currBullets, int TotalBullets);
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateAntivirusCount(int Count);
+
 	void SwitchWeapon(UROTDWeaponItem* curWeapon);
 
 	void UpdateHealthProcessBar(float CurrentHealth, float MaxHealth);
@@ -66,6 +78,10 @@ public:
 	void CanDisplayInteractDetail(bool CanDisplay);
 
 	void UpdateInteractItemInfo(FString Name, FString Detail, int Num);
+
+	void CanShowWeaponPanel(bool CanDisplay);
+
+	void CanShowMedialSlot(bool CanDisplay);
 
 private:
 	//AWeaponBase* DisplayWeapon;

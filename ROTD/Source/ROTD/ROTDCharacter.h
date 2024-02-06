@@ -135,8 +135,7 @@ protected:
 	UClass* BulletImpactClass;
 
 	// Cache MedicalSupply
-	ASupplyPickup* MedicalSupply = NULL;
-	
+	ASupplyPickup* MedicalSupply = NULL;	
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
