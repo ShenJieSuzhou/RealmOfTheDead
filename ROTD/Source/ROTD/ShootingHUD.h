@@ -31,6 +31,8 @@ public:
 
 	void UpdateAmmo(int currBullets, int TotalBullets);
 
+	void UpdateMedicalSupply(int Count);
+
 	void SwitchWeapon(UROTDWeaponItem* WeaponItem);
 
 	void UpdateHealth(float CurrentHealth, float MaxHealth);

@@ -295,6 +295,12 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 	
 	// 刷新数据
 	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+
+	if(AntiVirusSupply)
+	{
+		int Count = PlayerController->GetInventoryItemCount(AntiVirusSupply);
+		hud->UpdateMedicalSupply(Count);
+	}
 }
 
 void AROTDCharacter::Reload()
@@ -999,7 +1005,17 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 	{
 		return;
 	}
+
+	if(!PlayerController->RemoveInventoryItem(AntiVirusSupply))
+	{
+		UE_LOG(LogROTD, Warning, TEXT("TreatSelf: no more supply "));
+		AntiVirusSupply = NULL;
+		return;
+	}
 	
+	int NewCount = PlayerController->GetInventoryItemCount((UROTDItems*)AntiVirusSupply);
+	hud->UpdateMedicalSupply(NewCount);
+
 	UWorld* const World = GetWorld();
 	FVector Localtion = FVector(0.f, 0.f, 0.f);
 	FRotator Rotator = FRotator(0.f);
