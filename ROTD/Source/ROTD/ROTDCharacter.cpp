@@ -76,6 +76,12 @@ void AROTDCharacter::BeginPlay()
 	GunFireLatentInfo.ExecutionFunction = "GunFireDelay";
 	GunFireLatentInfo.UUID = __LINE__;
 
+	// Treatment Delay
+	TreatmentLatentInfo.Linkage = 0;
+	TreatmentLatentInfo.CallbackTarget = this;
+	TreatmentLatentInfo.ExecutionFunction = "TreatmentDelay";
+	TreatmentLatentInfo.UUID = __LINE__;
+
 	//Blueprint
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
 	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
@@ -777,6 +783,26 @@ void AROTDCharacter::ReloadAmmoDelay()
 }
 
 
+void AROTDCharacter::TreatmentDelay()
+{
+	if (MedicalSupply) {
+		MedicalSupply->FP_Supply->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+	}
+
+	MedicalSupply = NULL;
+
+	if (CurrentWeapon) {
+		if (CurrentWeapon->WeaponType == EWeapon::EW_Rifle)
+		{
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+		}
+		else if (CurrentWeapon->WeaponType == EWeapon::EW_Pisto)
+		{
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
+		}
+	}
+}
+
 void AROTDCharacter::GunFireDelay()
 {
 	if (!CurrentWeapon)
@@ -967,16 +993,17 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 		return;
 	}
 	
-	// Blueprint'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP'
-
 	UWorld* const World = GetWorld();
 	FVector Localtion = FVector(0.f, 0.f, 0.f);
 	FRotator Rotator = FRotator(0.f);
 	UClass* AntivirusClass = LoadClass<ASupplyPickup>(nullptr, TEXT("'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP_C'"));
 	// Spawn Supply 
-	ASupplyPickup* Pickup = World->SpawnActor<ASupplyPickup>(AntivirusClass, Localtion, Rotator);
-
-	if(!Pickup)
+	if(MedicalSupply == NULL)
+	{
+		MedicalSupply = World->SpawnActor<ASupplyPickup>(AntivirusClass, Localtion, Rotator);
+	}
+	
+	if(!MedicalSupply)
 	{
 		return;
 	}
@@ -985,13 +1012,13 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 	}
 
-	Pickup->FP_Supply->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Supply_Antivirus"));
+	MedicalSupply->FP_Supply->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Supply_Antivirus"));
 
 	// Play gun fire montage
-	UAnimMontage* SyringsMontage = Pickup->UsedAnimation;
+	UAnimMontage* SyringsMontage = MedicalSupply->UsedAnimation;
 	if (SyringsMontage != nullptr)
 	{
-		Pickup->FP_Supply->PlayAnimation(SyringsMontage, false);
+		MedicalSupply->FP_Supply->PlayAnimation(SyringsMontage, false);
 	}
 
 	// Play Arm fire montage
@@ -1006,6 +1033,9 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 			AnimInstance->Montage_Play(ArmFireMontage, 1.f);
 		}
 	}
+
+	// Delay
+	UKismetSystemLibrary::Delay(this, 2.2f, TreatmentLatentInfo);
 }
 
 void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)

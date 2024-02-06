@@ -64,6 +64,8 @@ public:
 
 	FLatentActionInfo GunFireLatentInfo;
 
+	FLatentActionInfo TreatmentLatentInfo;
+
 	FTimerHandle AutomaticHandle;
 
 	// Current Weapons
@@ -131,6 +133,9 @@ protected:
 	UClass* BulletDecalClass;
 
 	UClass* BulletImpactClass;
+
+	// Cache MedicalSupply
+	ASupplyPickup* MedicalSupply = NULL;
 	
 protected:
 	// APawn interface
@@ -162,6 +167,9 @@ public:
 
 	UFUNCTION()
 	void ReloadAmmoDelay();
+
+	UFUNCTION()
+	void TreatmentDelay();
 
 	UFUNCTION()
 	void GunFireDelay();
