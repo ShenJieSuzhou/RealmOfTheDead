@@ -222,7 +222,14 @@ void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 		UE_LOG(LogROTD, Warning, TEXT("Invalid weapon!"));
 		return;
 	}
-
+	
+	// 检查背包中是否已经有子弹
+	int Count = PlayerController->GetInventoryItemCount(PickupWeapon->Ammo);
+	if(Count > 0)
+	{
+		PickupWeapon->MaxAmmoCount = Count - PickupWeapon->MagazineBullets;
+	}
+	
 	if (Item->ItemType == EItemType::EItem_Rifle)
 	{
 		PrimaryWeapon = PickupWeapon;
