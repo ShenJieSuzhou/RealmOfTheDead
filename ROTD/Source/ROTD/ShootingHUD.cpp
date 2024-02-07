@@ -65,6 +65,7 @@ void AShootingHUD::UpdateAmmo(int currBullets, int TotalBullets)
 
 void AShootingHUD::UpdateMedicalSupply(int Count)
 {
+	
 	HealthWeaponWidget->UpdateAntivirusCount(Count);
 }
 
@@ -75,6 +76,7 @@ void AShootingHUD::SwitchWeapon(UROTDWeaponItem* WeaponItem)
 		return;
 	}
 	
+	HealthWeaponWidget->CanShowWeaponPanel(true);
 	HealthWeaponWidget->SwitchWeapon(WeaponItem);
 }
 
