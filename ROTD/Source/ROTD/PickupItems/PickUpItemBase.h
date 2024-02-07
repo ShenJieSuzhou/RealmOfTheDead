@@ -24,6 +24,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UROTDItems *ItemType;
 
+	/** Actor to spawn */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gameplay)
+	TSubclassOf<AActor> ItemActor;
+
 public:	
 	// Sets default values for this actor's properties
 	APickUpItemBase();
