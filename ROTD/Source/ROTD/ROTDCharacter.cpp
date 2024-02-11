@@ -310,6 +310,8 @@ void AROTDCharacter::Reload()
 		return;
 	}
 
+	if(!CurrentWeapon) return;
+
 	switch (CurrentWeapon->WeaponType)
 	{
 	case EWeapon::EW_Hands:
@@ -902,7 +904,7 @@ void AROTDCharacter::OnGunFire()
 void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 {
 	switch (CurrWeaponType)
-	{	// 如果当前是步枪，切换顺序：步枪->手枪->狙击枪->刀
+	{	// 如果当前是步枪，切换顺序：步枪->手枪->狙击枪->刀->空手
 	case EWeapon::EW_Rifle:
 		if(SecondWeapon)
 		{
@@ -918,7 +920,7 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 		}
 		else
 		{
-			WeaponType = 3;
+			WeaponType = 0;
 		}
 		break;
 	case EWeapon::EW_Pisto:
@@ -936,7 +938,7 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 		}
 		else
 		{
-			WeaponType = 2;
+			WeaponType = 0;
 		}
 		break;
 	case EWeapon::EW_Knife:
@@ -954,7 +956,7 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 		}
 		else
 		{
-			WeaponType = 1;
+			WeaponType = 0;
 		}
 		break;
 	case EWeapon::EW_Snipe:
@@ -972,7 +974,7 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 		}
 		else
 		{
-			WeaponType = 4;	
+			WeaponType = 0;	
 		}
 	default:
 		break;
@@ -994,6 +996,14 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 	{
 		this->EquipWeapon(ThridWeapon);
 	}
+	else if (WeaponType == 0)
+	{
+		if (CurrentWeapon) {
+			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+		CurrentWeapon = NULL;
+	}
+
 }
 
 void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
@@ -1137,4 +1147,41 @@ void AROTDCharacter::PlayerDieAndHideCross()
 	{
 		hud->SetCrossWidgetVisible(false);
 	}
+}
+
+void AROTDCharacter::DropWeaponAndSwitchWeapon()
+{
+	// 背包中移除当前武器
+	if(PlayerController == NULL) return;
+
+	if(CurrentWeapon == NULL) return;
+
+	bool IsRemove = PlayerController->RemoveInventoryItem(CurrentWeapon->ItemType);
+	
+	if(!IsRemove)
+	{
+		UE_LOG(LogROTD, Warning, TEXT("RemoveInventoryItem not success"));
+	}
+
+	// 并移除武器缓存
+	EWeapon type = CurrentWeapon->WeaponType;
+	if(type == EWeapon::EW_Rifle)
+	{
+		PrimaryWeapon = NULL;
+	}
+	else if(type == EWeapon::EW_Pisto)
+	{
+		SecondWeapon = NULL;
+	}
+	else if(type == EWeapon::EW_Snipe)
+	{
+		ThridWeapon = NULL;
+	}
+	else if(type == EWeapon::EW_Knife)
+	{
+		FourthWeapon = NULL;
+	}
+
+	// 切换至下一把
+	SwitchWeapons(type);
 }

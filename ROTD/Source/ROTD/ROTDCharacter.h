@@ -213,6 +213,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayerDieAndHideCross();
 
+	UFUNCTION(BlueprintCallable)
+	void DropWeaponAndSwitchWeapon();
+
 	void OnGunFire();
 
 	UFUNCTION(BlueprintCallable)
