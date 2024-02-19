@@ -1080,10 +1080,23 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 	}
 	// Spawn weapon
 	if (CurrentWeapon) {
+		// Play low down animation
+		UAnimMontage* lowMontage = CurrentWeapon->LowAnimation;
+		if (lowMontage != nullptr)
+		{
+			// Get the animation object for the arms mesh
+			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+			if (AnimInstance != nullptr)
+			{
+				AnimInstance->Montage_Play(lowMontage, 1.f);
+			}
+		}
+
 		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 	}
 	
 	CurrentWeapon = Weapon;
+
 	if (Weapon->WeaponType ==  EWeapon::EW_Rifle)
 	{
 		WeaponType = (int)EWeapon::EW_Rifle;
@@ -1108,6 +1121,18 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 	{
 		if (CurrentWeapon) {
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+	}
+
+	// Play raise animation
+	UAnimMontage* raiseMontage = CurrentWeapon->RaiseAnimation;
+	if (raiseMontage != nullptr)
+	{
+		// Get the animation object for the arms mesh
+		UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+		if (AnimInstance != nullptr)
+		{
+			AnimInstance->Montage_Play(raiseMontage, 1.f);
 		}
 	}
 
