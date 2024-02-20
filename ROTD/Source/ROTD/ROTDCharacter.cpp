@@ -473,7 +473,7 @@ void AROTDCharacter::OnFire()
 		{
 			CanFire = false;
 			// Play Knife Attack Animation
-			if (CurrentWeapon->GunName == "NepaleseArmyKnife")
+			if (CurrentWeapon->GunName == "Nipol")
 			{
 				// Play Arm fire montage
 				FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Knife_Attack_03_Montage.Anim_Hands_Knife_Attack_03_Montage'"));
