@@ -135,6 +135,7 @@ protected:
 	UClass* BulletImpactClass;
 
 	// Cache MedicalSupply
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Mesh)
 	ASupplyPickup* MedicalSupply = NULL;	
 protected:
 	// APawn interface

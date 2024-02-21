@@ -800,13 +800,28 @@ void AROTDCharacter::ReloadAmmoDelay()
 
 void AROTDCharacter::TreatmentDelay()
 {
-	if (MedicalSupply) {
-		MedicalSupply->FP_Supply->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
-	}
-
-	MedicalSupply = NULL;
-
+	
 	if (CurrentWeapon) {
+		//EquipWeapon(CurrentWeapon);
+
+		// Play raise arm 
+		UAnimMontage* RaiseMontage = CurrentWeapon->LowAnimation;
+		if (RaiseMontage != nullptr)
+		{
+			// Get the animation object for the arms mesh
+			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+			if (AnimInstance != nullptr)
+			{
+				AnimInstance->Montage_Play(RaiseMontage, 1.f);
+			}
+		}
+		
+		if (MedicalSupply) {
+			MedicalSupply->FP_Supply->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+
+		MedicalSupply = NULL;
+
 		if (CurrentWeapon->WeaponType == EWeapon::EW_Rifle)
 		{
 			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
@@ -816,6 +831,30 @@ void AROTDCharacter::TreatmentDelay()
 			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
 		}
 	}
+	else
+	{
+		if (MedicalSupply) {
+			MedicalSupply->FP_Supply->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+		}
+
+		MedicalSupply = NULL;
+	}
+	//	if(WeaponType == 0)
+	//	{
+	//		// Empty hands raise up
+	//		FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Empty_Up_Montage.Anim_Hands_Empty_Up_Montage'"));
+	//		UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+	//		if (ArmFireMontage != nullptr)
+	//		{
+	//			// Get the animation object for the arms mesh
+	//			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//			if (AnimInstance != nullptr)
+	//			{
+	//				AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void AROTDCharacter::GunFireDelay()
@@ -1031,35 +1070,62 @@ void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 	FRotator Rotator = FRotator(0.f);
 	UClass* AntivirusClass = LoadClass<ASupplyPickup>(nullptr, TEXT("'/Game/ROTD/Blueprint/Supplys/Antivirus_BP.Antivirus_BP_C'"));
 	// Spawn Supply 
-	if(MedicalSupply == NULL)
+	if (MedicalSupply == NULL)
 	{
 		MedicalSupply = World->SpawnActor<ASupplyPickup>(AntivirusClass, Localtion, Rotator);
 	}
-	
-	if(!MedicalSupply)
+
+	if (!MedicalSupply)
 	{
 		return;
 	}
 
 	if (CurrentWeapon) {
+		// Play low down animation
+		UAnimMontage* lowMontage = CurrentWeapon->LowAnimation;
+		if (lowMontage != nullptr)
+		{
+			// Get the animation object for the arms mesh
+			UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+			if (AnimInstance != nullptr)
+			{
+				AnimInstance->Montage_Play(lowMontage, 1.f);
+			}
+		}
 		CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
+	}
+	else
+	{
+		if (WeaponType == 0)
+		{
+			// Empty hands low down
+			FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Empty_Down_Montage.Anim_Hands_Empty_Down_Montage'"));
+			UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+			if (ArmFireMontage != nullptr)
+			{
+				// Get the animation object for the arms mesh
+				UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+				if (AnimInstance != nullptr)
+				{
+					AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+				}
+			}
+		}
 	}
 
 	MedicalSupply->FP_Supply->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Supply_Antivirus"));
 
-	// Play gun fire montage
+	// Play inject montage
 	UAnimMontage* SyringsMontage = MedicalSupply->UsedAnimation;
 	if (SyringsMontage != nullptr)
 	{
 		MedicalSupply->FP_Supply->PlayAnimation(SyringsMontage, false);
 	}
 
-	// Play Arm fire montage
 	FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/Anim_Hands_Syringe_03_Using_Montage.Anim_Hands_Syringe_03_Using_Montage'"));
 	UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 	if (ArmFireMontage != nullptr)
 	{
-			// Get the animation object for the arms mesh
 		UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
 		if (AnimInstance != nullptr)
 		{
