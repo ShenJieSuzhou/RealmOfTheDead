@@ -28,6 +28,11 @@ void AShootingHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
+}
+
+void AShootingHUD::ShowROTDHUD(bool IsVisible)
+{
 	FString WidgetClassLoadPath = FString(TEXT("WidgetBlueprint'/Game/ROTD/UI/XHair_HUD.XHair_HUD_C'"));
 	TSubclassOf<UCrossMarkWidget> CrossWidgetClass = LoadClass<UCrossMarkWidget>(NULL, *WidgetClassLoadPath);
 	CrossWidget = CreateWidget<UCrossMarkWidget>(GetWorld(), CrossWidgetClass);
@@ -46,17 +51,30 @@ void AShootingHUD::BeginPlay()
 	HealthWeaponWidget->AddToViewport();
 }
 
-void AShootingHUD::ShowROTDHUD(bool IsVisible)
-{
-	this->SetCrossWidgetVisible(IsVisible);
-
-	this->SetPointWidgetVisible(IsVisible);
-
-	this->SetHealthBarWidgetVisible(IsVisible);
-}
-
 void AShootingHUD::SetCrossWidgetVisible(bool isVisible)
 {
+	if(CrossWidget == NULL)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("CrossWidget ")));
+		return;
+	}
+	if (isVisible)
+	{
+		CrossWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		CrossWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AShootingHUD::SetPointWidgetVisible(bool isVisible)
+{
+	if (PointWidget == NULL)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("PointWidget ")));
+		return;
+	}
 	if (isVisible)
 	{
 		PointWidget->SetVisibility(ESlateVisibility::Visible);
@@ -67,8 +85,13 @@ void AShootingHUD::SetCrossWidgetVisible(bool isVisible)
 	}
 }
 
-void AShootingHUD::SetPointWidgetVisible(bool isVisible)
+void AShootingHUD::SetHealthBarWidgetVisible(bool isVisible)
 {
+	if (HealthWeaponWidget == NULL)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, FString::Printf(TEXT("HealthWeaponWidget ")));
+		return;
+	}
 	if (isVisible)
 	{
 		HealthWeaponWidget->SetVisibility(ESlateVisibility::Visible);
@@ -76,18 +99,6 @@ void AShootingHUD::SetPointWidgetVisible(bool isVisible)
 	else
 	{
 		HealthWeaponWidget->SetVisibility(ESlateVisibility::Hidden);
-	}
-}
-
-void AShootingHUD::SetHealthBarWidgetVisible(bool isVisible)
-{
-	if (isVisible)
-	{
-		CrossWidget->SetVisibility(ESlateVisibility::Visible);
-	}
-	else
-	{
-		CrossWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
