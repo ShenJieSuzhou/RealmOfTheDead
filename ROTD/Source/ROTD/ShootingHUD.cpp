@@ -46,7 +46,40 @@ void AShootingHUD::BeginPlay()
 	HealthWeaponWidget->AddToViewport();
 }
 
+void AShootingHUD::ShowROTDHUD(bool IsVisible)
+{
+	this->SetCrossWidgetVisible(IsVisible);
+
+	this->SetPointWidgetVisible(IsVisible);
+
+	this->SetHealthBarWidgetVisible(IsVisible);
+}
+
 void AShootingHUD::SetCrossWidgetVisible(bool isVisible)
+{
+	if (isVisible)
+	{
+		PointWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		PointWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AShootingHUD::SetPointWidgetVisible(bool isVisible)
+{
+	if (isVisible)
+	{
+		HealthWeaponWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		HealthWeaponWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AShootingHUD::SetHealthBarWidgetVisible(bool isVisible)
 {
 	if (isVisible)
 	{

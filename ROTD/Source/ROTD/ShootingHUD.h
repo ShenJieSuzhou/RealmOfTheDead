@@ -29,6 +29,10 @@ public:
 
 	void SetCrossWidgetVisible(bool isVisible);
 
+	void SetPointWidgetVisible(bool isVisible);
+
+	void SetHealthBarWidgetVisible(bool isVisible);
+
 	void UpdateAmmo(int currBullets, int TotalBullets);
 
 	void UpdateMedicalSupply(int Count);
@@ -42,6 +46,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateInteractItemInfo(FString Name, FString Detail, int Num);
+
+	UFUNCTION(BlueprintCallable)
+	void ShowROTDHUD(bool IsVisible);
 
 private:
 	/** Crosshair asset pointer */
