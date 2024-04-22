@@ -48,6 +48,12 @@ public:
 	void UpdateInteractItemInfo(FString Name, FString Detail, int Num);
 
 	UFUNCTION(BlueprintCallable)
+	void CanDisplayPressTip(bool CanDisplay);
+
+	UFUNCTION(BlueprintCallable)
+	void IsDoorOpen(bool IsOpen);
+
+	UFUNCTION(BlueprintCallable)
 	void ShowROTDHUD(bool IsVisible);
 
 private:

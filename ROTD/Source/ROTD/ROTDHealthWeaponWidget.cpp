@@ -95,3 +95,26 @@ void UROTDHealthWeaponWidget::CanShowMedialSlot(bool CanDisplay)
 		MediaSupply->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
+
+void UROTDHealthWeaponWidget::CanShowPressTip(bool CanDisplay)
+{
+	if (!CanDisplay)
+	{
+		PressOpenTip->SetVisibility(ESlateVisibility::Hidden);
+		PressCloseTip->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UROTDHealthWeaponWidget::IsDoorOpen(bool IsOpen)
+{
+	if (IsOpen)
+	{
+		PressOpenTip->SetVisibility(ESlateVisibility::Hidden);
+		PressCloseTip->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		PressOpenTip->SetVisibility(ESlateVisibility::Visible);
+		PressCloseTip->SetVisibility(ESlateVisibility::Hidden);
+	}
+}

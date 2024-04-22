@@ -138,3 +138,13 @@ void AShootingHUD::UpdateInteractItemInfo(FString Name, FString Detail, int Num)
 {
 	HealthWeaponWidget->UpdateInteractItemInfo(Name, Detail, Num);
 }
+
+void AShootingHUD::CanDisplayPressTip(bool CanDisplay)
+{
+	HealthWeaponWidget->CanShowPressTip(CanDisplay);
+}
+
+void AShootingHUD::IsDoorOpen(bool IsOpen)
+{
+	HealthWeaponWidget->IsDoorOpen(IsOpen);
+}

@@ -65,6 +65,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UUserWidget* MediaSupply;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* PressOpenTip;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* PressCloseTip;
+
 public:
 	void UpdateAmmo(int currBullets, int TotalBullets);
 	
@@ -82,6 +88,10 @@ public:
 	void CanShowWeaponPanel(bool CanDisplay);
 
 	void CanShowMedialSlot(bool CanDisplay);
+
+	void CanShowPressTip(bool CanDisplay);
+
+	void IsDoorOpen(bool IsOpen);
 
 private:
 	//AWeaponBase* DisplayWeapon;
