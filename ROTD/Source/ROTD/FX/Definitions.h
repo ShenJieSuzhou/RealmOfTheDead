@@ -51,6 +51,7 @@ public:
 };
 
 
+// 掉落可捡起物品种类
 UENUM()
 enum class EItemType : uint8
 {
@@ -62,6 +63,16 @@ enum class EItemType : uint8
 	EItem_RifleAmmoSupply,
 	EItem_PistoAmmoSupply
 };
+
+// TraceLine 碰撞可交互物品
+UENUM()
+enum class ETraceLineHitUseType : uint8
+{
+	EItem_Pickup,
+	EItem_Door,
+	EItem_Box
+};
+
 
 UCLASS(BlueprintType)
 class UROTDItems : public UDataAsset
