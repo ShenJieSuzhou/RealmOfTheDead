@@ -904,7 +904,8 @@ void AROTDCharacter::OnGunFire()
 			}
 
 			UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, Rotator1);
+			
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, FRotator(0, 0, 0));
 		}
 	}
 
