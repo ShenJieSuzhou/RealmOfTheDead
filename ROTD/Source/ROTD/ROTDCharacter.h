@@ -223,6 +223,9 @@ public:
 	void SwitchWeapons(EWeapon CurrWeaponType);
 
 	UFUNCTION(BlueprintCallable)
+	void EquipGunFlashlight(APickUpItemBase* ItemBase);
+
+	UFUNCTION(BlueprintCallable)
 	void TreatSelf(EWeapon CurrWeaponType);
 
 	void EquipWeapon(AWeaponPickup* Weapon);

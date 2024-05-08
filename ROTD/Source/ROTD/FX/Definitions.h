@@ -60,6 +60,7 @@ enum class EItemType : uint8
 	EItem_Rifle,
 	EItem_Snipe,
 	EItem_MediaSupply,
+	EItem_Flashlight,
 	EItem_RifleAmmoSupply,
 	EItem_PistoAmmoSupply
 };

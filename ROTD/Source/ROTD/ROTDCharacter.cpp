@@ -1019,6 +1019,11 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 
 }
 
+void AROTDCharacter::EquipGunFlashlight(APickUpItemBase* ItemBase)
+{
+	
+}
+
 void AROTDCharacter::TreatSelf(EWeapon CurrWeaponType)
 {
 	// 背包中是否还有抗生素
