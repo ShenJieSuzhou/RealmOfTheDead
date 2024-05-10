@@ -29,7 +29,7 @@ enum class EWeapon : uint8
 	EW_Snipe  //4
 };
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESubWeapon : uint8
 {
 	EW_Empty,		//0

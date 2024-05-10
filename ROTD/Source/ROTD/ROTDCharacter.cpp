@@ -1156,7 +1156,7 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 		}
 		else if(GunID == ESubWeapon::EW_Remington)
 		{
-			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_Remington"));
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_Reminton"));
 		}
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Pisto)
