@@ -78,6 +78,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int WeaponType;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ESubWeapon GunID;
+
 	AShootingHUD* hud;
 
 	// Primary Weapon 

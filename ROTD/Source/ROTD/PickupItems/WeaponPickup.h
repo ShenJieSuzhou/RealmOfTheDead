@@ -29,9 +29,10 @@ enum class EWeapon : uint8
 	EW_Snipe  //4
 };
 
+UENUM()
 enum class ESubWeapon : uint8
 {
-	EW_Hands,
+	EW_Empty,		//0
 	EW_Nipol,		//1
 	EW_Magnum,		//2
 	EW_AK47,		//3
@@ -64,6 +65,9 @@ public:
 	// Projectile class to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	EWeapon WeaponType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	ESubWeapon GunID;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)

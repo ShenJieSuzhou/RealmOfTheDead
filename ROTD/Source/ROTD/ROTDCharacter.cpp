@@ -86,7 +86,10 @@ void AROTDCharacter::BeginPlay()
 	BulletDecalClass = LoadClass<ABulletHole>(nullptr, TEXT("Class'/Script/ROTD.BulletHole'"));
 	BulletImpactClass = LoadClass<ABulletImpactEffect>(nullptr, TEXT("Class'/Script/ROTD.BulletImpactEffect'"));
 
+	// 出生时，没有武器
 	WeaponType = 0;
+	GunID = ESubWeapon::EW_Empty;
+
 	IsAiming = false;
 	hud = Cast<AShootingHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
@@ -399,6 +402,7 @@ void AROTDCharacter::Reload()
 					AnimInstance->Montage_Play(assetMontage, 1.f);
 				}
 			}
+
 
 			UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
 		}
@@ -1145,22 +1149,33 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 	if (Weapon->WeaponType ==  EWeapon::EW_Rifle)
 	{
 		WeaponType = (int)EWeapon::EW_Rifle;
-		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+		GunID = Weapon->GunID;
+		if(GunID == ESubWeapon::EW_AK47)
+		{
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_AK"));
+		}
+		else if(GunID == ESubWeapon::EW_Remington)
+		{
+			CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Rifle_Remington"));
+		}
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Pisto)
 	{
 		WeaponType = 2;
+		GunID = Weapon->GunID;
 		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Pisto_Magnum"));
 		
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Knife)
 	{
 		WeaponType = (int)EWeapon::EW_Knife;
+		GunID = Weapon->GunID;
 		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Palm_R"));
 	}
 	else if (Weapon->WeaponType == EWeapon::EW_Snipe)
 	{
 		WeaponType = (int)EWeapon::EW_Snipe;
+		GunID = Weapon->GunID;
 	}
 	else
 	{
