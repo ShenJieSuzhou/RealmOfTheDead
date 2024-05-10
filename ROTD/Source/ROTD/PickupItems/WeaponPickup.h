@@ -29,6 +29,15 @@ enum class EWeapon : uint8
 	EW_Snipe  //4
 };
 
+enum class ESubWeapon : uint8
+{
+	EW_Hands,
+	EW_Nipol,		//1
+	EW_Magnum,		//2
+	EW_AK47,		//3
+	EW_Remington	//4
+};
+
 UCLASS()
 class ROTD_API AWeaponPickup : public APickUpItemBase
 {
