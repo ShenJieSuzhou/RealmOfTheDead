@@ -328,7 +328,7 @@ void AROTDCharacter::Reload()
 			return;
 		}
 		
-		if(CurrentWeapon->GunName == "Magnum")
+		if(CurrentWeapon->GunID == ESubWeapon::EW_Magnum)
 		{
 			IsReloading = true;
 			// Play Reload montage
@@ -380,7 +380,7 @@ void AROTDCharacter::Reload()
 			return;
 		}
 
-		if (CurrentWeapon->GunName == "AK47")
+		if (CurrentWeapon->GunID == ESubWeapon::EW_AK47)
 		{
 			IsReloading = true;
 			// Play Reload montage
@@ -403,8 +403,13 @@ void AROTDCharacter::Reload()
 				}
 			}
 
-
 			UKismetSystemLibrary::Delay(this, 3.3f, ReloadAmmoLatentInfo);
+		}
+		else if(CurrentWeapon->GunID == ESubWeapon::EW_Remington)
+		{
+			IsReloading = true;
+			// 先在蓝图中实现
+			ShotgunReload();
 		}
 
 		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)

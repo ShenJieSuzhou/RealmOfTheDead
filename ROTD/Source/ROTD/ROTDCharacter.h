@@ -186,6 +186,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Reload();
 
+	// Shotgun Reload
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShotgunReload();
+
 	// Fire
 	UFUNCTION(BlueprintCallable)
 	void OnFire();
