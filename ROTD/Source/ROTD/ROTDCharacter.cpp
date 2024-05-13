@@ -1189,6 +1189,9 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 		}
 	}
 
+	// play weapon idle animation
+	UAnimSequence* WeaponIdleAnim = CurrentWeapon->IdleAnimation;
+
 	// Play raise animation
 	UAnimMontage* raiseMontage = CurrentWeapon->RaiseAnimation;
 	if (raiseMontage != nullptr)
