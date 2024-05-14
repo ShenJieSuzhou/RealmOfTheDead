@@ -412,17 +412,21 @@ void AROTDCharacter::Reload()
 			ShotgunReload();
 		}
 
-		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		if(CurrentWeapon->GunID != ESubWeapon::EW_Remington)
 		{
-			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+			if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+			{
+				CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+				CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+				CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+			}
+			else
+			{
+				CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+				CurrentWeapon->MaxAmmoCount = 0;
+			}
 		}
-		else
-		{
-			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-			CurrentWeapon->MaxAmmoCount = 0;
-		}
+		
 		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
 		break;
@@ -454,6 +458,11 @@ void AROTDCharacter::Reload()
 	}
 }
 
+
+void AROTDCharacter::OnUpdateShotGunAmmo(int currBullets, int TotalBullets)
+{
+	hud->UpdateAmmo(currBullets, TotalBullets);
+}
 
 void AROTDCharacter::OnFire()
 {
@@ -583,7 +592,7 @@ void AROTDCharacter::OnFire()
 			return;
 		}
 
-		if (CurrentWeapon->GunName == "AK47")
+		if (CurrentWeapon->GunID == ESubWeapon::EW_AK47)
 		{
 			if(CanFire)
 			{
@@ -620,6 +629,58 @@ void AROTDCharacter::OnFire()
 				{
 					// Play Arm fire montage
 					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_ArK-47_Fire_Montage.ANIM_ArK-47_Fire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
+			}
+		}
+		else if(CurrentWeapon->GunID == ESubWeapon::EW_Remington)
+		{
+			if (CanFire)
+			{
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
+
+				// GunFire
+				this->OnGunFire();
+
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
+				{
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
+
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANiM_870AC_ADSFire_Montage.ANiM_870AC_ADSFire_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				else
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANIM_870AC_Fire_Montage.ANIM_870AC_Fire_Montage'"));
+					//FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/ANiM_870AC_ADSFire_Montage.ANiM_870AC_ADSFire_Montage'"));
 					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
 					if (ArmFireMontage != nullptr)
 					{

@@ -190,6 +190,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ShotgunReload();
 
+	UFUNCTION(BlueprintCallable)
+	void OnUpdateShotGunAmmo(int currBullets, int TotalBullets);
+
 	// Fire
 	UFUNCTION(BlueprintCallable)
 	void OnFire();
