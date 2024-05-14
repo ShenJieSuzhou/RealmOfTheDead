@@ -63,6 +63,7 @@ void AROTDCharacter::BeginPlay()
 	
 	IsReloading = false;
 	CanFire = true;
+	StopReloading = false;
 
 	// Reload Ammo Delay
 	ReloadAmmoLatentInfo.Linkage = 0;
@@ -471,7 +472,7 @@ void AROTDCharacter::OnFire()
 		return;
 	}
 		
-	if(IsReloading)
+	if(IsReloading && CurrentWeapon->GunID != ESubWeapon::EW_Remington)
 	{
 		return;
 	}
@@ -658,7 +659,12 @@ void AROTDCharacter::OnFire()
 				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
 				if (GunFireMontage != nullptr)
 				{
-					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+					//CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+					UAnimInstance* AnimInstance = CurrentWeapon->FP_Gun->GetAnimInstance();
+					if (AnimInstance != nullptr)
+					{
+						AnimInstance->Montage_Play(GunFireMontage, 1.f);
+					}
 				}
 
 				if (IsAiming)
@@ -1249,9 +1255,6 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
 	}
-
-	// play weapon idle animation
-	UAnimSequence* WeaponIdleAnim = CurrentWeapon->IdleAnimation;
 
 	// Play raise animation
 	UAnimMontage* raiseMontage = CurrentWeapon->RaiseAnimation;

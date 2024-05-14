@@ -58,6 +58,9 @@ public:
 	bool IsReloading;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool StopReloading;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool CanFire;
 
 	FLatentActionInfo ReloadAmmoLatentInfo;
@@ -189,6 +192,9 @@ public:
 	// Shotgun Reload
 	UFUNCTION(BlueprintImplementableEvent)
 	void ShotgunReload();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShotgunStopReload();
 
 	UFUNCTION(BlueprintCallable)
 	void OnUpdateShotGunAmmo(int currBullets, int TotalBullets);
