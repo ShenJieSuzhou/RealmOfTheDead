@@ -929,62 +929,126 @@ void AROTDCharacter::OnGunFire()
 	UCameraComponent* FirstCamera = this->FirstPersonCameraComponent;
 	FVector TraceStart = FirstCamera->GetComponentLocation();
 
-	float BulletSpread = 120.f;
-	float calu = BulletSpread * -1;
-	float x = FMath::RandRange(calu, BulletSpread);
-	float y = FMath::RandRange(calu, BulletSpread);
-	float z = FMath::RandRange(calu, BulletSpread);
-
-	FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
-
-	FHitResult Hit;
-	FCollisionQueryParams queryParam;
-	queryParam.bReturnPhysicalMaterial = true;
-	queryParam.AddIgnoredActor(this);
-	bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
-
-	if (isHit)
+	if(CurrentWeapon->GunID != ESubWeapon::EW_Remington)
 	{
-		EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
-	
-		// Retrieve BulletImpactData from GameMode
-		AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
-		bool Success = false;
-		FBulletImpact BulletImpact;
-		BulletImpact = GameMode->FindBulletImpact(Type, Success);
+		float BulletSpread = 120.f;
+		float calu = BulletSpread * -1;
+		float x = FMath::RandRange(calu, BulletSpread);
+		float y = FMath::RandRange(calu, BulletSpread);
+		float z = FMath::RandRange(calu, BulletSpread);
 
-		if(!Success)
-		{
-			return;
-		}
+		FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
 
-		UWorld* const World = GetWorld();
-		if (World != nullptr)
+		FHitResult Hit;
+		FCollisionQueryParams queryParam;
+		queryParam.bReturnPhysicalMaterial = true;
+		queryParam.AddIgnoredActor(this);
+		bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
+
+		if (isHit)
 		{
-			ApplyDamageTo(Hit);
-			FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
-			if(BulletImpact.BulletDecals.Num() != 0)
+			EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
+
+			// Retrieve BulletImpactData from GameMode
+			AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
+			bool Success = false;
+			FBulletImpact BulletImpact;
+			BulletImpact = GameMode->FindBulletImpact(Type, Success);
+
+			if (!Success)
 			{
-				int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
-				if (!BulletImpact.BulletDecals[index])
+				return;
+			}
+
+			UWorld* const World = GetWorld();
+			if (World != nullptr)
+			{
+				ApplyDamageTo(Hit);
+				FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
+				if (BulletImpact.BulletDecals.Num() != 0)
+				{
+					int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
+					if (!BulletImpact.BulletDecals[index])
+					{
+						return;
+					}
+
+					UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
+					if (MaterialIns)
+					{
+						ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+						BulletDecal->SetBulletHoleMaterial(MaterialIns);
+					}
+				}
+
+				UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
+
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, FRotator(0, 0, 0));
+			}
+		}
+	}
+	else
+	{
+		for(int i = 0; i < 6; i++)
+		{
+			float BulletSpread = 600.f;
+			float calu = BulletSpread * -1;
+			float x = FMath::RandRange(calu, BulletSpread);
+			float y = FMath::RandRange(calu, BulletSpread);
+			float z = FMath::RandRange(calu, BulletSpread);
+
+			FVector TraceEnd = TraceStart + FirstCamera->GetForwardVector() * 20000.f + FVector(x, y, z);
+
+			FHitResult Hit;
+			FCollisionQueryParams queryParam;
+			queryParam.bReturnPhysicalMaterial = true;
+			queryParam.AddIgnoredActor(this);
+			bool isHit = GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECC_Visibility, queryParam);
+
+			if (isHit)
+			{
+				EImpactType Type = FShootingUtil::GetInstance()->GetImpactType(Hit.PhysMaterial.Get());
+
+				// Retrieve BulletImpactData from GameMode
+				AROTDGameMode* GameMode = Cast<AROTDGameMode>(GetWorld()->GetAuthGameMode());
+				bool Success = false;
+				FBulletImpact BulletImpact;
+				BulletImpact = GameMode->FindBulletImpact(Type, Success);
+
+				if (!Success)
 				{
 					return;
 				}
 
-				UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
-				if (MaterialIns)
+				UWorld* const World = GetWorld();
+				if (World != nullptr)
 				{
-					ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
-					BulletDecal->SetBulletHoleMaterial(MaterialIns);
+					ApplyDamageTo(Hit);
+					FRotator Rotator1 = UKismetMathLibrary::MakeRotFromX(Hit.ImpactNormal);
+					if (BulletImpact.BulletDecals.Num() != 0)
+					{
+						int32 index = FMath::RandRange(0, BulletImpact.BulletDecals.Num() - 1);
+						if (!BulletImpact.BulletDecals[index])
+						{
+							return;
+						}
+
+						UMaterialInterface* MaterialIns = Cast<UMaterialInterface>(BulletImpact.BulletDecals[index]);
+						if (MaterialIns)
+						{
+							ABulletHole* BulletDecal = World->SpawnActor<ABulletHole>(BulletDecalClass, Hit.Location, Rotator1);
+							BulletDecal->SetBulletHoleMaterial(MaterialIns);
+						}
+					}
+
+					UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
+
+					UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, FRotator(0, 0, 0));
 				}
 			}
-
-			UNiagaraSystem* NiagaraSys = Cast<UNiagaraSystem>(BulletImpact.ImpactNiagara);
-			
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, NiagaraSys, Hit.Location, FRotator(0, 0, 0));
 		}
 	}
-
+	
 	// 更新背包子弹
 	PlayerController->RemoveInventoryItem(CurrentWeapon->Ammo, 1);
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
