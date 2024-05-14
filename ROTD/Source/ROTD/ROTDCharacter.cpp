@@ -698,7 +698,7 @@ void AROTDCharacter::OnFire()
 						}
 					}
 				}
-				UKismetSystemLibrary::Delay(this, 0.1f, GunFireLatentInfo);
+				UKismetSystemLibrary::Delay(this, 1.3f, GunFireLatentInfo);
 			}
 		}
 		GetWorldTimerManager().SetTimer(AutomaticHandle, this, &AROTDCharacter::OnFire, 0.12f, true);
