@@ -62,7 +62,9 @@ enum class EItemType : uint8
 	EItem_MediaSupply,
 	EItem_Flashlight,
 	EItem_RifleAmmoSupply,
-	EItem_PistoAmmoSupply
+	EItem_PistoAmmoSupply,
+	EItem_ShotgunAmmoSupply,
+	EItem_SnifferAmmoSupply
 };
 
 // TraceLine 碰撞可交互物品
