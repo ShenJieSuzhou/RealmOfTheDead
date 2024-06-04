@@ -1312,6 +1312,7 @@ void AROTDCharacter::EquipWeapon(AWeaponPickup* Weapon)
 	{
 		WeaponType = (int)EWeapon::EW_Snipe;
 		GunID = Weapon->GunID;
+		CurrentWeapon->FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Snipe_SSG08"));
 	}
 	else
 	{
