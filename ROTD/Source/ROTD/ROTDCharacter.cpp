@@ -282,6 +282,17 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 			}
 		}
 	}
+	else if (Item->ItemType == EItemType::EItem_ShotgunAmmoSupply)
+	{
+		if (PrimaryWeapon)
+		{
+			if (IsAdded)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+			}
+		}
+	}
 	else if(Item->ItemType == EItemType::EItem_MediaSupply)
 	{
 		// 刷新药品补给的数量 
@@ -290,9 +301,17 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 			AntiVirusSupply = (UROTDSupplyItem*)Item;
 		}
 	}
-	else
+	else if (Item->ItemType == EItemType::EItem_SnifferAmmoSupply)
 	{
 		// Sinper Todo 
+		if (ThridWeapon)
+		{
+			if (IsAdded)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				ThridWeapon->MaxAmmoCount = Count - ThridWeapon->MagazineBullets;
+			}
+		}
 	}
 	
 	if(!CurrentWeapon) return;
@@ -354,7 +373,7 @@ void AROTDCharacter::Reload()
 			
 			UKismetSystemLibrary::Delay(this, 5.5f, ReloadAmmoLatentInfo);
 		} 
-		else if(CurrentWeapon->GunName == "Glock")
+		else if(CurrentWeapon->GunID == ESubWeapon::EW_Glock)
 		{
 
 		}
@@ -439,17 +458,47 @@ void AROTDCharacter::Reload()
 			return;
 		}
 
-		if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		if (CurrentWeapon->GunID == ESubWeapon::EW_STEYRSCOUT)
 		{
-			CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-			CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-			CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+			//IsReloading = true;
+			//// Play Reload montage
+			//UAnimMontage* ReloadSnipe = CurrentWeapon->ReloadAnimation;
+			//if (ReloadSnipe != nullptr)
+			//{
+			//	CurrentWeapon->FP_Gun->PlayAnimation(ReloadSnipe, false);
+			//}
+
+			//// Load static asset
+			//FString SnipeReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/A_reload_Montage.A_reload_Montage'"));
+			//UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *SnipeReloadMontage));
+			//if (assetMontage != nullptr)
+			//{
+			//	// Get the animation object for the arms mesh
+			//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+			//	if (AnimInstance != nullptr)
+			//	{
+			//		AnimInstance->Montage_Play(assetMontage, 1.f);
+			//	}
+			//}
+
+			//UKismetSystemLibrary::Delay(this, 2.6f, ReloadAmmoLatentInfo);
+
+			IsReloading = true;
+			// 先在蓝图中实现
+			SinperReload();
 		}
-		else
-		{
-			CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-			CurrentWeapon->MaxAmmoCount = 0;
-		}
+		
+		//if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
+		//{
+		//	CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
+		//	CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
+		//	CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
+		//}
+		//else
+		//{
+		//	CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
+		//	CurrentWeapon->MaxAmmoCount = 0;
+		//}
 		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
 		break;

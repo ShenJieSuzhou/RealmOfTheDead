@@ -199,6 +199,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnUpdateShotGunAmmo(int currBullets, int TotalBullets);
 
+	// Sniper Reload
+	UFUNCTION(BlueprintImplementableEvent)
+	void SinperReload();
+
 	// Fire
 	UFUNCTION(BlueprintCallable)
 	void OnFire();

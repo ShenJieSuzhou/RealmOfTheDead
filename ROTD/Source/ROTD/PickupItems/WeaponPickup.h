@@ -35,9 +35,10 @@ enum class ESubWeapon : uint8
 	EW_Empty,		//0
 	EW_Nipol,		//1
 	EW_Magnum,		//2
-	EW_AK47,		//3
-	EW_Remington,	//4
-	EW_STEYRSCOUT	//5
+	EW_Glock,		//3
+	EW_AK47,		//4
+	EW_Remington,	//5
+	EW_STEYRSCOUT	//6
 };
 
 UCLASS()

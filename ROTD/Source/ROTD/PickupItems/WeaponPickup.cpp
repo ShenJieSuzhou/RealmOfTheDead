@@ -46,3 +46,4 @@ void AWeaponPickup::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
