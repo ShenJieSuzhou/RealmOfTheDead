@@ -32,7 +32,7 @@ public:
 	void SetPointWidgetVisible(bool isVisible);
 
 	void SetHealthBarWidgetVisible(bool isVisible);
-
+	UFUNCTION(BlueprintCallable)
 	void UpdateAmmo(int currBullets, int TotalBullets);
 
 	void UpdateMedicalSupply(int Count);

@@ -499,7 +499,7 @@ void AROTDCharacter::Reload()
 		//	CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
 		//	CurrentWeapon->MaxAmmoCount = 0;
 		//}
-		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+		//hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 
 		break;
 	}
@@ -763,6 +763,49 @@ void AROTDCharacter::OnFire()
 			}
 			return;
 		}
+
+		if (CurrentWeapon->GunID == ESubWeapon::EW_STEYRSCOUT)
+		{
+			if (CanFire)
+			{
+				CanFire = false;
+				// Muzzle Flash
+				this->MuzzleFlash();
+
+				// GunFire
+				this->OnGunFire();
+
+				// Play gun fire montage
+				UAnimMontage* GunFireMontage = CurrentWeapon->FireAnimation;
+				if (GunFireMontage != nullptr)
+				{
+					CurrentWeapon->FP_Gun->PlayAnimation(GunFireMontage, false);
+				}
+
+				if (IsAiming)
+				{
+					// Play Arm fire montage
+					
+				}
+				else
+				{
+					// Play Arm fire montage
+					FString assetPath = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/A_shoot_Montage.A_shoot_Montage'"));
+					UAnimMontage* ArmFireMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *assetPath));
+					if (ArmFireMontage != nullptr)
+					{
+						// Get the animation object for the arms mesh
+						UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+						if (AnimInstance != nullptr)
+						{
+							AnimInstance->Montage_Play(ArmFireMontage, 1.f);
+						}
+					}
+				}
+				UKismetSystemLibrary::Delay(this, 1.5f, GunFireLatentInfo);
+			}
+		}
+
 		break;
 	}
 	default:
