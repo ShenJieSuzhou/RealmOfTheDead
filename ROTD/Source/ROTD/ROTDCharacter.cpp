@@ -429,7 +429,7 @@ void AROTDCharacter::Reload()
 		{
 			IsReloading = true;
 			// 先在蓝图中实现
-			ShotgunReload();
+			CurrentWeapon->WeaponReload();
 		}
 
 		if(CurrentWeapon->GunID != ESubWeapon::EW_Remington)
@@ -843,6 +843,8 @@ void AROTDCharacter::OnAimDownSight()
 
 	IsAiming = true;
 	hud->SetCrossWidgetVisible(false);
+
+	CurrentWeapon->WeaponADS();
 }
 
 void AROTDCharacter::OnRecoverAimDownSight()
@@ -859,6 +861,8 @@ void AROTDCharacter::OnRecoverAimDownSight()
 
 	IsAiming = false;
 	hud->SetCrossWidgetVisible(true);
+
+	CurrentWeapon->WeaponRecoverADS();
 }
 
 void AROTDCharacter::DropMagazine()

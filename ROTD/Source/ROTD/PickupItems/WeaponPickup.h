@@ -102,6 +102,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UAnimMontage* RaiseAnimation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UAnimMontage* EquipAnimation;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	AActor* BulletShell;
@@ -111,6 +114,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UAnimInstance* WeaponAnimIdleBP;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	float ADSDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	float ReloadTime;
@@ -155,5 +161,17 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "LowLevel")
+	void WeaponFire();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "LowLevel")
+	void WeaponReload();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "LowLevel")
 	void BulletShellDrop();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "LowLevel")
+	void WeaponADS();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "LowLevel")
+	void WeaponRecoverADS();
 };
