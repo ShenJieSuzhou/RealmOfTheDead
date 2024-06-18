@@ -1251,8 +1251,8 @@ void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
 			CurrentWeapon->FP_Gun->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepRelative, true));
 		}
 		CurrentWeapon = NULL;
+		GunID = ESubWeapon::EW_Empty;
 	}
-
 }
 
 void AROTDCharacter::EquipGunFlashlight(APickUpItemBase* ItemBase)
@@ -1501,5 +1501,5 @@ void AROTDCharacter::DropWeaponAndSwitchWeapon()
 	}
 
 	// 切换至下一把
-	SwitchWeapons(type);
+	this->SwitchWeapons(type);
 }
