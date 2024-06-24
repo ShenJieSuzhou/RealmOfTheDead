@@ -460,47 +460,11 @@ void AROTDCharacter::Reload()
 
 		if (CurrentWeapon->GunID == ESubWeapon::EW_STEYRSCOUT)
 		{
-			//IsReloading = true;
-			//// Play Reload montage
-			//UAnimMontage* ReloadSnipe = CurrentWeapon->ReloadAnimation;
-			//if (ReloadSnipe != nullptr)
-			//{
-			//	CurrentWeapon->FP_Gun->PlayAnimation(ReloadSnipe, false);
-			//}
-
-			//// Load static asset
-			//FString SnipeReloadMontage = FString(TEXT("AnimMontage'/Game/ROTD/Arms/Animations/A_reload_Montage.A_reload_Montage'"));
-			//UAnimMontage* assetMontage = Cast<UAnimMontage>(LoadObject<UAnimMontage>(nullptr, *SnipeReloadMontage));
-			//if (assetMontage != nullptr)
-			//{
-			//	// Get the animation object for the arms mesh
-			//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-			//	if (AnimInstance != nullptr)
-			//	{
-			//		AnimInstance->Montage_Play(assetMontage, 1.f);
-			//	}
-			//}
-
-			//UKismetSystemLibrary::Delay(this, 2.6f, ReloadAmmoLatentInfo);
-
 			IsReloading = true;
 			// 先在蓝图中实现
-			SinperReload();
+			CurrentWeapon->WeaponReload();
 		}
 		
-		//if ((CurrentWeapon->MaxAmmoCount + CurrentWeapon->MagazineBullets) >= CurrentWeapon->MagazineVolum)
-		//{
-		//	CurrentWeapon->MaxAmmoCount += CurrentWeapon->MagazineBullets;
-		//	CurrentWeapon->MaxAmmoCount -= CurrentWeapon->MagazineVolum;
-		//	CurrentWeapon->MagazineBullets = CurrentWeapon->MagazineVolum;
-		//}
-		//else
-		//{
-		//	CurrentWeapon->MagazineBullets += CurrentWeapon->MaxAmmoCount;
-		//	CurrentWeapon->MaxAmmoCount = 0;
-		//}
-		//hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
-
 		break;
 	}
 	default:
