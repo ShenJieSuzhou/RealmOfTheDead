@@ -72,10 +72,11 @@ public:
 	// Fourth Weapon 
 	UROTDItems* FourthWeapon;
 
-private:
 	/** Map of all items owned by this player, from definition to data */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<UROTDItems*, int> InventoryData;
 
+private:
 	/** Delegate called when an inventory item has been added or removed */
 	FOnInventoryWeaponChanged OnInventoryWeaponChanged;
 

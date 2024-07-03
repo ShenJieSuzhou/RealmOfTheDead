@@ -324,6 +324,9 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 		int Count = PlayerController->GetInventoryItemCount(AntiVirusSupply);
 		hud->UpdateMedicalSupply(Count);
 	}
+
+	// 刷新背包
+
 }
 
 void AROTDCharacter::Reload()
