@@ -10,37 +10,36 @@
 #include "Components/Button.h"
 #include "Components/Overlay.h"
 #include "../ROTDItems/ROTDWeaponItem.h"
-#include "ROTDItemSlotTip.h"
-#include "ROTDItemSlot.generated.h"
+#include "ROTDItemSlotTip.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ROTD_API UROTDItemSlot : public UUserWidget
+class ROTD_API UROTDItemSlotTip : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* ItemNum = nullptr;
+	class UOverlay* FloatDescTip = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UImage* ItemImg = nullptr;
+	class UTextBlock* ItemNameText = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UBorder* ItemNumBackground = nullptr;
+	class UTextBlock* DesText = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* EquipButton = nullptr;
+	class UTextBlock* ItemSubText = nullptr;
 
-	UPROPERTY(BlueprintReadWrite)
-	class UROTDItemSlotTip* ItemSlotTip = nullptr;
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* CostText = nullptr;
 
-	bool IsEmptySlot = true;
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UImage* ItemBigImage = nullptr;
 
-	void SetItemInfo(UROTDItems* Item, int Num);
+	void SetItemInfo(UROTDItems* Item);
 
-	//void SetTipSubTitle(EItemType Type);
+	void SetTipSubTitle(EItemType Type);
 };
-

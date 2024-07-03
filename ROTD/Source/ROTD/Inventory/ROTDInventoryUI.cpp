@@ -42,7 +42,7 @@ void UROTDInventoryUI::ReloadInventory(TMap<UROTDItems*, int> InventoryData)
 				if (ItemContainer)
 				{
 					UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
-					ItemSlot->SetItemInfo(Icon, count);
+					ItemSlot->SetItemInfo(Pair.Key, count);
 				}
 			}
 			SlotIndex++;
