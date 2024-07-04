@@ -6,6 +6,10 @@
 
 void UROTDItemSlotTip::SetItemInfo(UROTDItems* Item)
 {
+	if(!Item)
+	{
+		return;
+	}
 	// Tip name
 	ItemNameText->SetText(Item->ItemName);
 

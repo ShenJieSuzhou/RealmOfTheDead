@@ -39,6 +39,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UImage* ItemBigImage = nullptr;
 
+	UFUNCTION(BlueprintCallable)
 	void SetItemInfo(UROTDItems* Item);
 
 	void SetTipSubTitle(EItemType Type);

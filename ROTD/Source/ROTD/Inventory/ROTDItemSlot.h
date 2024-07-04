@@ -37,10 +37,11 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	class UROTDItemSlotTip* ItemSlotTip = nullptr;
 
+	UPROPERTY(BlueprintReadWrite)
+	UROTDItems* ItemInfo = nullptr;
+
 	bool IsEmptySlot = true;
 
 	void SetItemInfo(UROTDItems* Item, int Num);
-
-	//void SetTipSubTitle(EItemType Type);
 };
 
