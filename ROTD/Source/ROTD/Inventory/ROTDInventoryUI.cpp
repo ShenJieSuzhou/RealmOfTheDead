@@ -2,6 +2,7 @@
 
 
 #include "ROTDInventoryUI.h"
+#include "../ROTDPlayerController.h"
 
 void UROTDInventoryUI::InitInventory()
 {
@@ -17,54 +18,56 @@ void UROTDInventoryUI::InitInventory()
 	}
 }
 
-void UROTDInventoryUI::ReloadInventory(TMap<UROTDItems*, int> InventoryData)
+void UROTDInventoryUI::ReloadInventory(TArray<UROTDItems*> InventoryItems, TMap<UROTDItems*, int> InventoryData)
 {
-	if(InventoryData.Num() > MaxSlotNum)
+	if(InventoryItems.Num() > MaxSlotNum)
 	{
 		// 背包溢出
 		return;
 	}
 	
 	int SlotIndex = 0;
-	for (const TPair<UROTDItems*, int>& Pair : InventoryData)
-	{
-		if (Pair.Key)
-		{
-			FString ItemId = Pair.Key->ItemID.ToString();
 
-			// Filters based on item type
-			if (!ItemId.IsEmpty())
+	for (UROTDItems* Item : InventoryItems)
+	{
+		FString ItemId = Item->ItemID.ToString();
+
+		// Filters based on item type
+		if (!ItemId.IsEmpty())
+		{
+			// Item 数量
+			const int32* count = InventoryData.Find(Item);
+			if(count == 0)
 			{
-				// Item 数量
-				int count = Pair.Value;
-				// Item icon
-				FSlateBrush Icon = Pair.Key->ItemIcon;
-				if (ItemContainer)
-				{
-					UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
-					ItemSlot->SetItemInfo(Pair.Key, count);
-				}
+				return;
 			}
-			SlotIndex++;
+
+			// Item icon
+			FSlateBrush Icon = Item->ItemIcon;
+			if (ItemContainer)
+			{
+				UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
+				ItemSlot->SetItemInfo(Item, *count);
+			}
 		}
+		SlotIndex++;
 	}
 }
 
-void UROTDInventoryUI::DragAndResort()
+void UROTDInventoryUI::DragAndResort(TArray<UROTDItems*> InventoryItems, int SelectIndex, int DropIndex)
 {
+	int count = InventoryItems.Num();
+	if(SelectIndex > count || DropIndex > count)
+	{
+		return;
+	}
 
+	if(InventoryItems.IsValidIndex(SelectIndex))
+	{
+		// temp
+		UROTDItems* Item = InventoryItems[SelectIndex];
+		InventoryItems[SelectIndex] = InventoryItems[DropIndex];
+		InventoryItems[DropIndex] = Item;
+	}
 }
 
-//if (Pair.Key)
-//{
-//	FString ItemId = Pair.Key->ItemID.ToString();
-
-//	// Filters based on item type
-//	if (!ItemId.IsEmpty())
-//	{
-
-//		// Make ItemSlot 显示
-
-
-//		ItemContainer->AddChild(ItemSlot);
-//	}

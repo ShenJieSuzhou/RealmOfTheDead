@@ -61,6 +61,11 @@ bool AROTDPlayerController::AddInventoryItem(UROTDItems* NewItem, int32 ItemCoun
 
 	if (OldCount != NewCount)
 	{
+		// 如果是新物品就加到物品数组中
+		if (OldCount == 0)
+		{
+			InventoryItems.Add(NewItem);
+		}
 		// If data changed, need to update storage and call callback
 		InventoryData.Add(NewItem, NewCount);
 		NotifyInventoryItemChanged(true, NewItem);
@@ -139,6 +144,7 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 	{
 		// Remove item entirely, make sure it is unslotted
 		InventoryData.Remove(RemovedItem);
+		InventoryItems.Remove(RemovedItem);
 	}
 
 	// If we got this far, there is a change so notify and save

@@ -76,6 +76,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<UROTDItems*, int> InventoryData;
 
+	// For Inventory UI 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<UROTDItems*> InventoryItems;
 private:
 	/** Delegate called when an inventory item has been added or removed */
 	FOnInventoryWeaponChanged OnInventoryWeaponChanged;
