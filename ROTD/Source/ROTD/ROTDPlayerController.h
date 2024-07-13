@@ -41,6 +41,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = Inventory)
 	int32 GetInventoryItemCount(UROTDItems* Item) const;
 
+	void DragAndResort(int32 SelectIndex, int32 DropIndex);
+
 	// Implement IRPGInventoryInterface
 	virtual const TMap<UROTDItems*, int>& GetInventoryDataMap() const override
 	{

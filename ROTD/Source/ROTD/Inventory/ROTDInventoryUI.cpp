@@ -2,6 +2,7 @@
 
 
 #include "ROTDInventoryUI.h"
+#include "Kismet/GameplayStatics.h"
 #include "../ROTDPlayerController.h"
 
 void UROTDInventoryUI::InitInventory()
@@ -47,27 +48,19 @@ void UROTDInventoryUI::ReloadInventory(TArray<UROTDItems*> InventoryItems, TMap<
 			if (ItemContainer)
 			{
 				UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
-				ItemSlot->SetItemInfo(Item, *count);
+				ItemSlot->SetItemInfo(Item, *count, SlotIndex);
 			}
 		}
 		SlotIndex++;
 	}
 }
 
-void UROTDInventoryUI::DragAndResort(TArray<UROTDItems*> InventoryItems, int SelectIndex, int DropIndex)
+void UROTDInventoryUI::DragAndResort(int SelectIndex, int DropIndex)
 {
-	int count = InventoryItems.Num();
-	if(SelectIndex > count || DropIndex > count)
+	AROTDPlayerController* PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (PlayerController)
 	{
-		return;
-	}
-
-	if(InventoryItems.IsValidIndex(SelectIndex))
-	{
-		// temp
-		UROTDItems* Item = InventoryItems[SelectIndex];
-		InventoryItems[SelectIndex] = InventoryItems[DropIndex];
-		InventoryItems[DropIndex] = Item;
+		PlayerController->DragAndResort(SelectIndex, DropIndex);
 	}
 }
 

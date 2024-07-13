@@ -31,9 +31,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UBorder* ItemNumBackground = nullptr;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* EquipButton = nullptr;
-
 	UPROPERTY(BlueprintReadWrite)
 	class UROTDItemSlotTip* ItemSlotTip = nullptr;
 
@@ -42,6 +39,9 @@ public:
 
 	bool IsEmptySlot = true;
 
-	void SetItemInfo(UROTDItems* Item, int Num);
+	UPROPERTY(BlueprintReadWrite)
+	int32 SlotIndex;
+
+	void SetItemInfo(UROTDItems* Item, int Num, int ItemIndex);
 };
 

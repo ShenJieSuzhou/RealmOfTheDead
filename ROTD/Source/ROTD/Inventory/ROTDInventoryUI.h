@@ -26,7 +26,7 @@ class ROTD_API UROTDInventoryUI : public UUserWidget
 
 	// Drop Items ²¢µ÷ÕûË³Ðò
 	UFUNCTION(BlueprintCallable)
-	void DragAndResort(TArray<UROTDItems*> InventoryItems, int SelectIndex, int DropIndex);
+	void DragAndResort(int SelectIndex, int DropIndex);
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UWrapBox* ItemContainer;

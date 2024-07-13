@@ -4,14 +4,14 @@
 #include "ROTDItemSlot.h"
 
 
-void UROTDItemSlot::SetItemInfo(UROTDItems* Item, int Num)
+void UROTDItemSlot::SetItemInfo(UROTDItems* Item, int Num, int ItemIndex)
 {
 	// 物品信息
 	this->ItemInfo = Item;
 
 	// 显示
 	IsEmptySlot = false;
-	EquipButton->SetIsEnabled(true);
+	ItemImg->SetVisibility(ESlateVisibility::Visible);
 	ItemImg->SetVisibility(ESlateVisibility::Visible);
 	ItemNumBackground->SetVisibility(ESlateVisibility::Visible);
 	ItemNum->SetVisibility(ESlateVisibility::Visible);
@@ -20,6 +20,9 @@ void UROTDItemSlot::SetItemInfo(UROTDItems* Item, int Num)
 	FString sTotal = FString::FromInt(Num);
 	ItemNum->SetText(FText::FromString(sTotal));
 	ItemImg->SetBrushFromTexture((UTexture2D*)Item->ItemIcon.GetResourceObject());
+
+	// 格子索引
+	this->SlotIndex = ItemIndex;
 }
 
 //void UROTDItemSlot::CreateToolTips()

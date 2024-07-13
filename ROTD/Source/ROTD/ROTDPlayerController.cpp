@@ -184,6 +184,23 @@ int32 AROTDPlayerController::GetInventoryItemCount(UROTDItems* Item) const
 	return 0;
 }
 
+void AROTDPlayerController::DragAndResort(int32 SelectIndex, int32 DropIndex)
+{
+	int count = InventoryItems.Num();
+	if(SelectIndex > count || DropIndex > count)
+	{
+		return;
+	}
+
+	if(InventoryItems.IsValidIndex(SelectIndex))
+	{
+		// temp
+		UROTDItems* Item = InventoryItems[SelectIndex];
+		InventoryItems[SelectIndex] = InventoryItems[DropIndex];
+		InventoryItems[DropIndex] = Item;
+	}
+}
+
 void AROTDPlayerController::NotifyInventoryItemChanged(bool bAdded, UROTDItems* Item)
 {
 	
