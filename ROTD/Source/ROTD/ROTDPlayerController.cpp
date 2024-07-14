@@ -6,11 +6,47 @@
 void AROTDPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//UE_LOG(LogROTD, Warning, TEXT("ReadDataFromSaveLog"));
+
+	this->ReadDataFromSaveLog();
 }
 
 void AROTDPlayerController::InventoryItemChanged(bool bAdded, UROTDItems* Item)
 {
 
+}
+
+bool AROTDPlayerController::ReadDataFromSaveLog()
+{
+	// 如果存在存档
+	// 获取角色的物品明细
+
+	// 获取背包 UI 明细
+	// 否则，就用本地数据初始化
+	for(int i = 0; i < MAX_INVENTORY_SLOT; i++)
+	{
+		InventoryItems.Add(nullptr);
+	}
+
+	return true;
+}
+
+bool AROTDPlayerController::SaveInventoryDataToLog()
+{
+	return true;
+}
+
+void AROTDPlayerController::ManageNewItemInInventory(UROTDItems* NewItem)
+{
+	for(int i = 0; i < MAX_INVENTORY_SLOT; i++)
+	{
+		if(InventoryItems[i] == nullptr)
+		{
+			InventoryItems[i] = NewItem;
+			break;
+		}
+	}
 }
 
 bool AROTDPlayerController::AddInventoryItem(UROTDItems* NewItem, int32 ItemCount /*= 1*/, bool bAutoSlot /*= true*/)
@@ -61,11 +97,12 @@ bool AROTDPlayerController::AddInventoryItem(UROTDItems* NewItem, int32 ItemCoun
 
 	if (OldCount != NewCount)
 	{
-		// 如果是新物品就加到物品数组中
-		if (OldCount == 0)
+		if(OldCount == 0)
 		{
-			InventoryItems.Add(NewItem);
+			//将物品摆到空格子上
+			ManageNewItemInInventory(NewItem);
 		}
+
 		// If data changed, need to update storage and call callback
 		InventoryData.Add(NewItem, NewCount);
 		NotifyInventoryItemChanged(true, NewItem);
@@ -95,7 +132,7 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 	}
 
 	// Find current item data, which may be empty
-	int ItemCount = GetInventoryItemCount(RemovedItem);;
+	int ItemCount = GetInventoryItemCount(RemovedItem);
 
 	if (ItemCount <= 0)
 	{
@@ -144,7 +181,9 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 	{
 		// Remove item entirely, make sure it is unslotted
 		InventoryData.Remove(RemovedItem);
+		int32 index = InventoryItems.Find(RemovedItem);
 		InventoryItems.Remove(RemovedItem);
+		InventoryItems[index] = nullptr;
 	}
 
 	// If we got this far, there is a change so notify and save
@@ -152,21 +191,22 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 	return true;
 }
 
-void AROTDPlayerController::GetInventoryItems(TArray<UROTDItems*>& Items)
+bool AROTDPlayerController::GenInventoryItems()
 {
-	for (const TPair<UROTDItems*, int>& Pair : InventoryData)
-	{
-		if (Pair.Key)
-		{
-			FString ItemId = Pair.Key->ItemID.ToString();
-
-			// Filters based on item type
-			if (!ItemId.IsEmpty())
-			{
-				Items.Add(Pair.Key);
-			}
-		}
-	}
+	//int ItemIndex = 0;
+	//for (const TPair<UROTDItems*, int>& Pair : InventoryData)
+	//{
+	//	if (Pair.Key)
+	//	{
+	//		FString ItemId = Pair.Key->ItemID.ToString();
+	//		if (!ItemId.IsEmpty())
+	//		{
+	//			InventoryItems[ItemIndex] = Pair.Key;
+	//		}
+	//		ItemIndex++;
+	//	}
+	//}
+	return true;
 }
 
 int32 AROTDPlayerController::GetInventoryItemCount(UROTDItems* Item) const

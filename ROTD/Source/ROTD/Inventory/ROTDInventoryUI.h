@@ -21,12 +21,18 @@ class ROTD_API UROTDInventoryUI : public UUserWidget
 	UFUNCTION(BlueprintCallable)
 	void InitInventory();
 
+	// 刷新背包
 	UFUNCTION(BlueprintCallable)
-	void ReloadInventory(TArray<UROTDItems*> InventoryItems, TMap<UROTDItems*, int> InventoryData);
+	void UpdateInventory(TArray<UROTDItems*> InventoryItems);
 
-	// Drop Items 并调整顺序
+	// Drag Items 并调整顺序
 	UFUNCTION(BlueprintCallable)
 	void DragAndResort(int SelectIndex, int DropIndex);
+
+	// Drop Item
+	UFUNCTION(BlueprintCallable)
+	void DropItem(int DropIndex);
+
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UWrapBox* ItemContainer;

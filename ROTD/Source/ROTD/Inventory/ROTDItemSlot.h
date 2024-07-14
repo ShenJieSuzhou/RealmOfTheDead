@@ -42,6 +42,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int32 SlotIndex;
 
+	void InitBlankSlot(int ItemIndex);
+
 	void SetItemInfo(UROTDItems* Item, int Num, int ItemIndex);
 };
 

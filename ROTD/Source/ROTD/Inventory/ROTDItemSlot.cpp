@@ -4,6 +4,18 @@
 #include "ROTDItemSlot.h"
 
 
+void UROTDItemSlot::InitBlankSlot(int ItemIndex)
+{
+	IsEmptySlot = true;
+	ItemImg->SetVisibility(ESlateVisibility::Hidden);
+	ItemImg->SetVisibility(ESlateVisibility::Hidden);
+	ItemNumBackground->SetVisibility(ESlateVisibility::Hidden);
+	ItemNum->SetVisibility(ESlateVisibility::Hidden);
+
+	// 格子索引
+	this->SlotIndex = ItemIndex;
+}
+
 void UROTDItemSlot::SetItemInfo(UROTDItems* Item, int Num, int ItemIndex)
 {
 	// 物品信息

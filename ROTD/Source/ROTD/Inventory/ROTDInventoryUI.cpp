@@ -7,6 +7,7 @@
 
 void UROTDInventoryUI::InitInventory()
 {
+	int SlotIndex = 0;
 	for (int i = 0; i < MaxSlotNum; i++)
 	{
 		FString BPItemSlotPath = FString(TEXT("WidgetBlueprint'/Game/ROTD/UI/ItemSlot_WB.ItemSlot_WB_C'"));
@@ -14,12 +15,16 @@ void UROTDInventoryUI::InitInventory()
 		UROTDItemSlot* ItemSlot = CreateWidget<UROTDItemSlot>(GetWorld(), ItemSlotClass);
 		if(ItemSlot)
 		{
+			// Add Blank Slot
+			ItemSlot->InitBlankSlot(SlotIndex);
 			ItemContainer->AddChild(ItemSlot);
+			SlotIndex++;
 		}
 	}
 }
 
-void UROTDInventoryUI::ReloadInventory(TArray<UROTDItems*> InventoryItems, TMap<UROTDItems*, int> InventoryData)
+// 数据驱动
+void UROTDInventoryUI::UpdateInventory(TArray<UROTDItems*> InventoryItems)
 {
 	if(InventoryItems.Num() > MaxSlotNum)
 	{
@@ -27,30 +32,36 @@ void UROTDInventoryUI::ReloadInventory(TArray<UROTDItems*> InventoryItems, TMap<
 		return;
 	}
 	
-	int SlotIndex = 0;
+	// Item 数量对应Map
+	AROTDPlayerController* PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	TMap<UROTDItems*, int> InventoryData = PlayerController->InventoryData;
 
+	int SlotIndex = 0;
 	for (UROTDItems* Item : InventoryItems)
 	{
-		FString ItemId = Item->ItemID.ToString();
-
-		// Filters based on item type
-		if (!ItemId.IsEmpty())
+		if(Item)
 		{
-			// Item 数量
-			const int32* count = InventoryData.Find(Item);
-			if(count == 0)
+			FString ItemId = Item->ItemID.ToString();
+			// Filters based on item type
+			if (!ItemId.IsEmpty())
 			{
-				return;
-			}
+				// Item 数量
+				const int32* count = InventoryData.Find(Item);
+				if (count == 0)
+				{
+					return;
+				}
 
-			// Item icon
-			FSlateBrush Icon = Item->ItemIcon;
-			if (ItemContainer)
-			{
-				UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
-				ItemSlot->SetItemInfo(Item, *count, SlotIndex);
+				// Item icon
+				FSlateBrush Icon = Item->ItemIcon;
+				if (ItemContainer)
+				{
+					UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
+					ItemSlot->SetItemInfo(Item, *count, SlotIndex);
+				}
 			}
 		}
+		
 		SlotIndex++;
 	}
 }
@@ -62,5 +73,10 @@ void UROTDInventoryUI::DragAndResort(int SelectIndex, int DropIndex)
 	{
 		PlayerController->DragAndResort(SelectIndex, DropIndex);
 	}
+}
+
+void UROTDInventoryUI::DropItem(int DropIndex)
+{
+	// 丢弃 Item
 }
 
