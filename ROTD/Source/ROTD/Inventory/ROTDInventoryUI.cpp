@@ -61,6 +61,14 @@ void UROTDInventoryUI::UpdateInventory(TArray<UROTDItems*> InventoryItems)
 				}
 			}
 		}
+		else
+		{
+			if (ItemContainer)
+			{
+				UROTDItemSlot* ItemSlot = Cast<UROTDItemSlot>(ItemContainer->GetChildAt(SlotIndex));
+				ItemSlot->InitBlankSlot(SlotIndex);
+			}
+		}
 		
 		SlotIndex++;
 	}

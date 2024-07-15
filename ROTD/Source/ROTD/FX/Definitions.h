@@ -86,6 +86,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	FText ItemID;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	TSubclassOf<AActor> ItemActor;
+
 	/** User-visible short name */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	EItemType ItemType;
