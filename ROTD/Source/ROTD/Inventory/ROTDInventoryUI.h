@@ -31,7 +31,7 @@ class ROTD_API UROTDInventoryUI : public UUserWidget
 
 	// Drop Item
 	UFUNCTION(BlueprintCallable)
-	void DropItem(int DropIndex);
+	int DropItem(int DropIndex);
 
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))

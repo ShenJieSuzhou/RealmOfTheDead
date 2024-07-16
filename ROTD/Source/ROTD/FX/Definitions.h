@@ -110,8 +110,12 @@ public:
 	int32 Price;
 
 	/** Price in game */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 Count;
+
+	/** Price in game */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	int32 BoxCapacity;
 
 	/** Maximum number of instances that can be in inventory at once, <= 0 means infinite */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Max)

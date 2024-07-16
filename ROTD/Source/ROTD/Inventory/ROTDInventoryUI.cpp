@@ -83,8 +83,18 @@ void UROTDInventoryUI::DragAndResort(int SelectIndex, int DropIndex)
 	}
 }
 
-void UROTDInventoryUI::DropItem(int DropIndex)
+int UROTDInventoryUI::DropItem(int DropIndex)
 {
-	// ¶ªÆú Item
+	// »ñÈ¡¶ªÆú Item µÄ count
+	int count = 0;
+	AROTDPlayerController* PlayerController = Cast<AROTDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (PlayerController)
+	{
+		UROTDItems* Item = PlayerController->InventoryItems[DropIndex];
+		int* num = PlayerController->InventoryData.Find(Item);
+		count = *num;
+	}
+
+	return count;
 }
 
