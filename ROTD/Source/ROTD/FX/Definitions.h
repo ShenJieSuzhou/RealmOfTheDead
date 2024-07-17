@@ -110,10 +110,6 @@ public:
 	int32 Price;
 
 	/** Price in game */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	int32 Count;
-
-	/** Price in game */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	int32 BoxCapacity;
 

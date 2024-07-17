@@ -21,12 +21,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FString PickUpItemName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gameplay)
 	UROTDItems *ItemType;
 
 	/** Actor to spawn */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gameplay)
 	TSubclassOf<AActor> ItemActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gameplay)
+	int32 Count;
 
 public:	
 	// Sets default values for this actor's properties
