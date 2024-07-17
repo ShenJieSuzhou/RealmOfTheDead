@@ -411,6 +411,10 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 				}
 			}
 		}
+
+		if (!CurrentWeapon) return;
+		// 刷新数据
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 	}
 	
 	if(AntiVirusSupply)
@@ -1207,8 +1211,8 @@ void AROTDCharacter::OnGunFire()
 	}
 	
 	// 更新背包子弹
-	PlayerController->RemoveInventoryItem(CurrentWeapon->Ammo, 1);
 	hud->UpdateAmmo(--CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+	PlayerController->RemoveInventoryItem(CurrentWeapon->Ammo, 1);
 }
 
 void AROTDCharacter::SwitchWeapons(EWeapon CurrWeaponType)
