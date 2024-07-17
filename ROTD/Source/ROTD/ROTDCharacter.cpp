@@ -260,73 +260,164 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 {
 	if(!Item) return;
 
-	if(Item->ItemType == EItemType::EItem_RifleAmmoSupply)
+	if(IsAdded)
 	{
-		if(PrimaryWeapon)
+		if (Item->ItemType == EItemType::EItem_RifleAmmoSupply)
 		{
-			if(IsAdded)
+			if (PrimaryWeapon)
 			{
 				int Count = PlayerController->GetInventoryItemCount(Item);
 				PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
 			}
 		}
-	}
-	else if(Item->ItemType == EItemType::EItem_PistoAmmoSupply)
-	{
-		if(SecondWeapon)
+		else if (Item->ItemType == EItemType::EItem_PistoAmmoSupply)
 		{
-			if (IsAdded)
+			if (SecondWeapon)
 			{
 				int Count = PlayerController->GetInventoryItemCount(Item);
 				SecondWeapon->MaxAmmoCount = Count - SecondWeapon->MagazineBullets;
 			}
 		}
-	}
-	else if (Item->ItemType == EItemType::EItem_ShotgunAmmoSupply)
-	{
-		if (PrimaryWeapon)
+		else if (Item->ItemType == EItemType::EItem_ShotgunAmmoSupply)
 		{
-			if (IsAdded)
+			if (PrimaryWeapon)
 			{
 				int Count = PlayerController->GetInventoryItemCount(Item);
 				PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
 			}
 		}
-	}
-	else if(Item->ItemType == EItemType::EItem_MediaSupply)
-	{
-		// 刷新药品补给的数量 
-		if(!AntiVirusSupply)
+		else if (Item->ItemType == EItemType::EItem_MediaSupply)
 		{
-			AntiVirusSupply = (UROTDSupplyItem*)Item;
+			// 刷新药品补给的数量 
+			if (!AntiVirusSupply)
+			{
+				AntiVirusSupply = (UROTDSupplyItem*)Item;
+			}
 		}
-	}
-	else if (Item->ItemType == EItemType::EItem_SnifferAmmoSupply)
-	{
-		// Sinper Todo 
-		if (ThridWeapon)
+		else if (Item->ItemType == EItemType::EItem_SnifferAmmoSupply)
 		{
-			if (IsAdded)
+			if (ThridWeapon)
 			{
 				int Count = PlayerController->GetInventoryItemCount(Item);
 				ThridWeapon->MaxAmmoCount = Count - ThridWeapon->MagazineBullets;
 			}
 		}
+
+		if (!CurrentWeapon) return;
+		// 刷新数据
+		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
+	}
+	else
+	{
+		if (Item->ItemType == EItemType::EItem_RifleAmmoSupply)
+		{
+			if (PrimaryWeapon)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				if(Count > 0)
+				{
+					if(Count > PrimaryWeapon->MagazineBullets)
+					{
+						PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+					}
+					else
+					{
+						PrimaryWeapon->MaxAmmoCount = 0;
+					}
+				}
+				else
+				{
+					PrimaryWeapon->MaxAmmoCount = 0;
+					PrimaryWeapon->MagazineBullets = 0;
+				}
+				
+			}
+		}
+		else if (Item->ItemType == EItemType::EItem_PistoAmmoSupply)
+		{
+			if (SecondWeapon)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				if (Count > 0)
+				{
+					if (Count > SecondWeapon->MagazineBullets)
+					{
+						SecondWeapon->MaxAmmoCount = Count - SecondWeapon->MagazineBullets;
+					}
+					else
+					{
+						SecondWeapon->MaxAmmoCount = 0;
+					}
+				}
+				else
+				{
+					SecondWeapon->MaxAmmoCount = 0;
+					SecondWeapon->MagazineBullets = 0;
+				}
+			}
+		}
+		else if (Item->ItemType == EItemType::EItem_ShotgunAmmoSupply)
+		{
+			if (PrimaryWeapon)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				if (Count > 0)
+				{
+					if (Count > PrimaryWeapon->MagazineBullets)
+					{
+						PrimaryWeapon->MaxAmmoCount = Count - PrimaryWeapon->MagazineBullets;
+					}
+					else
+					{
+						PrimaryWeapon->MaxAmmoCount = 0;
+					}
+				}
+				else
+				{
+					PrimaryWeapon->MaxAmmoCount = 0;
+					PrimaryWeapon->MagazineBullets = 0;
+				}
+			}
+		}
+		else if (Item->ItemType == EItemType::EItem_MediaSupply)
+		{
+			// 刷新药品补给的数量 
+			if (!AntiVirusSupply)
+			{
+				AntiVirusSupply = (UROTDSupplyItem*)Item;
+			}
+		}
+		else if (Item->ItemType == EItemType::EItem_SnifferAmmoSupply)
+		{
+			if (ThridWeapon)
+			{
+				int Count = PlayerController->GetInventoryItemCount(Item);
+				ThridWeapon->MaxAmmoCount = Count - ThridWeapon->MagazineBullets;
+				if (Count > 0)
+				{
+					if (Count > ThridWeapon->MagazineBullets)
+					{
+						ThridWeapon->MaxAmmoCount = Count - ThridWeapon->MagazineBullets;
+					}
+					else
+					{
+						ThridWeapon->MaxAmmoCount = 0;
+					}
+				}
+				else
+				{
+					ThridWeapon->MaxAmmoCount = 0;
+					ThridWeapon->MagazineBullets = 0;
+				}
+			}
+		}
 	}
 	
-	if(!CurrentWeapon) return;
-	
-	// 刷新数据
-	hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
-
 	if(AntiVirusSupply)
 	{
 		int Count = PlayerController->GetInventoryItemCount(AntiVirusSupply);
 		hud->UpdateMedicalSupply(Count);
 	}
-
-	// 刷新背包
-
 }
 
 void AROTDCharacter::Reload()

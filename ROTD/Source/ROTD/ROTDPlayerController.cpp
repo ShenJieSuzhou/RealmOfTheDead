@@ -140,28 +140,6 @@ bool AROTDPlayerController::RemoveInventoryItem(UROTDItems* RemovedItem, int32 R
 		return false;
 	}
 
-	// 是什么类型的物品
-	//if (RemovedItem->ItemType == EItemType::EItem_Rifle)
-	//{
-	//	delete PrimaryWeapon;
-	//	PrimaryWeapon = NULL;
-	//}
-	//else if (RemovedItem->ItemType == EItemType::EItem_Pisto)
-	//{
-	//	delete SecondWeapon;
-	//	SecondWeapon = NULL;
-	//}
-	//else if (RemovedItem->ItemType == EItemType::EItem_Snipe)
-	//{
-	//	delete ThridWeapon;
-	//	ThridWeapon = NULL;
-	//}
-	//else if (RemovedItem->ItemType == EItemType::EItem_Knife)
-	//{
-	//	delete FourthWeapon;
-	//	FourthWeapon = NULL;
-	//}
-
 	// If RemoveCount <= 0, delete all
 	if (RemoveCount <= 0)
 	{
