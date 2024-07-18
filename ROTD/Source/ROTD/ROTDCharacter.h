@@ -87,15 +87,19 @@ public:
 	AShootingHUD* hud;
 
 	// Primary Weapon 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWeaponPickup* PrimaryWeapon = NULL;
 
 	// Second Weapon
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWeaponPickup* SecondWeapon = NULL;
 
 	// Thrid Weapon (Only for sniper)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWeaponPickup* ThridWeapon = NULL;
 
 	// Fourth Weapon 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWeaponPickup* FourthWeapon = NULL;
 
 	AROTDPlayerController* PlayerController;
