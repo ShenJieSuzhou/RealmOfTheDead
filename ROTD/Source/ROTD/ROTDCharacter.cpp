@@ -203,6 +203,28 @@ void AROTDCharacter::PickUpWeapons(bool IsAdded, UROTDItems* Item)
 {
 	if(!IsAdded)
 	{
+		if (Item->ItemType == EItemType::EItem_Rifle)
+		{
+			PrimaryWeapon = NULL;
+		}
+		else if (Item->ItemType == EItemType::EItem_Pisto)
+		{
+			SecondWeapon = NULL;
+		}
+		else if (Item->ItemType == EItemType::EItem_Snipe)
+		{
+			ThridWeapon = NULL;
+		}
+		else if (Item->ItemType == EItemType::EItem_Knife)
+		{
+			FourthWeapon = NULL;
+		}
+
+		if (!CurrentWeapon) return;
+		EWeapon type = CurrentWeapon->WeaponType;
+		// 切换至下一把
+		this->SwitchWeapons(type);
+
 		return;
 	}
 
@@ -260,6 +282,7 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 {
 	if(!Item) return;
 
+	// Ammo
 	if(IsAdded)
 	{
 		if (Item->ItemType == EItemType::EItem_RifleAmmoSupply)
@@ -1546,25 +1569,25 @@ void AROTDCharacter::DropWeaponAndSwitchWeapon()
 		UE_LOG(LogROTD, Warning, TEXT("RemoveInventoryItem not success"));
 	}
 
-	// 并移除武器缓存
-	EWeapon type = CurrentWeapon->WeaponType;
-	if(type == EWeapon::EW_Rifle)
-	{
-		PrimaryWeapon = NULL;
-	}
-	else if(type == EWeapon::EW_Pisto)
-	{
-		SecondWeapon = NULL;
-	}
-	else if(type == EWeapon::EW_Snipe)
-	{
-		ThridWeapon = NULL;
-	}
-	else if(type == EWeapon::EW_Knife)
-	{
-		FourthWeapon = NULL;
-	}
+	//// 并移除武器缓存
+	//EWeapon type = CurrentWeapon->WeaponType;
+	//if(type == EWeapon::EW_Rifle)
+	//{
+	//	PrimaryWeapon = NULL;
+	//}
+	//else if(type == EWeapon::EW_Pisto)
+	//{
+	//	SecondWeapon = NULL;
+	//}
+	//else if(type == EWeapon::EW_Snipe)
+	//{
+	//	ThridWeapon = NULL;
+	//}
+	//else if(type == EWeapon::EW_Knife)
+	//{
+	//	FourthWeapon = NULL;
+	//}
 
-	// 切换至下一把
-	this->SwitchWeapons(type);
+	//// 切换至下一把
+	//this->SwitchWeapons(type);
 }
