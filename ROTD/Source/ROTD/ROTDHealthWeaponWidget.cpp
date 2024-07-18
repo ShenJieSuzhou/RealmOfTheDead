@@ -32,8 +32,8 @@ void UROTDHealthWeaponWidget::SwitchWeapon(UROTDWeaponItem* curWeapon)
 		return;
 	}
 
-	CurWeaponImg->SetVisibility(ESlateVisibility::Visible);
-	CurWeaponImg->SetBrushFromTexture((UTexture2D*)curWeapon->ItemIcon.GetResourceObject());
+	//CurWeaponImg->SetVisibility(ESlateVisibility::Visible);
+	//CurWeaponImg->SetBrushFromTexture((UTexture2D*)curWeapon->ItemIcon.GetResourceObject());
 }
 
 void UROTDHealthWeaponWidget::UpdateHealthProcessBar(float CurrentHealth, float MaxHealth)

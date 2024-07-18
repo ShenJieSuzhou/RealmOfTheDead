@@ -440,11 +440,11 @@ void AROTDCharacter::InventoryItemChanged(bool IsAdded, UROTDItems* Item)
 		hud->UpdateAmmo(CurrentWeapon->MagazineBullets, CurrentWeapon->MaxAmmoCount);
 	}
 	
-	if(AntiVirusSupply)
-	{
-		int Count = PlayerController->GetInventoryItemCount(AntiVirusSupply);
-		hud->UpdateMedicalSupply(Count);
-	}
+	//if(AntiVirusSupply)
+	//{
+	//	int Count = PlayerController->GetInventoryItemCount(AntiVirusSupply);
+	//	hud->UpdateMedicalSupply(Count);
+	//}
 }
 
 void AROTDCharacter::Reload()
