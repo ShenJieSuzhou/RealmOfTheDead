@@ -77,6 +77,16 @@ enum class ETraceLineHitUseType : uint8
 };
 
 
+UENUM()
+enum class EEquipmentsType : uint8
+{
+	Equipment_Helmet,
+	Equipment_Trousers,
+	Equipment_Armor,
+	Equipment_Boot,
+	Equipment_Clothing
+};
+
 UCLASS(BlueprintType)
 class UROTDItems : public UDataAsset
 {
