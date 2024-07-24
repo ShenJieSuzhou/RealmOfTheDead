@@ -64,7 +64,12 @@ enum class EItemType : uint8
 	EItem_RifleAmmoSupply,
 	EItem_PistoAmmoSupply,
 	EItem_ShotgunAmmoSupply,
-	EItem_SnifferAmmoSupply
+	EItem_SnifferAmmoSupply,
+	EItem_Helmet,
+	EItem_Trousers,
+	EItem_Armor,
+	EItem_Boot,
+	EItem_Clothing
 };
 
 // TraceLine 碰撞可交互物品
@@ -76,16 +81,6 @@ enum class ETraceLineHitUseType : uint8
 	EItem_Box
 };
 
-
-UENUM()
-enum class EEquipmentsType : uint8
-{
-	Equipment_Helmet,
-	Equipment_Trousers,
-	Equipment_Armor,
-	Equipment_Boot,
-	Equipment_Clothing
-};
 
 UCLASS(BlueprintType)
 class UROTDItems : public UDataAsset

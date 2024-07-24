@@ -89,7 +89,7 @@ public:
 
 	// 管理物品数量映射关系
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<UROTDItems*, EEquipmentsType> EquipmentsData;
+	TMap<UROTDItems*, EItemType> EquipmentsData;
 
 	// 物品背包界面由此数据驱动
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
