@@ -52,7 +52,7 @@ public:
 
 
 // 掉落可捡起物品种类
-UENUM()
+UENUM(BlueprintType)
 enum class EItemType : uint8
 {
 	EItem_Knife,
@@ -93,6 +93,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
 	TSubclassOf<AActor> ItemActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	UStaticMesh* Mesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	FString SocketName;
 
 	/** User-visible short name */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
